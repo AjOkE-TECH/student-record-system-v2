@@ -35,7 +35,7 @@ if(!isset($_SESSION['admin'])){
         <h2>Management System</h2>
 
         <ul>
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="add_student.php">Add Student</a></li>
             <li><a href="view_students.php">View Students</a></li>
             <li><a href="search_student.php">Search Student</a></li>
@@ -52,26 +52,26 @@ if(!isset($_SESSION['admin'])){
 
         <div class="cards">
 
-            <div class="card">
-                <h3>Total Students</h3>
-                <p><?php echo $count_data['total']; ?></p>
-            </div>
+    <div class="card">
+        <h3>Total Students</h3>
+        <p><?php echo $count_data['total']; ?></p>
+    </div>
 
-           <a href="search_student.php" class="card-link">
-           <div class="card">
-             <h3>Search Records</h3>
-             <p>Quick Access</p>
-           </div>
-          </a>
-
-           <a href="view_students.php" class="card-link">
-              <div class="card">
-                <h3>Manage Students</h3>
-                <p>CRUD Operations</p>
-              </div>
-          </a>
-
+    <a href="search_student.php" class="card-link">
+        <div class="card">
+            <h3>Search Students</h3>
+            <p>Search</p>
         </div>
+    </a>
+
+    <a href="view_students.php" class="card-link">
+        <div class="card">
+            <h3>Manage Students</h3>
+            <p>Manage</p>
+        </div>
+    </a>
+
+</div>
 
     </div>
 

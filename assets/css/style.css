@@ -77,24 +77,34 @@ body{
 }
 
 /*DASHBOARD CARDS*/
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+    gap:25px;
+    margin-top:20px;
+}
 .card{
-    background:white;
+    background:#fff;
     border-radius:15px;
     padding:25px;
     box-shadow:0 8px 20px rgba(0,0,0,.05);
     transition:.3s;
-    border:none;
+    min-height:120px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
 }
 .card h3{
     color:#006400;
-    margin-bottom:15px;
     font-size:18px;
+    margin-bottom:15px;
 }
 
 .card p{
-    font-size:35px;
+    font-size:56px;
     font-weight:bold;
     color:#333;
+    margin:0;
 }
 /*LOGIN PAGE*/
 .login-container{
