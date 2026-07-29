@@ -89,7 +89,7 @@ body{
     padding:25px;
     box-shadow:0 8px 20px rgba(0,0,0,.05);
     transition:.3s;
-    min-height:120px;
+    min-height:100px;
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
@@ -101,7 +101,7 @@ body{
 }
 
 .card p{
-    font-size:56px;
+    font-size:30px;
     font-weight:bold;
     color:#333;
     margin:0;
