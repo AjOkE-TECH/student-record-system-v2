@@ -1,127 +1,169 @@
 <?php
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 include "config/database.php";
 
-$message = "";
-$messageType = "";
+$error = "";
 
-if(isset($_POST['login'])){
-
+if(isset($_POST['login']))
+{
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = $_POST['password'];
 
-    $query = mysqli_query($conn,
-        "SELECT * FROM admins WHERE username='$username'");
+    $query = mysqli_query($conn, "SELECT * FROM admins WHERE username='$username'");
 
-    if(mysqli_num_rows($query) > 0){
-
+    if(mysqli_num_rows($query) > 0)
+    {
         $admin = mysqli_fetch_assoc($query);
 
-        if(password_verify($password, $admin['password'])){
-
+        if(password_verify($password, $admin['password']))
+        {
             $_SESSION['admin'] = $admin['username'];
-
-            $message = "Login Successful!";
-            $messageType = "success";
-
-        }else{
-
-            $message = "Invalid password.";
-            $messageType = "error";
-
+            header("Location: dashboard.php");
+            exit();
         }
-
-    }else{
-
-        $message = "Account not found. Please register first.";
-        $messageType = "error";
-
+        else
+        {
+            $error = "Incorrect password!";
+        }
     }
-
+    else
+    {
+        $error = "Account not found!";
+    }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
-    <title>Login - Student Record System</title>
+<meta charset="UTF-8">
 
-    <link rel="stylesheet" href="assets/css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<title>Student Record Management System</title>
 
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
 
-<div class="login-container">
+<header class="top-header">
 
-    <h2>Student Record System</h2>
+    <div class="logo-area">
 
-    <form method="POST">
+        <img src="assets/image/logo.png" alt="Logo">
 
-        <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            required
-        >
+        <div>
 
-        <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-        >
+            <h2>SRMS</h2>
 
-        <button type="submit" name="login">
-            Login
-        </button>
+            <span>Student Record Management System</span>
 
-    </form>
+        </div>
 
-    <p style="text-align:center;margin-top:15px;">
-        <a href="register.php">
-            Don't have an account? Register
-        </a>
-    </p>
+    </div>
 
-</div>
+    <nav>
 
-<?php if($message != ""){ ?>
+       <a href="index.php#home">Home</a>
+       <a href="index.php#about">About</a>
+       <a href="index.php#features">Features</a>
+       <a href="index.php#contact">Contact</a>
 
-<script>
+    </nav>
 
-Swal.fire({
+</header>
 
-    icon: "<?php echo $messageType; ?>",
 
-    title:
-        "<?php echo $messageType == 'success' ? 'Success' : 'Login Failed'; ?>",
+<section class="login-section">
 
-    text: 
-       "<?php echo $message; ?>",
+    <div class="login-image">
 
-    confirmButtonColor: 
-         "#006400"
+        <img src="assets/image/image.jpg" alt="Students">
 
-}).then(function(){
+    </div>
 
-<?php if($messageType == "success"){ ?>
 
-    window.location.href = "dashboard.php";
+    <div class="login-box">
 
-<?php } ?>
+        <div class="login-content">
 
-});
+            <h1>Welcome Back</h1>
 
-</script>
+            <p>
+                Login to continue managing student records.
+            </p>
 
-<?php } ?>
+            <?php if($error != ""){ ?>
+
+                <div class="error-box">
+
+                    <i class="fa-solid fa-circle-exclamation"></i>
+
+                    <?php echo $error; ?>
+
+                </div>
+
+            <?php } ?>
+
+            <form method="POST">
+
+                <div class="input-group">
+
+                    <label>Username</label>
+
+                    <input type="text" name="username" placeholder="Username">
+                </div>
+
+                <div class="input-group">
+
+                    <label>Password</label>
+
+                    <input
+                    type="password"name="password"placeholder="Enter your password"required>
+
+                </div>
+
+                <button
+                type="submit"name="login"class="login-btn">
+
+                    <i class="fa-solid fa-right-to-bracket"></i>
+
+                    Login
+
+                </button>
+
+            </form>
+
+            <div class="bottom-text">
+
+                Don't have an account?
+
+                <a href="register.php">
+
+                    Create Account
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer class="footer">
+
+    2026 Student Record Management System |
+    Designed by Sekinat Mutolib
+
+</footer>
 
 </body>
+
 </html>
