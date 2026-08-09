@@ -8,7 +8,7 @@ if(!isset($_SESSION['admin'])){
 
 include "config/database.php";
 
-if(!isset($_GET['id'])){
+if(!isset($_GET['id']) || empty($_GET['id'])){
     header("Location: view_students.php");
     exit();
 }
@@ -18,11 +18,17 @@ $id = (int)$_GET['id'];
 $query = mysqli_query($conn, "SELECT * FROM students WHERE id='$id'");
 
 if(mysqli_num_rows($query) == 0){
-    echo "Student not found.";
+    header("Location: view_students.php");
     exit();
 }
 
-$row = mysqli_fetch_assoc($query);
+$student = mysqli_fetch_assoc($query);
+
+if(!empty($student['passport'])){
+    $passport = "assets/upload/students/" . $student['passport'];
+}else{
+    $passport = "assets/image/default.png";
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +36,149 @@ $row = mysqli_fetch_assoc($query);
 <head>
     <title>Student Profile</title>
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        .profile-container{
+            background:#ffffff;
+            border-radius:15px;
+            padding:35px;
+            box-shadow:0 5px 15px rgba(0,0,0,.05);
+        }
+
+        .profile-top{
+            display:flex;
+            align-items:center;
+            gap:30px;
+            padding-bottom:30px;
+            border-bottom:1px solid #eeeeee;
+            margin-bottom:30px;
+        }
+
+        .profile-image{
+            width:150px;
+            height:150px;
+            border-radius:50%;
+            object-fit:cover;
+            border:5px solid #E8F5E9;
+        }
+
+        .profile-name h2{
+            color:#006400;
+            font-size:32px;
+            margin-bottom:8px;
+        }
+
+        .profile-name p{
+            color:#777;
+            font-size:17px;
+        }
+
+        .profile-details{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+        }
+
+        .profile-item{
+            border:1px solid #eeeeee;
+            border-radius:10px;
+            overflow:hidden;
+        }
+
+        .profile-label{
+            background:#006400;
+            color:#ffffff;
+            padding:14px 18px;
+            font-weight:bold;
+        }
+
+        .profile-value{
+            padding:16px 18px;
+            color:#444;
+            background:#ffffff;
+            font-size:16px;
+        }
+
+        .profile-actions{
+            display:flex;
+            gap:15px;
+            margin-top:30px;
+        }
+
+        .profile-btn{
+            display:inline-block;
+            padding:13px 25px;
+            border-radius:25px;
+            text-decoration:none;
+            font-weight:bold;
+            transition:.3s;
+        }
+
+        .edit-profile-btn{
+            background:#006400;
+            color:#ffffff;
+        }
+
+        .edit-profile-btn:hover{
+            background:#008000;
+        }
+
+        .back-btn{
+            background:#eeeeee;
+            color:#444;
+        }
+
+        .back-btn:hover{
+            background:#dddddd;
+        }
+
+        .print-btn{
+            background:#333333;
+            color:#ffffff;
+            border:none;
+            cursor:pointer;
+            font-size:15px;
+        }
+
+        .print-btn:hover{
+            background:#555555;
+        }
+
+        @media(max-width:900px){
+
+            .profile-details{
+                grid-template-columns:1fr;
+            }
+
+            .profile-top{
+                flex-direction:column;
+                text-align:center;
+            }
+        }
+
+        @media print{
+
+            .sidebar,
+            .header,
+            .profile-actions{
+                display:none;
+            }
+
+            .container{
+                display:block;
+            }
+
+            .main-content{
+                padding:0;
+            }
+
+            .profile-container{
+                box-shadow:none;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
 <div class="container">
@@ -40,10 +188,25 @@ $row = mysqli_fetch_assoc($query);
         <h2>Management System</h2>
 
         <ul>
-            <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="add_student.php">Add Student</a></li>
-            <li><a href="view_students.php" class="active">View Students</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li>
+                <a href="dashboard.php">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="add_student.php">Add Student</a>
+            </li>
+
+            <li>
+                <a href="view_students.php">View Students</a>
+            </li>
+
+            <li>
+                <a href="search_student.php">Search Student</a>
+            </li>
+
+            <li>
+                <a href="logout.php">Logout</a>
+            </li>
         </ul>
 
     </div>
@@ -51,82 +214,158 @@ $row = mysqli_fetch_assoc($query);
     <div class="main-content">
 
         <div class="header">
-            <h1>Student Profile</h1>
+
+            <div>
+                <h1>Student Profile</h1>
+                <p>View student information</p>
+            </div>
+
         </div>
 
-        <div class="profile-card">
+        <div class="profile-container">
 
-            <div class="profile-left">
+            <div class="profile-top">
 
-               <?php
-                    if(!empty($row['passport'])){
-                    ?>
-                        <img src="assets/upload/students/<?php echo $row['passport']; ?>"
-                            width="150"
-                            height="150"
-                            style="border-radius:50%; object-fit:cover;">
-                    <?php
-                    }else{
-                    ?>
-                        <img src="assets/image/default.png"
-                            width="150"
-                            height="150"
-                            style="border-radius:50%; object-fit:cover;">
-                    <?php
-                    }
-                ?>
+                <img
+                    src="<?php echo $passport; ?>"
+                    alt="Student Passport"
+                    class="profile-image"
+                >
+
+                <div class="profile-name">
+
+                    <h2>
+                        <?php
+                        echo htmlspecialchars(
+                            $student['firstname'] . " " . $student['lastname']
+                        );
+                        ?>
+                    </h2>
+
+                    <p>
+                        Matric No:
+                        <?php echo htmlspecialchars($student['matric_no']); ?>
+                    </p>
+
+                </div>
 
             </div>
 
-            <div class="profile-right">
+            <div class="profile-details">
 
-                <h2>
-                    <?php echo $row['firstname']." ".$row['lastname']; ?>
-                </h2>
+                <div class="profile-item">
 
-                <table class="profile-table">
+                    <div class="profile-label">
+                        Matric Number
+                    </div>
 
-                    <tr>
-                        <th>Matric Number</th>
-                        <td><?php echo $row['matric_no']; ?></td>
-                    </tr>
+                    <div class="profile-value">
+                        <?php echo htmlspecialchars($student['matric_no']); ?>
+                    </div>
 
-                    <tr>
-                        <th>Gender</th>
-                        <td><?php echo $row['gender']; ?></td>
-                    </tr>
+                </div>
 
-                    <tr>
-                        <th>Department</th>
-                        <td><?php echo $row['department']; ?></td>
-                    </tr>
+                <div class="profile-item">
 
-                    <tr>
-                        <th>Level</th>
-                        <td><?php echo $row['level']; ?></td>
-                    </tr>
+                    <div class="profile-label">
+                        Full Name
+                    </div>
 
-                    <tr>
-                        <th>Phone</th>
-                        <td><?php echo $row['phone']; ?></td>
-                    </tr>
+                    <div class="profile-value">
+                        <?php
+                        echo htmlspecialchars(
+                            $student['firstname'] . " " . $student['lastname']
+                        );
+                        ?>
+                    </div>
 
-                    <tr>
-                        <th>Email</th>
-                        <td><?php echo $row['email']; ?></td>
-                    </tr>
+                </div>
 
-                </table>
+                <div class="profile-item">
 
-                <br>
+                    <div class="profile-label">
+                        Gender
+                    </div>
 
-                <a href="edit_student.php?id=<?php echo $row['id']; ?>" class="create-btn">
+                    <div class="profile-value">
+                        <?php echo htmlspecialchars($student['gender']); ?>
+                    </div>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Department
+                    </div>
+
+                    <div class="profile-value">
+                        <?php echo htmlspecialchars($student['department']); ?>
+                    </div>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Level
+                    </div>
+
+                    <div class="profile-value">
+                        <?php echo htmlspecialchars($student['level']); ?>
+                    </div>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Phone
+                    </div>
+
+                    <div class="profile-value">
+                        <?php echo htmlspecialchars($student['phone']); ?>
+                    </div>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Email
+                    </div>
+
+                    <div class="profile-value">
+                        <?php echo htmlspecialchars($student['email']); ?>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="profile-actions">
+
+                <a
+                    href="view_students.php"
+                    class="profile-btn back-btn"
+                >
+                    Back to Students
+                </a>
+
+                <a
+                    href="edit_student.php?id=<?php echo $student['id']; ?>"
+                    class="profile-btn edit-profile-btn"
+                >
                     Edit Student
                 </a>
 
-                <a href="#" onclick="window.print()" class="create-btn">
+                <button
+                    type="button"
+                    class="profile-btn print-btn"
+                    onclick="window.print()"
+                >
                     Print Profile
-                </a>
+                </button>
 
             </div>
 

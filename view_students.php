@@ -108,8 +108,10 @@ $total_pages = ceil($total_records / $limit);
                 <td><?php echo $row['matric_no']; ?></td>
 
                 <td>
-                    <?php echo $row['firstname'] . " " . $row['lastname']; ?>
-                </td>
+                    <a href="student_profile.php?id=<?php echo $row['id']; ?>">
+                        <?php echo htmlspecialchars($row['firstname'] . " " . $row['lastname']); ?>
+                    </a>
+                </td>>
 
                 <td><?php echo $row['gender']; ?></td>
 
