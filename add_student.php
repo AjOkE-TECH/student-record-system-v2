@@ -18,11 +18,25 @@ if(isset($_POST['add_student'])){
     $level = $_POST['level'];
     $phone = $_POST['phone'];
     $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $passport = "";
+
+if(isset($_FILES['passport']) && $_FILES['passport']['error'] == 0){
+
+    $folder = "assets/upload/students/";
+
+    $fileName = time() . "_" . basename($_FILES['passport']['name']);
+
+    $target = $folder . $fileName;
+    
+    move_uploaded_file($_FILES['passport']['tmp_name'], $target);
+
+    $passport = $fileName;
+}
 
     $sql = "INSERT INTO students
-            (matric_no, firstname, lastname, gender, department, level, phone, email)
+            (matric_no, firstname, lastname, gender, department, level, phone, email, passport)
             VALUES
-            ('$matric_no','$firstname','$lastname','$gender','$department','$level','$phone','$email')";
+            ('$matric_no','$firstname','$lastname','$gender','$department','$level','$phone','$email','$passport')";
 
   if(mysqli_query($conn, $sql)){
 
@@ -74,28 +88,24 @@ if(isset($_POST['add_student'])){
             <div class="error"><?php echo $error; ?></div>
         <?php } ?>
 
-        <form method="POST" class="student-form">
+        <form class="student-form" method="POST" enctype="multipart/form-data">
 
             <input type="text" name="matric_no" placeholder="e.g NCSF/23/0025" required>
-
             <input type="text" name="firstname" placeholder="e.g Sekinat" required>
-
             <input type="text" name="lastname" placeholder="e.g Mutolib" required>
-
             <select name="gender" required>
             <option value="">Select Gender</option>
             <option>Male</option>
             <option>Female</option>
             </select>
-
             <input type="text" name="department" placeholder="e.g Computer Science" required>
-
             <input type="text" name="level" placeholder="e.g ND II" required>
-
-            <input type="text" name="phone" placeholder="e.g 07051716653">
-
-            <input type="email" name="email" placeholder="e.g. sekinat@gmail.com" required>
-
+            <input type="text" name="phone" placeholder="e.g 091#######">
+            <input type="email" name="email" placeholder="e.g. example@gmail.com" required>
+            <div class="input-group">
+           <label>Student Passport</label>
+           <input type="file"name="passport"accept="image/*">
+    </div>
             <button type="submit" name="add_student">
                 Add Student
             </button>

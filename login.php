@@ -2,15 +2,11 @@
 
 session_start();
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 include "config/database.php";
 
-$message = "";
-$messageType = "";
+$error = "";
 
-if(isset($_POST['login'])){
+if (isset($_POST['login'])) {
 
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = $_POST['password'];
@@ -20,27 +16,27 @@ if(isset($_POST['login'])){
         "SELECT * FROM admins WHERE username='$username'"
     );
 
-    if(mysqli_num_rows($query) > 0){
+    if (mysqli_num_rows($query) > 0) {
 
         $admin = mysqli_fetch_assoc($query);
 
-        if(password_verify($password, $admin['password'])){
+        if (password_verify($password, $admin['password'])) {
 
             $_SESSION['admin'] = $admin['username'];
 
-            $message = "Login Successful!";
-            $messageType = "success";
+            header("Location: dashboard.php");
+            exit();
 
-        }else{
+        } else {
 
-            $message = "Invalid password.";
-            $messageType = "error";
+            $error = "Incorrect password!";
+
         }
 
-    }else{
+    } else {
 
-        $message = "Account not found. Please register first.";
-        $messageType = "error";
+        $error = "Account not found! Please register first.";
+
     }
 }
 
@@ -53,115 +49,281 @@ if(isset($_POST['login'])){
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Login - Student Record System</title>
+    <title>Login - Student Record Management System</title>
 
-    <link rel="stylesheet"href="assets/css/style.css">
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Login CSS -->
+    <link rel="stylesheet" href="assets/css/login.css">
 
 </head>
 
-<body class="login-page">
+<body>
 
-    <div class="login-box">
+    <!-- ================= HEADER ================= -->
+
+    <header class="login-header">
 
         <div class="login-logo">
 
-            <h1>Student Record System</h1>
+            <img
+                src="assets/image/logo.png"
+                alt="Student Record Management System Logo"
+            >
 
-            <p>
-                Login to continue managing student records.
-            </p>
+            <div class="logo-text">
 
-        </div>
+                <h2>SRMS</h2>
 
-        <?php if($message != "" && $messageType == "error"){ ?>
+                <span>Student Record Management System</span>
 
-            <div class="alert">
-                <?php echo htmlspecialchars($message); ?>
             </div>
 
-        <?php } ?>
+        </div>
 
-        <form method="POST">
 
-            <label for="username">
-                Username
-            </label>
+        <nav class="login-nav">
 
-            <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Enter username"
-                required
+            <a href="index.php">Home</a>
+
+            <a href="index.php#about">About</a>
+
+            <a href="index.php#features">Features</a>
+
+            <a href="index.php#contact">Contact</a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================= LOGIN SECTION ================= -->
+
+    <section class="login-section">
+
+
+        <!-- LEFT IMAGE -->
+
+        <div class="login-image">
+
+            <img
+                src="assets/image/image.jpg"
+                alt="Student"
             >
-
-            <label for="password">
-                Password
-            </label>
-
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Enter password"
-                required
-            >
-
-            <button type="submit" name="login">
-                Login
-            </button>
-
-        </form>
-
-        <div class="login-register">
-
-            Don't have an account?
-
-            <a href="register.php">
-                Create Account
-            </a>
 
         </div>
 
-    </div>
+
+        <!-- RIGHT LOGIN FORM -->
+
+        <div class="login-form-area">
+
+            <div class="login-content">
 
 
-<?php if($message != ""){ ?>
+                <h1>Welcome Back</h1>
 
-<script>
+                <p>
+                    Login to continue managing student records.
+                </p>
 
-Swal.fire({
 
-    icon: "<?php echo $messageType; ?>",
+                <!-- ERROR MESSAGE -->
 
-    title:
-        "<?php echo $messageType == 'success'
-        ? 'Success'
-        : 'Login Failed'; ?>",
+                <?php if ($error != "") { ?>
 
-    text:
-        "<?php echo htmlspecialchars($message); ?>",
+                    <div class="error-box">
 
-    confirmButtonColor: "#006400"
+                        <i class="fa-solid fa-circle-exclamation"></i>
 
-}).then(function(){
+                        <span>
+                            <?php echo htmlspecialchars($error); ?>
+                        </span>
 
-<?php if($messageType == "success"){ ?>
+                    </div>
 
-    window.location.href = "dashboard.php";
+                <?php } ?>
 
-<?php } ?>
 
-});
+                <!-- LOGIN FORM -->
 
-</script>
+                <form method="POST" action="">
 
-<?php } ?>
+
+                    <!-- USERNAME -->
+
+                    <div class="input-group">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-user"></i>
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Enter your username"
+                                required
+                                autocomplete="username"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="input-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                required
+                                autocomplete="current-password"
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword()"
+                                aria-label="Show password"
+                            >
+
+                                <i
+                                    class="fa-solid fa-eye"
+                                    id="eyeIcon"
+                                ></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- REMEMBER / FORGOT -->
+
+                    <div class="login-options">
+
+                        <label class="remember-me">
+
+                            <input
+                                type="checkbox"
+                                name="remember"
+                            >
+
+                            <span>Remember me</span>
+
+                        </label>
+
+
+                        <a href="#" class="forgot-password">
+                            Forgot Password?
+                        </a>
+
+                    </div>
+
+
+                    <!-- LOGIN BUTTON -->
+
+                    <button
+                        type="submit"
+                        name="login"
+                        class="login-btn"
+                    >
+
+                        <i class="fa-solid fa-right-to-bracket"></i>
+
+                        Login
+
+                    </button>
+
+                </form>
+
+
+                <!-- REGISTER -->
+
+                <div class="register-text">
+
+                    Don't have an account?
+
+                    <a href="register.php">
+                        Create Account
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="login-footer">
+
+        2026 Student Record Management System
+        <span>|</span>
+        Designed by Sekinat Mutolib
+
+    </footer>
+
+
+    <!-- ================= PASSWORD SCRIPT ================= -->
+
+    <script>
+
+        function togglePassword() {
+
+            const password = document.getElementById("password");
+            const eyeIcon = document.getElementById("eyeIcon");
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                eyeIcon.classList.remove("fa-eye");
+
+                eyeIcon.classList.add("fa-eye-slash");
+
+            } else {
+
+                password.type = "password";
+
+                eyeIcon.classList.remove("fa-eye-slash");
+
+                eyeIcon.classList.add("fa-eye");
+
+            }
+
+        }
+
+    </script>
 
 </body>
+
 </html>
