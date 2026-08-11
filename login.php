@@ -1,5 +1,7 @@
 <?php
+
 session_start();
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -13,8 +15,10 @@ if(isset($_POST['login'])){
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = $_POST['password'];
 
-    $query = mysqli_query($conn,
-        "SELECT * FROM admins WHERE username='$username'");
+    $query = mysqli_query(
+        $conn,
+        "SELECT * FROM admins WHERE username='$username'"
+    );
 
     if(mysqli_num_rows($query) > 0){
 
@@ -31,66 +35,101 @@ if(isset($_POST['login'])){
 
             $message = "Invalid password.";
             $messageType = "error";
-
         }
 
     }else{
 
         $message = "Account not found. Please register first.";
         $messageType = "error";
-
     }
-
 }
+
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Login - Student Record System</title>
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet"href="assets/css/style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
-<body>
+<body class="login-page">
 
-<div class="login-container">
+    <div class="login-box">
 
-    <h2>Student Record System</h2>
+        <div class="login-logo">
 
-    <form method="POST">
+            <h1>Student Record System</h1>
 
-        <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            required
-        >
+            <p>
+                Login to continue managing student records.
+            </p>
 
-        <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-        >
+        </div>
 
-        <button type="submit" name="login">
-            Login
-        </button>
+        <?php if($message != "" && $messageType == "error"){ ?>
 
-    </form>
+            <div class="alert">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
 
-    <p style="text-align:center;margin-top:15px;">
-        <a href="register.php">
-            Don't have an account? Register
-        </a>
-    </p>
+        <?php } ?>
 
-</div>
+        <form method="POST">
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter username"
+                required
+            >
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter password"
+                required
+            >
+
+            <button type="submit" name="login">
+                Login
+            </button>
+
+        </form>
+
+        <div class="login-register">
+
+            Don't have an account?
+
+            <a href="register.php">
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
+
 
 <?php if($message != ""){ ?>
 
@@ -101,13 +140,14 @@ Swal.fire({
     icon: "<?php echo $messageType; ?>",
 
     title:
-        "<?php echo $messageType == 'success' ? 'Success' : 'Login Failed'; ?>",
+        "<?php echo $messageType == 'success'
+        ? 'Success'
+        : 'Login Failed'; ?>",
 
-    text: 
-       "<?php echo $message; ?>",
+    text:
+        "<?php echo htmlspecialchars($message); ?>",
 
-    confirmButtonColor: 
-         "#006400"
+    confirmButtonColor: "#006400"
 
 }).then(function(){
 

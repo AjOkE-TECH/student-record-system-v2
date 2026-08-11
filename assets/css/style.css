@@ -9,13 +9,16 @@ body{
     background:#F5F7FA;
     color:#333;
 }
-/*LAYOUT*/
+
+/*General Layout*/
+
 .container{
     display:flex;
     min-height:100vh;
 }
 
-/*SIDEBAR*/
+/*Sidebar*/
+
 .sidebar{
     width:240px;
     background:#ffffff;
@@ -59,13 +62,15 @@ body{
     background:#006400;
     color:white;
 }
-/*MAIN CONTENT*/
+
+/*Main Content */
+
 .main-content{
     flex:1;
     padding:20px;
     background:#F5F7FA;
 }
-/* HEADER */
+
 .header{
     display:flex;
     justify-content:space-between;
@@ -76,13 +81,19 @@ body{
     margin-bottom:25px;
 }
 
-/*DASHBOARD CARDS*/
+.header h1{
+    color:#006400;
+}
+
+/* Dashboard Cards*/
+
 .cards{
     display:grid;
     grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
     gap:25px;
     margin-top:20px;
 }
+
 .card{
     background:#fff;
     border-radius:15px;
@@ -94,6 +105,7 @@ body{
     flex-direction:column;
     justify-content:flex-start;
 }
+
 .card h3{
     color:#006400;
     font-size:18px;
@@ -106,24 +118,18 @@ body{
     color:#333;
     margin:0;
 }
-/*LOGIN PAGE*/
-.login-container{
-    width:380px;
-    margin:90px auto;
-    padding:30px;
-    background:#fff;
-    border-top:5px solid #006400;
-    border-radius:8px;
-    box-shadow:0 3px 10px rgba(0,0,0,.1);
+
+.card-link{
+    text-decoration:none;
+    color:inherit;
 }
 
-.login-container h2{
-    color:#006400;
-    text-align:center;
-    margin-bottom:20px;
+.card-link:hover .card{
+    transform:translateY(-5px);
 }
 
-/*INPUTS*/
+/*Inputs*/
+
 input,
 select{
     width:100%;
@@ -140,7 +146,8 @@ select:focus{
     border-color:#006400;
 }
 
-/*BUTTONS*/
+/*Buttons*/
+
 button{
     width:100%;
     padding:12px;
@@ -157,7 +164,8 @@ button:hover{
     background:#008000;
 }
 
-/*STUDENT FORM*/
+/*Students Form */
+
 .student-form{
     background:white;
     padding:30px;
@@ -165,7 +173,8 @@ button:hover{
     box-shadow:0 2px 8px rgba(0,0,0,.1);
 }
 
-/*ALERTS*/
+/*Alerts */
+
 .success{
     background:#d4edda;
     color:#155724;
@@ -182,7 +191,8 @@ button:hover{
     border-radius:5px;
 }
 
-/*SEARCH + CREATE BUTTON*/
+/* Search and Create Button */
+
 .top-actions{
     display:flex;
     justify-content:space-between;
@@ -196,7 +206,7 @@ button:hover{
 }
 
 .search-form input{
-    height: 40px;
+    height:40px;
     width:300px;
     padding:12px 18px;
     border:1px solid #ddd;
@@ -211,11 +221,13 @@ button:hover{
 .search-form button{
     width:70px;
     border-radius:30px;
-    height: 40px;
+    height:40px;
 }
+
 .search-form button:hover{
-    background: #008000;
+    background:#008000;
 }
+
 .create-btn{
     background:#006400;
     color:white;
@@ -228,12 +240,15 @@ button:hover{
 .create-btn:hover{
     background:#008000;
 }
-/*TABLE*/
+
+/*Table*/
+
 table{
     width:100%;
     background:white;
     border-collapse:collapse;
     border-radius:15px;
+    overflow:hidden;
 }
 
 table th{
@@ -251,7 +266,8 @@ table tr:hover{
     background:#f8fff8;
 }
 
-/*ACTION BUTTONS*/
+/* Action Button */
+
 .action-buttons{
     display:flex;
     gap:8px;
@@ -278,7 +294,8 @@ table tr:hover{
     background:#dc3545;
 }
 
-/*PAGINATION*/
+/*pagination */
+
 .pagination{
     margin-top:25px;
     display:flex;
@@ -301,12 +318,171 @@ table tr:hover{
     color:white;
 }
 
-/*LINKS*/
-.card-link{
-    text-decoration:none;
-    color:inherit;
+/*Student Profile */
+
+.profile-container{
+    background:#fff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
 }
 
-.card-link:hover .card{
-    transform:translateY(-5px);
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:25px;
+    padding-bottom:25px;
+    margin-bottom:25px;
+    border-bottom:1px solid #eee;
+}
+
+.profile-photo{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid #006400;
+}
+
+.profile-header h2{
+    color:#006400;
+    font-size:30px;
+}
+
+.profile-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.profile-table th{
+    width:35%;
+    background:#006400;
+    color:#fff;
+    text-align:left;
+    padding:16px;
+}
+
+.profile-table td{
+    padding:16px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+}
+
+.profile-actions{
+    display:flex;
+    gap:15px;
+    margin-top:25px;
+}
+
+.profile-actions a{
+    text-decoration:none;
+    background:#006400;
+    color:#fff;
+    padding:13px 25px;
+    border-radius:30px;
+    font-weight:bold;
+}
+
+.profile-actions a:hover{
+    background:#008000;
+}
+
+/*Login Page*/
+
+.login-page{
+    min-height:100vh;
+    background:#F5F7FA;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+.login-box{
+    width:100%;
+    max-width:490px;
+    background:#ffffff;
+    padding:45px 50px;
+    border-radius:15px;
+    border-top:6px solid #006400;
+    box-shadow:0 8px 25px rgba(0,0,0,.10);
+}
+
+.login-logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.login-logo h1{
+    color:#006400;
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.login-logo p{
+    color:#777;
+    font-size:15px;
+}
+
+.login-box label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+    color:#333;
+}
+
+.login-box input{
+    width:100%;
+    padding:15px;
+    margin-bottom:20px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    background:#f8fbff;
+    font-size:16px;
+}
+
+.login-box input:focus{
+    outline:none;
+    border-color:#006400;
+    box-shadow:0 0 0 2px rgba(0,100,0,.08);
+}
+
+.login-box button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:8px;
+    background:#006400;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.login-box button:hover{
+    background:#008000;
+}
+
+.login-register{
+    text-align:center;
+    margin-top:20px;
+    color:#666;
+}
+
+.login-register a{
+    color:#006400;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.login-register a:hover{
+    text-decoration:underline;
+}
+
+.alert{
+    background:#ffe5e5;
+    color:#b30000;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
 }
