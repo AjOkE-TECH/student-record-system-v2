@@ -53,20 +53,18 @@ if (isset($_POST['login'])) {
 
     <title>Login - Student Record Management System</title>
 
-    <!-- Font Awesome -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-    <!-- Login CSS -->
     <link rel="stylesheet" href="assets/css/login.css">
 
 </head>
 
 <body>
 
-    <!-- ================= HEADER ================= -->
+    <!-- HEADER -->
 
     <header class="login-header">
 
@@ -87,7 +85,6 @@ if (isset($_POST['login'])) {
 
         </div>
 
-
         <nav class="login-nav">
 
             <a href="index.php">Home</a>
@@ -103,10 +100,9 @@ if (isset($_POST['login'])) {
     </header>
 
 
-    <!-- ================= LOGIN SECTION ================= -->
+    <!-- LOGIN SECTION -->
 
     <section class="login-section">
-
 
         <!-- LEFT IMAGE -->
 
@@ -125,7 +121,6 @@ if (isset($_POST['login'])) {
         <div class="login-form-area">
 
             <div class="login-content">
-
 
                 <h1>Welcome Back</h1>
 
@@ -155,7 +150,6 @@ if (isset($_POST['login'])) {
 
                 <form method="POST" action="">
 
-
                     <!-- USERNAME -->
 
                     <div class="input-group">
@@ -165,8 +159,6 @@ if (isset($_POST['login'])) {
                         </label>
 
                         <div class="input-wrapper">
-
-                            <i class="fa-solid fa-user"></i>
 
                             <input
                                 type="text"
@@ -192,8 +184,6 @@ if (isset($_POST['login'])) {
 
                         <div class="input-wrapper">
 
-                            <i class="fa-solid fa-lock"></i>
-
                             <input
                                 type="password"
                                 id="password"
@@ -203,44 +193,7 @@ if (isset($_POST['login'])) {
                                 autocomplete="current-password"
                             >
 
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                onclick="togglePassword()"
-                                aria-label="Show password"
-                            >
-
-                                <i
-                                    class="fa-solid fa-eye"
-                                    id="eyeIcon"
-                                ></i>
-
-                            </button>
-
                         </div>
-
-                    </div>
-
-
-                    <!-- REMEMBER / FORGOT -->
-
-                    <div class="login-options">
-
-                        <label class="remember-me">
-
-                            <input
-                                type="checkbox"
-                                name="remember"
-                            >
-
-                            <span>Remember me</span>
-
-                        </label>
-
-
-                        <a href="#" class="forgot-password">
-                            Forgot Password?
-                        </a>
 
                     </div>
 
@@ -252,8 +205,6 @@ if (isset($_POST['login'])) {
                         name="login"
                         class="login-btn"
                     >
-
-                        <i class="fa-solid fa-right-to-bracket"></i>
 
                         Login
 
@@ -274,7 +225,6 @@ if (isset($_POST['login'])) {
 
                 </div>
 
-
             </div>
 
         </div>
@@ -282,47 +232,17 @@ if (isset($_POST['login'])) {
     </section>
 
 
-    <!-- ================= FOOTER ================= -->
+    <!-- FOOTER -->
 
     <footer class="login-footer">
 
         2026 Student Record Management System
+
         <span>|</span>
+
         Designed by Sekinat Mutolib
 
     </footer>
-
-
-    <!-- ================= PASSWORD SCRIPT ================= -->
-
-    <script>
-
-        function togglePassword() {
-
-            const password = document.getElementById("password");
-            const eyeIcon = document.getElementById("eyeIcon");
-
-            if (password.type === "password") {
-
-                password.type = "text";
-
-                eyeIcon.classList.remove("fa-eye");
-
-                eyeIcon.classList.add("fa-eye-slash");
-
-            } else {
-
-                password.type = "password";
-
-                eyeIcon.classList.remove("fa-eye-slash");
-
-                eyeIcon.classList.add("fa-eye");
-
-            }
-
-        }
-
-    </script>
 
 </body>
 
