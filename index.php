@@ -2,10 +2,15 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Student Record Management System</title>
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/students_record_system/assets/css/style.css">
+
 </head>
 
 <body>
@@ -16,9 +21,9 @@
 
     <div class="logo-section">
 
-        <img src="assets/image/logo.png" alt="Logo">
+        <img src="assets/image/logo.png" alt="SRMS Logo">
 
-        <div>
+        <div class="logo-text">
 
             <h1>SRMS</h1>
 
@@ -44,43 +49,45 @@
 
 </header>
 
+
 <!-- ================= HERO ================= -->
 
 <section class="hero" id="home">
 
     <div class="hero-text">
 
+        <span class="welcome-text">WELCOME TO</span>
+
         <h1>
-            Welcome to the
-            <br>
             Student Record
             <br>
             Management System
         </h1>
 
         <p>
-
             A secure and efficient platform for managing student
             records, registration, academic information and
             administrative activities.
-
         </p>
 
         <a href="login.php" class="hero-btn">
-
             Get Started
-
         </a>
 
     </div>
 
+
     <div class="hero-image">
 
-        <img src="assets/image/image.jpg" alt="Students">
+        <img
+            src="assets/image/image.jpg"
+            alt="Students"
+        >
 
     </div>
 
 </section>
+
 
 <!-- ================= ABOUT ================= -->
 
@@ -89,70 +96,107 @@
     <h2>About SRMS</h2>
 
     <p>
-
         The Student Record Management System is designed to simplify
         the storage, management and retrieval of student information.
 
         It enables administrators to register students, update
         records, search information and monitor academic activities
         from one secure platform.
-
     </p>
 
 </section>
 
+
+<!-- ================= FEATURES ================= -->
+
 <section id="features" class="features">
 
-      <h2>System Features</h2>
+    <h2>System Features</h2>
 
-     <div class="feature-container">
+    <div class="feature-container">
 
         <div class="feature-box">
-          <h3>Student Registration</h3>
-             <p>
-               Register new students quickly and securely with complete personal and academic details.
-             </p>
+
+            <h3>Student Registration</h3>
+
+            <p>
+                Register new students quickly and securely with
+                complete personal and academic details.
+            </p>
+
         </div>
 
-            <div class="feature-box">
-              <h3>Record Management</h3>
-                    <p>
-                       Update, edit and manage student records whenever necessary.
-                    </p>
-            </div>
 
-               <div class="feature-box">
-                   <h3>Secure Dashboard</h3>
-                    <p>
-                      Administrators can securely manage all student information from one dashboard.
-                    </p>
-              </div>
+        <div class="feature-box">
 
-      </div>
+            <h3>Record Management</h3>
+
+            <p>
+                Update, edit and manage student records whenever
+                necessary.
+            </p>
+
+        </div>
+
+
+        <div class="feature-box">
+
+            <h3>Secure Dashboard</h3>
+
+            <p>
+                Administrators can securely manage all student
+                information from one dashboard.
+            </p>
+
+        </div>
+
+    </div>
 
 </section>
+
+
+<!-- ================= CONTACT ================= -->
 
 <section id="contact" class="contact">
 
-        <h2>Contact Us</h2>
+    <h2>Contact Us</h2>
 
-             <div class="contact-box">
+    <div class="contact-box">
 
-               <p><strong>Student Record Management System</strong></p>
+        <p>
+            <strong>Student Record Management System</strong>
+        </p>
 
-               <p>Ogun State Institute of Technology</p>
+        <p>
+            Ogun State Institute of Technology
+        </p>
 
-               <p>Igbesa, Ogun State</p>
+        <p>
+            Igbesa, Ogun State
+        </p>
 
-               <p>Email:sekinatmutolib48@gmail.com</p>
+        <p>
+            Email: sekinatmutolib48@gmail.com
+        </p>
 
-               <p>Phone: 07051716653</p>
+        <p>
+            Phone: 07051716653
+        </p>
 
-            </div>
+    </div>
 
 </section>
 
-</section>
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
-   2026 Student Record Management System.
+
+    2026 Student Record Management System.
+
 </footer>
+
+
+</body>
+
+</html>
