@@ -1,0 +1,1026 @@
+/* =========================================================
+   SRMS ADMIN PANEL
+   Shared CSS for:
+   - Dashboard
+   - Add Student
+   - View Students
+   - Search Student
+========================================================= */
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #f5f7fa;
+    color: #333333;
+
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.admin-layout {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.admin-sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 235px;
+    height: 100vh;
+
+    background: #ffffff;
+
+    border-right: 1px solid #e5e5e5;
+
+    padding: 25px 15px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    z-index: 1000;
+}
+
+
+/* =========================================================
+   SIDEBAR TITLE
+========================================================= */
+
+.admin-sidebar-title {
+    text-align: center;
+
+    margin-bottom: 35px;
+
+    padding-top: 5px;
+}
+
+.admin-sidebar-title h2 {
+    margin: 0;
+
+    color: #006400;
+
+    font-size: 24px;
+    line-height: 1.12;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+========================================================= */
+
+.admin-navigation ul {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+.admin-navigation li {
+    margin-bottom: 4px;
+}
+
+.admin-navigation a {
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+    min-height: 44px;
+
+    padding: 0 14px;
+
+    border-radius: 7px;
+
+    color: #444444;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* VERY LIGHT GREEN HOVER */
+
+.admin-navigation a:hover {
+    background: #f4f9f4;
+
+    color: #006400;
+}
+
+
+/* ACTIVE PAGE */
+
+.admin-navigation a.active {
+    background: #edf7ed;
+
+    color: #006400;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.admin-main {
+    width: calc(100% - 235px);
+
+    margin-left: 235px;
+
+    min-height: 100vh;
+
+    padding: 28px 32px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.admin-page-header {
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 12px;
+
+    padding: 23px 27px;
+
+    margin-bottom: 24px;
+}
+
+.admin-page-header h1 {
+    margin: 0 0 5px;
+
+    color: #006400;
+
+    font-size: 29px;
+
+    font-weight: 600;
+}
+
+.admin-page-header p {
+    margin: 0;
+
+    color: #777777;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   GENERAL CARD
+========================================================= */
+
+.admin-card {
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 12px;
+
+    padding: 25px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.student-form {
+    width: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 12px;
+
+    padding: 27px;
+}
+
+.student-form .form-row {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.student-form .form-group {
+    margin-bottom: 18px;
+}
+
+.student-form label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #444444;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.student-form input,
+.student-form select {
+    width: 100%;
+
+    height: 44px;
+
+    padding: 0 13px;
+
+    background: #ffffff;
+
+    border: 1px solid #d8dde2;
+
+    border-radius: 7px;
+
+    color: #333333;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.student-form input::placeholder {
+    color: #999999;
+}
+
+.student-form input:focus,
+.student-form select:focus {
+    border-color: #9bbb9b;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 100, 0, 0.05);
+}
+
+
+/* FILE INPUT */
+
+.student-form input[type="file"] {
+    padding: 9px 12px;
+}
+
+
+/* =========================================================
+   FORM BUTTON
+========================================================= */
+
+.student-form button {
+    width: 175px;
+
+    height: 44px;
+
+    margin-top: 5px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #006400;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.student-form button:hover {
+    background: #005800;
+}
+
+
+/* =========================================================
+   SUCCESS / ERROR
+========================================================= */
+
+.success {
+    background: #eef8ee;
+
+    color: #287228;
+
+    border: 1px solid #cfe6cf;
+
+    border-radius: 7px;
+
+    padding: 11px 14px;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+}
+
+.error {
+    background: #fff0f0;
+
+    color: #c62828;
+
+    border: 1px solid #efcccc;
+
+    border-radius: 7px;
+
+    padding: 11px 14px;
+
+    margin-bottom: 18px;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   SEARCH + CREATE
+========================================================= */
+
+.top-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex: 1;
+
+    max-width: 540px;
+}
+
+.search-form input {
+    width: 100%;
+
+    height: 42px;
+
+    padding: 0 14px;
+
+    border: 1px solid #d8dde2;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #333333;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.search-form input:focus {
+    border-color: #9bbb9b;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 100, 0, 0.05);
+}
+
+.search-form button {
+    height: 42px;
+
+    padding: 0 20px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #006400;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background: #005800;
+}
+
+
+/* CREATE STUDENT BUTTON */
+
+.create-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 42px;
+
+    padding: 0 18px;
+
+    border-radius: 7px;
+
+    background: #006400;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.create-btn:hover {
+    background: #005800;
+}
+
+
+/* =========================================================
+   STUDENT TABLE
+========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 12px;
+}
+
+.students-table {
+    width: 100%;
+
+    min-width: 1050px;
+
+    border-collapse: collapse;
+}
+
+.students-table thead th {
+    background: #006400;
+
+    color: #ffffff;
+
+    padding: 13px 14px;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.students-table tbody td {
+    padding: 13px 14px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    color: #444444;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+
+    vertical-align: middle;
+}
+
+.students-table tbody tr:hover {
+    background: #fafdf9;
+}
+
+.students-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   STUDENT NAME
+========================================================= */
+
+.student-name-link {
+    color: #333333;
+
+    font-weight: 600;
+}
+
+.student-name-link:hover {
+    color: #006400;
+}
+
+
+/* =========================================================
+   PASSPORT
+========================================================= */
+
+.passport-image {
+    width: 44px;
+
+    height: 52px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 2px solid #e2eee2;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.action-buttons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.action-btn {
+    width: 34px;
+
+    height: 34px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 14px;
+
+    transition:
+        opacity 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.action-btn:hover {
+    opacity: 0.8;
+}
+
+.view-btn {
+    background: #f0f2f4;
+
+    color: #006400;
+}
+
+.edit-btn {
+    background: #e8f7ed;
+
+    color: #159447;
+}
+
+.delete-btn {
+    background: #fde8e8;
+
+    color: #dc3545;
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.pagination {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    margin-top: 20px;
+
+    margin-bottom: 20px;
+}
+
+.pagination a {
+    min-width: 34px;
+
+    height: 34px;
+
+    padding: 0 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid #d7e5d7;
+
+    border-radius: 6px;
+
+    color: #006400;
+
+    font-size: 13px;
+}
+
+.pagination a:hover {
+    background: #f4f9f4;
+}
+
+.pagination a.active {
+    background: #006400;
+
+    border-color: #006400;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   NO STUDENTS
+========================================================= */
+
+.no-students {
+    text-align: center;
+
+    padding: 35px !important;
+
+    color: #888888 !important;
+
+    font-size: 14px !important;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.dashboard-header {
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 12px;
+
+    padding: 24px 27px;
+
+    margin-bottom: 25px;
+}
+
+.dashboard-header h1 {
+    margin: 0 0 5px;
+
+    color: #006400;
+
+    font-size: 30px;
+
+    font-weight: 600;
+}
+
+.dashboard-header p {
+    margin: 0;
+
+    color: #777777;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.statistics-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 12px;
+
+    padding: 23px 18px;
+
+    text-align: center;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 16px rgba(0, 0, 0, 0.04);
+}
+
+.stat-card h3 {
+    margin: 0 0 12px;
+
+    color: #555555;
+
+    font-size: 15px;
+
+    font-weight: 600;
+}
+
+.stat-number {
+    margin: 0;
+
+    color: #006400;
+
+    font-size: 34px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ANALYTICS
+========================================================= */
+
+.analytics-title {
+    margin: 0 0 18px;
+
+    color: #006400;
+
+    font-size: 26px;
+
+    font-weight: 600;
+}
+
+.analytics-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+.analytics-card {
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 12px;
+
+    padding: 24px;
+}
+
+.analytics-card h3 {
+    margin: 0 0 21px;
+
+    color: #444444;
+
+    font-size: 17px;
+
+    font-weight: 600;
+}
+
+.analytics-row {
+    margin-bottom: 18px;
+}
+
+.analytics-row:last-child {
+    margin-bottom: 0;
+}
+
+.analytics-info {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 7px;
+
+    font-size: 13px;
+}
+
+.analytics-info strong {
+    color: #444444;
+
+    font-weight: 600;
+}
+
+.analytics-info span {
+    color: #006400;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ANALYTICS PROGRESS
+========================================================= */
+
+.analytics-progress {
+    width: 100%;
+
+    height: 9px;
+
+    display: block;
+
+    appearance: none;
+
+    border: none;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.analytics-progress::-webkit-progress-bar {
+    background: #edf1ed;
+
+    border-radius: 20px;
+}
+
+.analytics-progress::-webkit-progress-value {
+    background: #006400;
+
+    border-radius: 20px;
+}
+
+.analytics-progress::-moz-progress-bar {
+    background: #006400;
+
+    border-radius: 20px;
+}
+
+
+/* =========================================================
+   RECENT STUDENTS
+========================================================= */
+
+.recent-card {
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 12px;
+
+    padding: 24px;
+
+    margin-bottom: 25px;
+}
+
+.recent-card h3 {
+    margin: 0 0 18px;
+
+    color: #444444;
+
+    font-size: 17px;
+
+    font-weight: 600;
+}
+
+.recent-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.recent-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.recent-table th {
+    background: #006400;
+
+    color: #ffffff;
+
+    padding: 12px 13px;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.recent-table td {
+    padding: 12px 13px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    color: #444444;
+
+    font-size: 13px;
+}
+
+.recent-table tbody tr:hover {
+    background: #fafdf9;
+}
+
+
+/* =========================================================
+   VIEW ALL BUTTON
+========================================================= */
+
+.view-all-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: 18px;
+
+    padding: 10px 18px;
+
+    border-radius: 7px;
+
+    background: #006400;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.view-all-btn:hover {
+    background: #005800;
+}
