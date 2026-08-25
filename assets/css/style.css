@@ -902,3 +902,1771 @@ body > footer {
 
     font-size: 14px;
 }
+
+/* =========================================================
+   VIEW STUDENTS PAGE
+========================================================= */
+
+.students-page {
+    padding: 30px;
+}
+
+.students-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.students-header h1 {
+    margin: 0;
+    color: #17351f;
+    font-size: 28px;
+}
+
+.students-header p {
+    margin-top: 5px;
+    color: #718078;
+    font-size: 14px;
+}
+
+
+/* SEARCH + ADD BUTTON AREA */
+
+.students-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.students-search {
+    position: relative;
+    width: 350px;
+}
+
+.students-search input {
+    width: 100%;
+    height: 45px;
+    padding: 0 15px 0 42px;
+
+    border: 1px solid #dce3de;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    font-size: 14px;
+    outline: none;
+}
+
+.students-search input:focus {
+    border-color: #006400;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 100, 0, 0.08);
+}
+
+.students-search::before {
+    content: "⌕";
+
+    position: absolute;
+    left: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #718078;
+    font-size: 20px;
+}
+
+
+/* ADD STUDENT BUTTON */
+
+.add-student-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 45px;
+    padding: 0 20px;
+
+    background: #006400;
+    color: #ffffff;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.add-student-btn:hover {
+    background: #007a00;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   STUDENTS TABLE CARD
+========================================================= */
+
+.students-table-card {
+    background: #ffffff;
+
+    border: 1px solid #e6ebe7;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.04);
+}
+
+
+/* TABLE */
+
+.students-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.students-table thead {
+    background: #f5f8f6;
+}
+
+.students-table th {
+    padding: 15px 18px;
+
+    text-align: left;
+
+    color: #637068;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+    font-weight: 700;
+
+    border-bottom: 1px solid #e5ebe7;
+}
+
+.students-table td {
+    padding: 15px 18px;
+
+    color: #344239;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid #edf0ee;
+
+    vertical-align: middle;
+}
+
+.students-table tbody tr {
+    transition: 0.15s ease;
+}
+
+.students-table tbody tr:hover {
+    background: #f8fbf9;
+}
+
+.students-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* STUDENT NAME */
+
+.student-name {
+    font-weight: 600;
+    color: #1f3025;
+}
+
+.student-matric {
+    color: #718078;
+    font-size: 13px;
+}
+
+
+/* PASSPORT */
+
+.student-passport {
+    width: 42px;
+    height: 48px;
+
+    object-fit: cover;
+
+    border-radius: 7px;
+
+    border: 1px solid #dce3de;
+
+    background: #f4f6f5;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.student-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background: #e8f6ec;
+
+    color: #18753b;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.student-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.student-action {
+    width: 34px;
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    transition: 0.2s ease;
+}
+
+
+/* VIEW */
+
+.student-view {
+    background: #eef6f0;
+    color: #006400;
+}
+
+.student-view:hover {
+    background: #006400;
+    color: #ffffff;
+}
+
+
+/* EDIT */
+
+.student-edit {
+    background: #f1f4f2;
+    color: #47554c;
+}
+
+.student-edit:hover {
+    background: #47554c;
+    color: #ffffff;
+}
+
+
+/* DELETE */
+
+.student-delete {
+    background: #fff1f1;
+    color: #c0392b;
+}
+
+.student-delete:hover {
+    background: #c0392b;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.students-pagination {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 20px;
+
+    border-top: 1px solid #edf0ee;
+}
+
+.students-pagination a,
+.students-pagination span {
+    min-width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.students-pagination a {
+    background: #f3f6f4;
+    color: #47554c;
+}
+
+.students-pagination a:hover {
+    background: #006400;
+    color: #ffffff;
+}
+
+.students-pagination .active {
+    background: #006400;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   SEARCH STUDENT PAGE
+========================================================= */
+
+.search-student-page {
+    padding: 30px;
+}
+
+.search-student-header {
+    margin-bottom: 25px;
+}
+
+.search-student-header h1 {
+    margin: 0;
+
+    color: #17351f;
+
+    font-size: 28px;
+}
+
+.search-student-header p {
+    margin-top: 6px;
+
+    color: #718078;
+
+    font-size: 14px;
+}
+
+
+/* SEARCH BOX */
+
+.search-student-box {
+    background: #ffffff;
+
+    border: 1px solid #e5ebe7;
+
+    border-radius: 15px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.04);
+
+    margin-bottom: 25px;
+}
+
+.search-student-form {
+    display: flex;
+
+    gap: 12px;
+}
+
+.search-student-form input {
+    flex: 1;
+
+    height: 46px;
+
+    padding: 0 16px;
+
+    border: 1px solid #dce3de;
+
+    border-radius: 9px;
+
+    background: #f8faf9;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.search-student-form input:focus {
+    background: #ffffff;
+
+    border-color: #006400;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 100, 0, 0.08);
+}
+
+.search-student-form button {
+    height: 46px;
+
+    padding: 0 25px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #006400;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.search-student-form button:hover {
+    background: #007a00;
+}
+
+
+/* =========================================================
+   SEARCH RESULT
+========================================================= */
+
+.search-results-card {
+    background: #ffffff;
+
+    border: 1px solid #e5ebe7;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.04);
+}
+
+.search-result {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 20px;
+
+    border-bottom: 1px solid #edf0ee;
+
+    transition: 0.2s ease;
+}
+
+.search-result:last-child {
+    border-bottom: none;
+}
+
+.search-result:hover {
+    background: #f8fbf9;
+}
+
+
+/* SEARCH RESULT IMAGE */
+
+.search-result-image {
+    width: 55px;
+    height: 65px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    border: 1px solid #dce3de;
+}
+
+
+/* SEARCH RESULT INFORMATION */
+
+.search-result-info {
+    flex: 1;
+}
+
+.search-result-info h3 {
+    margin: 0 0 5px;
+
+    color: #1f3025;
+
+    font-size: 16px;
+}
+
+.search-result-info p {
+    margin: 3px 0;
+
+    color: #718078;
+
+    font-size: 13px;
+}
+
+
+/* SEARCH RESULT BUTTON */
+
+.search-result-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    height: 38px;
+
+    padding: 0 16px;
+
+    border-radius: 8px;
+
+    background: #eef6f0;
+
+    color: #006400;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.search-result-btn:hover {
+    background: #006400;
+
+    color: #ffffff;
+}
+
+
+/* NO RESULT */
+
+.no-results {
+    text-align: center;
+
+    padding: 50px 20px;
+
+    color: #718078;
+
+    font-size: 14px;
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+    .sidebar,
+    .header,
+    .students-toolbar,
+    .students-pagination,
+    .student-actions {
+        display: none !important;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    .students-table-card,
+    .search-results-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
+
+/* =========================================================
+   STUDENT PROFILE PAGE
+========================================================= */
+
+.student-profile-card {
+    width: 100%;
+    max-width: 1180px;
+    margin: 25px auto 40px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   PROFILE HEADER
+========================================================= */
+
+.student-profile-header {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 30px;
+
+    min-height: 250px;
+
+    padding: 40px 45px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #006400 0%,
+            #007a00 55%,
+            #008f11 100%
+        );
+
+    color: #ffffff;
+}
+
+
+/* subtle decorative background */
+
+.student-profile-header::after {
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    right: -90px;
+    top: -120px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.07);
+
+    pointer-events: none;
+}
+
+
+.student-profile-header::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: 130px;
+    bottom: -110px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   STUDENT PASSPORT
+========================================================= */
+
+.student-profile-image {
+    position: relative;
+    z-index: 2;
+
+    width: 145px;
+    height: 145px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 6px solid #ffffff;
+
+    background: #f3f4f6;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.20);
+}
+
+
+/* =========================================================
+   STUDENT NAME
+========================================================= */
+
+.student-profile-name {
+    position: relative;
+    z-index: 2;
+}
+
+
+.student-profile-name h2 {
+    margin: 0 0 10px;
+
+    color: #ffffff;
+
+    font-size: 34px;
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+}
+
+
+.student-profile-name p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.88);
+
+    font-size: 16px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.admin-page-header {
+    margin-bottom: 5px;
+}
+
+
+.admin-page-header h1 {
+    color: #1f2937;
+
+    font-size: 30px;
+
+    font-weight: 800;
+
+    margin-bottom: 6px;
+}
+
+
+.admin-page-header p {
+    color: #6b7280;
+
+    font-size: 15px;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   STUDENT DETAILS
+========================================================= */
+
+.student-details-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
+    padding: 30px 35px;
+}
+
+
+/* =========================================================
+   DETAIL CARD
+========================================================= */
+
+.student-detail-item {
+    position: relative;
+
+    min-height: 105px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.04);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.student-detail-item:hover {
+    transform: translateY(-2px);
+
+    border-color: #cfd8d1;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.07);
+}
+
+
+/* =========================================================
+   DETAIL LABEL
+========================================================= */
+
+.student-detail-label {
+    display: flex;
+
+    align-items: center;
+
+    min-height: 45px;
+
+    padding: 0 18px;
+
+    background: #006400;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   DETAIL VALUE
+========================================================= */
+
+.student-detail-value {
+    display: flex;
+
+    align-items: center;
+
+    min-height: 60px;
+
+    padding: 14px 18px;
+
+    color: #374151;
+
+    background: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+    line-height: 1.4;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.student-profile-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    padding: 22px 35px;
+
+    background: #f8faf9;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   GENERAL PROFILE BUTTON
+========================================================= */
+
+.student-profile-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding: 0 20px;
+
+    border-radius: 8px;
+
+    border: 1px solid transparent;
+
+    text-decoration: none;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.student-profile-btn:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-profile-btn {
+    background: #ffffff;
+
+    color: #4b5563;
+
+    border-color: #d1d5db;
+}
+
+
+.back-profile-btn:hover {
+    background: #f3f4f6;
+
+    color: #1f2937;
+
+    border-color: #9ca3af;
+}
+
+
+/* =========================================================
+   EDIT BUTTON
+========================================================= */
+
+.edit-profile-btn {
+    background: #006400;
+
+    color: #ffffff;
+
+    border-color: #006400;
+
+    box-shadow:
+        0 4px 10px rgba(0, 100, 0, 0.15);
+}
+
+
+.edit-profile-btn:hover {
+    background: #005500;
+
+    border-color: #005500;
+
+    box-shadow:
+        0 6px 15px rgba(0, 100, 0, 0.20);
+}
+
+
+/* =========================================================
+   PRINT BUTTON
+========================================================= */
+
+.print-profile-btn {
+    background: #1f2937;
+
+    color: #ffffff;
+
+    border-color: #1f2937;
+}
+
+
+.print-profile-btn:hover {
+    background: #111827;
+
+    border-color: #111827;
+}
+/* =========================================================
+   PRINT PROFILE
+========================================================= */
+
+@media print {
+
+    body {
+        background: #ffffff;
+    }
+
+
+    .admin-sidebar,
+    .admin-topbar,
+    .admin-page-header,
+    .student-profile-actions {
+        display: none !important;
+    }
+
+
+    .admin-layout {
+        display: block;
+    }
+
+
+    .admin-main {
+        width: 100% !important;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+    }
+
+
+    .student-profile-card {
+        max-width: none;
+
+        margin: 0;
+
+        border: 1px solid #cccccc;
+
+        box-shadow: none;
+    }
+
+
+    .student-profile-header {
+        background: #006400 !important;
+
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+
+    .student-detail-label {
+        background: #006400 !important;
+
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+
+    .student-detail-item {
+        break-inside: avoid;
+
+        box-shadow: none;
+    }
+
+}
+
+/* =========================================================
+   RESULTS PAGE
+========================================================= */
+
+.results-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+
+    margin-bottom: 25px;
+    padding: 28px 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+
+.results-page-header > div:first-child span,
+.student-results-header span,
+.result-form-header span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #008f11;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.results-page-header h2,
+.student-results-header h2,
+.result-form-header h2 {
+    margin: 0;
+
+    color: #1f2937;
+
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.results-page-header p,
+.student-results-header p,
+.result-form-header p {
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+.results-total {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 120px;
+
+    padding: 15px 20px;
+
+    background: #f0fdf4;
+
+    border: 1px solid #bbf7d0;
+
+    border-radius: 12px;
+}
+
+.results-total strong {
+    color: #006400;
+
+    font-size: 26px;
+    line-height: 1;
+}
+
+.results-total span {
+    margin-top: 5px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RESULTS TABLE
+========================================================= */
+
+.results-table-card {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+
+.results-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.results-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 1050px;
+}
+
+.results-table thead {
+    background: #006400;
+}
+
+.results-table th {
+    padding: 15px 16px;
+
+    color: #ffffff;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+
+    white-space: nowrap;
+}
+
+.results-table td {
+    padding: 16px;
+
+    border-bottom: 1px solid #eef0f2;
+
+    color: #4b5563;
+
+    font-size: 14px;
+
+    vertical-align: middle;
+}
+
+.results-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.results-table tbody tr:hover {
+    background: #f8faf9;
+}
+
+.results-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.result-student-name {
+    color: #1f2937;
+}
+
+.result-matric {
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+.results-table td small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.score-value {
+    color: #1f2937;
+
+    font-size: 16px;
+}
+
+.result-view-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 13px;
+
+    background: #f0fdf4;
+
+    color: #006400;
+
+    border: 1px solid #bbf7d0;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.result-view-btn:hover {
+    background: #dcfce7;
+}
+
+.results-empty {
+    padding: 60px 20px !important;
+
+    text-align: center;
+
+    color: #9ca3af !important;
+}
+
+
+/* =========================================================
+   GRADE BADGES
+========================================================= */
+
+.grade-badge,
+.student-grade {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 34px;
+    height: 32px;
+
+    padding: 0 9px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.grade-a {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.grade-b {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.grade-c {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.grade-d {
+    background: #ffedd5;
+    color: #c2410c;
+}
+
+.grade-e {
+    background: #f3f4f6;
+    color: #4b5563;
+}
+
+.grade-f {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+
+/* =========================================================
+   ADD RESULT FORM
+========================================================= */
+
+.result-form-page {
+    max-width: 900px;
+
+    margin: 25px auto 40px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.result-form-header {
+    margin-bottom: 25px;
+}
+
+.result-student-summary {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 16px 18px;
+
+    margin-bottom: 25px;
+
+    background: #f8faf9;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+}
+
+.result-student-avatar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #006400;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.result-student-summary strong {
+    display: block;
+
+    color: #1f2937;
+
+    font-size: 16px;
+}
+
+.result-student-summary span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+.result-error {
+    margin-bottom: 20px;
+
+    padding: 13px 15px;
+
+    background: #fef2f2;
+
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.result-form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.result-form-group {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.result-form-group label {
+    margin-bottom: 8px;
+
+    color: #374151;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.result-form-group input,
+.result-form-group select {
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 0 13px;
+
+    background: #ffffff;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    color: #1f2937;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    box-sizing: border-box;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.result-form-group input:focus,
+.result-form-group select:focus {
+    border-color: #008f11;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 143, 17, 0.10);
+}
+
+.result-form-group small {
+    margin-top: 6px;
+
+    color: #9ca3af;
+
+    font-size: 12px;
+}
+
+.result-grade-info {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    background: #f8faf9;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 9px;
+}
+
+.result-grade-info strong {
+    margin-right: 8px;
+
+    color: #374151;
+
+    font-size: 13px;
+}
+
+.result-grade-info span {
+    padding: 6px 9px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 6px;
+
+    color: #4b5563;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.result-form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   PROFILE RESULTS
+========================================================= */
+
+.student-results-section {
+    margin-top: 35px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+
+.student-results-header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 22px;
+}
+
+.student-result-add-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 0 17px;
+
+    background: #006400;
+
+    color: #ffffff;
+
+    border: 1px solid #006400;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.student-result-add-btn:hover {
+    background: #005500;
+
+    transform: translateY(-1px);
+}
+
+.student-results-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.student-results-table {
+    width: 100%;
+
+    min-width: 800px;
+
+    border-collapse: collapse;
+}
+
+.student-results-table thead {
+    background: #f0fdf4;
+}
+
+.student-results-table th {
+    padding: 13px 14px;
+
+    color: #166534;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    border-bottom: 1px solid #bbf7d0;
+}
+
+.student-results-table td {
+    padding: 15px 14px;
+
+    color: #4b5563;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #eef0f2;
+}
+
+.student-results-table tbody tr:hover {
+    background: #fafdfb;
+}
+
+.student-results-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.student-course strong {
+    display: block;
+
+    color: #1f2937;
+
+    font-size: 14px;
+}
+
+.student-course span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.student-score {
+    color: #1f2937;
+
+    font-size: 16px;
+}
+
+.student-results-empty {
+    padding: 45px 20px;
+
+    text-align: center;
+
+    background: #f8faf9;
+
+    border: 1px dashed #d1d5db;
+
+    border-radius: 12px;
+}
+
+.student-results-empty-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 45px;
+    height: 45px;
+
+    margin: 0 auto 12px;
+
+    border-radius: 50%;
+
+    background: #e8f5e9;
+
+    color: #006400;
+
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.student-results-empty h3 {
+    margin: 0 0 5px;
+
+    color: #374151;
+
+    font-size: 17px;
+}
+
+.student-results-empty p {
+    margin: 0 0 18px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
