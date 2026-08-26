@@ -39,7 +39,7 @@ if (!$query || mysqli_num_rows($query) == 0) {
 $student = mysqli_fetch_assoc($query);
 
 /* =========================================================
-   GET STUDENT RESULTS
+   STUDENT RESULTS
 ========================================================= */
 
 $results_query = mysqli_query(
@@ -52,13 +52,11 @@ $results_query = mysqli_query(
         session,
         score,
         grade,
-        remark,
-        created_at
+        remark
      FROM results
      WHERE student_id = $id
-     ORDER BY session DESC, semester ASC, id DESC"
+     ORDER BY id DESC"
 );
-
 
 /* =========================================================
    PASSPORT
@@ -368,42 +366,44 @@ if (
 
                 </li>
 
+               <!-- RESULTS -->
+
                 <li>
 
-    <a href="results.php">
+                    <a href="results.php">
 
-        <span class="nav-icon">
+                        <span class="nav-icon">
 
-            <svg viewBox="0 0 24 24"
-                 width="18"
-                 height="18"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
 
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <path d="M4 4h16v16H4z"/>
 
-                <polyline points="14 2 14 8 20 8"/>
+                                <path d="M8 16v-4"/>
 
-                <line x1="8" y1="13" x2="16" y2="13"/>
+                                <path d="M12 16V8"/>
 
-                <line x1="8" y1="17" x2="13" y2="17"/>
+                                <path d="M16 16v-7"/>
 
-                <circle cx="17" cy="17" r="2"/>
+                            </svg>
 
-            </svg>
+                        </span>
 
-        </span>
+                        <span>
+                            Results
+                        </span>
 
-        <span>
-            Results
-        </span>
+                    </a>
 
-    </a>
-
-</li>
+                </li>
 
                 <!-- SEARCH -->
 
@@ -919,44 +919,43 @@ if (
 
 
             </div>
+   <!-- result-->
 
+            <section
+                class="student-results-section"
+                id="results"
+            >
 
-                <!-- students result-->
+                <div class="student-results-header">
 
-                <section
-                    class="student-results-section"
-                    id="results"
-                >
+                    <div>
 
+                        <span>
+                            ACADEMIC PERFORMANCE
+                        </span>
 
-                    <div class="student-results-header">
+                        <h2>
+                            Student Results
+                        </h2>
 
-                        <div>
-
-                            <span>
-                                ACADEMIC PERFORMANCE
-                            </span>
-
-                            <h2>
-                                Student Results
-                            </h2>
-
-                            <p>
-                                Academic results for this student.
-                            </p>
-
-                        </div>
-
-
-                        <a
-                            href="add_result.php?student_id=<?php echo (int)$student['id']; ?>"
-                            class="student-result-add-btn"
-                        >
-                            Add Result
-                        </a>
+                        <p>
+                            Academic results recorded for this student.
+                        </p>
 
                     </div>
 
+
+                    <a
+                        href="add_result.php?student_id=<?php echo (int)$student['id']; ?>"
+                        class="add-result-btn"
+                    >
+                        Add Result
+                    </a>
+
+                </div>
+
+
+                <div class="student-results-card">
 
 
                     <?php
@@ -968,12 +967,9 @@ if (
 
                     ?>
 
-
                         <div class="student-results-table-wrapper">
 
-
                             <table class="student-results-table">
-
 
                                 <thead>
 
@@ -1010,7 +1006,6 @@ if (
 
                                 <tbody>
 
-
                                 <?php
 
                                 while (
@@ -1024,87 +1019,28 @@ if (
 
                                     <tr>
 
-
                                         <td>
 
-                                            <div class="student-course">
-
-                                                <strong>
-
-                                                    <?php
-                                                    echo htmlspecialchars(
-                                                        $result['course_code']
-                                                    );
-                                                    ?>
-
-                                                </strong>
-
-                                                <span>
-
-                                                    <?php
-                                                    echo htmlspecialchars(
-                                                        $result['course_title']
-                                                    );
-                                                    ?>
-
-                                                </span>
-
-                                            </div>
-
-                                        </td>
-
-
-                                        <td>
-
-                                            <?php
-                                            echo htmlspecialchars(
-                                                $result['semester']
-                                            );
-                                            ?>
-
-                                        </td>
-
-
-                                        <td>
-
-                                            <?php
-                                            echo htmlspecialchars(
-                                                $result['session']
-                                            );
-                                            ?>
-
-                                        </td>
-
-
-                                        <td>
-
-                                            <strong class="student-score">
+                                            <strong>
 
                                                 <?php
+
                                                 echo htmlspecialchars(
-                                                    $result['score']
+                                                    $result['course_code']
                                                 );
+
                                                 ?>
 
                                             </strong>
 
-                                        </td>
-
-
-                                        <td>
-
-                                            <span
-                                                class="student-grade grade-<?php
-                                                echo strtolower(
-                                                    $result['grade']
-                                                );
-                                                ?>"
-                                            >
+                                            <span class="course-title">
 
                                                 <?php
+
                                                 echo htmlspecialchars(
-                                                    $result['grade']
+                                                    $result['course_title']
                                                 );
+
                                                 ?>
 
                                             </span>
@@ -1115,16 +1051,80 @@ if (
                                         <td>
 
                                             <?php
+
                                             echo htmlspecialchars(
-                                                $result['remark']
+                                                $result['semester']
                                             );
+
                                             ?>
 
                                         </td>
 
 
-                                    </tr>
+                                        <td>
 
+                                            <?php
+
+                                            echo htmlspecialchars(
+                                                $result['session']
+                                            );
+
+                                            ?>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <strong class="student-result-score">
+
+                                                <?php
+
+                                                echo htmlspecialchars(
+                                                    $result['score']
+                                                );
+
+                                                ?>
+
+                                            </strong>
+
+                                            / 100
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <span
+                                                class="student-result-grade grade-<?php echo strtolower($result['grade']); ?>"
+                                            >
+
+                                                <?php
+
+                                                echo htmlspecialchars(
+                                                    $result['grade']
+                                                );
+
+                                                ?>
+
+                                            </span>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <?php
+
+                                            echo htmlspecialchars(
+                                                $result['remark']
+                                            );
+
+                                            ?>
+
+                                        </td>
+
+                                    </tr>
 
                                 <?php
 
@@ -1132,15 +1132,11 @@ if (
 
                                 ?>
 
-
                                 </tbody>
-
 
                             </table>
 
-
                         </div>
-
 
                     <?php
 
@@ -1148,31 +1144,52 @@ if (
 
                     ?>
 
-
                         <div class="student-results-empty">
 
                             <div class="student-results-empty-icon">
-                                R
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    width="28"
+                                    height="28"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+
+                                    <path d="M4 4h16v16H4z"/>
+
+                                    <path d="M8 16v-4"/>
+
+                                    <path d="M12 16V8"/>
+
+                                    <path d="M16 16v-7"/>
+
+                                </svg>
+
                             </div>
+
 
                             <h3>
                                 No Results Yet
                             </h3>
 
+
                             <p>
-                                No academic results have been added
-                                for this student.
+                                No academic results have been recorded for this student.
                             </p>
+
 
                             <a
                                 href="add_result.php?student_id=<?php echo (int)$student['id']; ?>"
-                                class="student-result-add-btn"
+                                class="add-result-btn"
                             >
                                 Add First Result
                             </a>
 
                         </div>
-
 
                     <?php
 
@@ -1181,13 +1198,15 @@ if (
                     ?>
 
 
-                </section>
+                </div>
+
+            </section>
+
             <!-- =================================================
                  ACTION BUTTONS
             ================================================== -->
 
             <div class="student-profile-actions">
-
 
                 <!-- BACK -->
 
