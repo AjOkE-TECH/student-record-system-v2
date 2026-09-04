@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['admin'])) {
-    header("Location: login.php");
+    header("Location: login");
     exit();
 }
 
@@ -194,6 +194,11 @@ if (
 
     <link
         rel="stylesheet"
+        href="assets/css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
         href="assets/css/admin.css"
     >
 
@@ -212,36 +217,11 @@ if (
 
         <div class="admin-brand">
 
-            <div class="brand-mark">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                </svg>
-
-            </div>
-
-
-            <div class="brand-text">
-
-                <h2>
-                    Student Record
-                </h2>
-
-                <span>
-                    Management System
-                </span>
-
-            </div>
+            <img
+                class="logo-image"
+                src="assets/image/record_logo.png"
+                alt="Student Record Management System Logo"
+            >
 
         </div>
 
@@ -260,7 +240,7 @@ if (
                 <li>
 
                     <a
-                        href="dashboard.php"
+                        href="dashboard"
                         class="active"
                     >
 
@@ -296,7 +276,7 @@ if (
 
                 <li>
 
-                    <a href="add_student.php">
+                    <a href="add_student">
 
                         <span class="nav-icon">
 
@@ -330,7 +310,7 @@ if (
 
                 <li>
 
-                    <a href="view_students.php">
+                    <a href="view_students">
 
                         <span class="nav-icon">
 
@@ -364,7 +344,7 @@ if (
 
                 <li>
 
-                    <a href="search_student.php">
+                    <a href="search_student">
 
                         <span class="nav-icon">
 
@@ -408,7 +388,7 @@ if (
                 <li>
 
                     <a
-                        href="logout.php"
+                        href="logout"
                         class="logout-link"
                     >
 
@@ -472,6 +452,18 @@ if (
         ================================================== -->
 
         <header class="admin-topbar">
+
+        <button
+            class="sidebar-toggle"
+            id="sidebarToggle"
+            type="button"
+            aria-label="Toggle sidebar"
+            aria-expanded="true"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
 
             <div>
@@ -567,26 +559,11 @@ if (
                 </p>
 
             </div>
-
-
-            <a
-                href="add_student.php"
-                class="primary-action"
-            >
-                Add New Student
-            </a>
-
-
         </section>
 
-
-
-        <!-- =================================================
-             STATISTICS
-        ================================================== -->
+        <!--statistics -->
 
         <section class="statistics-grid">
-
 
             <!-- TOTAL STUDENTS -->
 
@@ -841,7 +818,7 @@ if (
 
 
                 <a
-                    href="add_student.php"
+                    href="add_student"
                     class="quick-action green-action"
                 >
 
@@ -885,7 +862,7 @@ if (
 
 
                 <a
-                    href="view_students.php"
+                    href="view_students"
                     class="quick-action blue-action"
                 >
 
@@ -929,7 +906,7 @@ if (
 
 
                 <a
-                    href="search_student.php"
+                    href="search_student"
                     class="quick-action teal-action"
                 >
 
@@ -1610,7 +1587,7 @@ if (
 
 
                 <a
-                    href="view_students.php"
+                    href="view_students"
                     class="view-all-btn"
                 >
                     View All Students
@@ -1835,6 +1812,8 @@ if (
 
 </div>
 
+
+<script src="assets/js/sidebar.js"></script>
 
 </body>
 

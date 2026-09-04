@@ -4,7 +4,7 @@ session_start();
 
 if (!isset($_SESSION['admin'])) {
 
-    header("Location: login.php");
+    header("Location: login");
 
     exit();
 }
@@ -268,6 +268,7 @@ if (isset($_POST['add_student'])) {
 
     <title>Add Student - Student Record Management System</title>
 
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="assets/css/students.css">
 
@@ -288,34 +289,11 @@ if (isset($_POST['add_student'])) {
 
         <div class="admin-brand">
 
-            <div class="brand-mark">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-
-                </svg>
-
-            </div>
-
-            <div class="brand-text">
-
-                <h2>Student Record</h2>
-
-                <span>Management System</span>
-
-            </div>
+            <img
+                class="logo-image"
+                src="assets/image/record_logo.png"
+                alt="Student Record Management System Logo"
+            >
 
         </div>
 
@@ -332,7 +310,7 @@ if (isset($_POST['add_student'])) {
 
                 <li>
 
-                    <a href="dashboard.php">
+                    <a href="dashboard">
 
                         <span class="nav-icon">
 
@@ -364,7 +342,7 @@ if (isset($_POST['add_student'])) {
                 <li>
 
                     <a
-                        href="add_student.php"
+                        href="add_student"
                         class="active"
                     >
 
@@ -397,7 +375,7 @@ if (isset($_POST['add_student'])) {
 
                 <li>
 
-                    <a href="view_students.php">
+                    <a href="view_students">
 
                         <span class="nav-icon">
 
@@ -428,7 +406,7 @@ if (isset($_POST['add_student'])) {
 
                 <li>
 
-                    <a href="search_student.php">
+                    <a href="search_student">
 
                         <span class="nav-icon">
 
@@ -467,7 +445,7 @@ if (isset($_POST['add_student'])) {
                 <li>
 
                     <a
-                        href="logout.php"
+                        href="logout"
                         class="logout-link"
                     >
 
@@ -514,6 +492,18 @@ if (isset($_POST['add_student'])) {
 
 
         <header class="admin-topbar">
+
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+                aria-label="Toggle sidebar"
+                aria-expanded="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
             <div>
 
@@ -923,7 +913,7 @@ if (isset($_POST['add_student'])) {
 
 
                                 <a
-                                    href="view_students.php"
+                                    href="view_students"
                                     class="cancel-student"
                                 >
                                     Cancel
@@ -980,13 +970,13 @@ if (isset($_POST['add_student'])) {
 
             <span>SRMS</span>
 
-            <span class="footer-dot">·</span>
+            <span class="footer-dot">Â·</span>
 
             <span>
                 Student Record Management System
             </span>
 
-            <span class="footer-dot">·</span>
+            <span class="footer-dot">Â·</span>
 
             <span>
                 &copy; <?php echo date('Y'); ?>
@@ -1049,6 +1039,7 @@ if (isset($_POST['add_student'])) {
 
 </script>
 
+<script src="assets/js/sidebar.js"></script>
 
 </body>
 </html>

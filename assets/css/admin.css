@@ -50,6 +50,14 @@
 }
 
 
+.admin-brand .logo-image {
+    width: 190px;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+
 .brand-mark {
     width: 42px;
     height: 42px;

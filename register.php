@@ -193,7 +193,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION["generated_username"] = $username;
 
                 header(
-                    "Location: login.php?registered=1"
+                    "Location: login?registered=1"
                 );
 
                 exit();
@@ -243,24 +243,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="register-logo">
 
         <img
-            src="assets/image/logo.png"alt="SRMS Logo" >
+            class="logo-image"
+            src="assets/image/record_logo.png"
+            alt="Student Record Management System Logo"
+        >
 
-        <div class="register-logo-text">
 
-            <strong>SRMS</strong>
-
-            <span>
-                Student Record Management System
-            </span>
-
-        </div>
 
     </div>
 
 
     <nav class="register-nav">
 
-        <a href="login.php">
+        <a href="login">
             Login
         </a>
 
@@ -587,7 +582,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 onclick="togglePassword('password', this)"
                 aria-label="Show password"
             >
-                👁
+                ðŸ‘
             </button>
 
         </div>
@@ -619,7 +614,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 onclick="togglePassword('confirm_password', this)"
                 aria-label="Show password"
             >
-                👁
+                ðŸ‘
             </button>
 
         </div>
@@ -647,7 +642,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 Already have an account?
 
-                <a href="login.php">
+                <a href="login">
                     Login
                 </a>
 
@@ -696,13 +691,13 @@ function togglePassword(inputId, button) {
 
         input.type = "text";
 
-        button.textContent = "🙈";
+        button.textContent = "ðŸ™ˆ";
 
     } else {
 
         input.type = "password";
 
-        button.textContent = "👁";
+        button.textContent = "ðŸ‘";
 
     }
 

@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['admin'])) {
-    header("Location: login.php");
+    header("Location: login");
     exit();
 }
 
@@ -15,7 +15,7 @@ include "config/database.php";
 ========================================================= */
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    header("Location: view_students.php");
+    header("Location: view_students");
     exit();
 }
 
@@ -32,14 +32,15 @@ $query = mysqli_query(
 );
 
 if (!$query || mysqli_num_rows($query) == 0) {
-    header("Location: view_students.php");
+    header("Location: view_students");
     exit();
 }
 
 $student = mysqli_fetch_assoc($query);
 
+
 /* =========================================================
-   STUDENT RESULTS
+   GET STUDENT RESULTS
 ========================================================= */
 
 $results_query = mysqli_query(
@@ -58,14 +59,21 @@ $results_query = mysqli_query(
      ORDER BY id DESC"
 );
 
+
 /* =========================================================
    PASSPORT
 ========================================================= */
 
 if (!empty($student['passport'])) {
-    $passport = "assets/upload/students/" . $student['passport'];
+
+    $passport =
+        "assets/upload/students/" .
+        $student['passport'];
+
 } else {
-    $passport = "assets/image/default.png";
+
+    $passport =
+        "assets/image/default.png";
 }
 
 
@@ -79,10 +87,13 @@ if (
     isset($_SESSION['admin_name']) &&
     !empty($_SESSION['admin_name'])
 ) {
-    $admin_name = $_SESSION['admin_name'];
+
+    $admin_name =
+        $_SESSION['admin_name'];
 }
 
 ?>
+
 
 <!DOCTYPE html>
 
@@ -98,24 +109,37 @@ if (
     >
 
     <title>
+
         <?php
+
         echo htmlspecialchars(
-            $student['firstname'] . " " . $student['lastname']
+            $student['firstname']
+            . " "
+            . $student['lastname']
         );
+
         ?>
+
         - Student Profile
+
     </title>
 
-    <!-- MAIN ADMIN CSS -->
+
+    <!-- ADMIN CSS -->
 
     <link
         rel="stylesheet"
         href="assets/css/admin.css"
     >
+
+
+    <!-- MAIN STYLE -->
+
     <link
         rel="stylesheet"
         href="assets/css/style.css"
     >
+
 </head>
 
 
@@ -136,45 +160,11 @@ if (
 
         <div class="admin-brand">
 
-
-            <div class="brand-mark">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-
-                    <path
-                        d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
-                    />
-
-                    <path
-                        d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-                    />
-
-                </svg>
-
-            </div>
-
-
-            <div class="brand-text">
-
-                <h2>
-                    Student Record
-                </h2>
-
-                <span>
-                    Management System
-                </span>
-
-            </div>
-
+            <img
+                class="logo-image"
+                src="assets/image/record_logo.png"
+                alt="Student Record Management System Logo"
+            >
 
         </div>
 
@@ -197,7 +187,7 @@ if (
 
                 <li>
 
-                    <a href="dashboard.php">
+                    <a href="dashboard">
 
                         <span class="nav-icon">
 
@@ -263,7 +253,7 @@ if (
 
                 <li>
 
-                    <a href="add_student.php">
+                    <a href="add_student">
 
                         <span class="nav-icon">
 
@@ -316,7 +306,7 @@ if (
                 <li>
 
                     <a
-                        href="view_students.php"
+                        href="view_students"
                         class="active"
                     >
 
@@ -366,11 +356,13 @@ if (
 
                 </li>
 
-               <!-- RESULTS -->
+
+
+                <!-- RESULTS -->
 
                 <li>
 
-                    <a href="results.php">
+                    <a href="result">
 
                         <span class="nav-icon">
 
@@ -385,17 +377,26 @@ if (
                                 stroke-linejoin="round"
                             >
 
-                                <path d="M4 4h16v16H4z"/>
+                                <path
+                                    d="M4 4h16v16H4z"
+                                />
 
-                                <path d="M8 16v-4"/>
+                                <path
+                                    d="M8 16v-4"
+                                />
 
-                                <path d="M12 16V8"/>
+                                <path
+                                    d="M12 16V8"
+                                />
 
-                                <path d="M16 16v-7"/>
+                                <path
+                                    d="M16 16v-7"
+                                />
 
                             </svg>
 
                         </span>
+
 
                         <span>
                             Results
@@ -405,11 +406,13 @@ if (
 
                 </li>
 
+
+
                 <!-- SEARCH -->
 
                 <li>
 
-                    <a href="search_student.php">
+                    <a href="search_student">
 
                         <span class="nav-icon">
 
@@ -461,11 +464,10 @@ if (
 
             <ul>
 
-
                 <li>
 
                     <a
-                        href="logout.php"
+                        href="logout"
                         class="logout-link"
                     >
 
@@ -510,7 +512,6 @@ if (
 
                 </li>
 
-
             </ul>
 
 
@@ -522,16 +523,13 @@ if (
 
         <div class="sidebar-footer">
 
-
             <strong>
                 Student Record Management System
             </strong>
 
-
             <span>
                 Administration Panel
             </span>
-
 
         </div>
 
@@ -547,11 +545,21 @@ if (
     <main class="admin-main">
 
 
-        <!-- =================================================
-             TOP HEADER
-        ================================================== -->
+        <!-- TOPBAR -->
 
         <header class="admin-topbar">
+
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+                aria-label="Toggle sidebar"
+                aria-expanded="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
 
             <div>
@@ -559,7 +567,6 @@ if (
                 <p class="topbar-label">
                     STUDENT RECORDS
                 </p>
-
 
                 <h1>
                     Student Profile
@@ -569,10 +576,9 @@ if (
 
 
 
-            <!-- ADMIN PROFILE -->
+            <!-- ADMIN -->
 
             <div class="admin-profile">
-
 
                 <div class="profile-avatar">
 
@@ -596,366 +602,477 @@ if (
                         echo htmlspecialchars(
                             $admin_name
                         );
-
                         ?>
-
                     </strong>
-
-
-                    <span>
-                        Administrator
-                    </span>
-
+                    <span>Administrator</span>
                 </div>
-
-
             </div>
-
-
         </header>
 
-
-
-        <!-- =================================================
-             PAGE HEADER
-        ================================================== -->
-
-        <section class="admin-page-header">
-
-
-            <h1>
-                Student Profile
-            </h1>
-
-
-            <p>
-                View complete student information.
-            </p>
-
-
-        </section>
-
-
-
-        <!-- =================================================
-             STUDENT PROFILE
-        ================================================== -->
-
-        <div class="student-profile-card">
-
-
-            <!-- PROFILE HEADER -->
-
-            <div class="student-profile-header">
-
-
-                <!-- PASSPORT -->
-
-                <img
-                    src="<?php echo htmlspecialchars($passport); ?>"
-                    alt="Student Passport"
-                    class="student-profile-image"
-                    onerror="this.onerror=null;this.src='assets/image/default.png';"
-                >
-
-
-
-                <!-- STUDENT NAME -->
-
-                <div class="student-profile-name">
-
-
-                    <h2>
-
-                        <?php
-
-                        echo htmlspecialchars(
-                            $student['firstname']
-                            . " "
-                            . $student['lastname']
-                        );
-
-                        ?>
-
-                    </h2>
-
-
-                    <p>
-
-                        Matric No:
-
-                        <?php
-
-                        echo htmlspecialchars(
-                            $student['matric_no']
-                        );
-
-                        ?>
-
-                    </p>
-
-
+        <!--PAGE CONTENT-->
+        <section class="student-profile-page">
+            <!-- PAGE INTRO -->
+            <div class="student-profile-page-header">
+                <div>
+                    <span class="student-profile-eyebrow"> STUDENT RECORD </span>
+                    <h2>Student Profile </h2>
+                    <p> View student information and academic performance.</p>
                 </div>
+                <!-- ACTIONS -->
+                <div class="student-profile-header-actions">
+                    <a
+                        href="edit_student?id=<?php echo (int)$student['id']; ?>"
+                        class="profile-header-btn profile-edit-btn"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M12 20h9"
+                            />
+
+                            <path
+                                d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"
+                            />
+
+                        </svg>
+                        Edit Student
+                    </a>
 
 
+                    <button
+                        type="button"
+                        onclick="window.print()"
+                        class="profile-header-btn profile-print-btn"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <polyline
+                                points="6 9 6 2 18 2 18 9"
+                            />
+
+                            <path
+                                d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"
+                            />
+
+                            <rect
+                                x="6"
+                                y="14"
+                                width="12"
+                                height="8"
+                            />
+
+                        </svg>
+                        Print Profile
+                    </button>
+                </div>
             </div>
 
-
-
-            <!-- =================================================
-                 STUDENT DETAILS
-            ================================================== -->
-
-            <div class="student-details-grid">
-
-
-                <!-- MATRIC NUMBER -->
-
-                <div class="student-detail-item">
-
-                    <div class="student-detail-label">
-                        Matric Number
+            <!-- COMPACT STUDENT INFORMATION CARD -->
+            <section class="compact-profile-card">
+                <!-- LEFT: PASSPORT -->
+                <div class="compact-profile-passport">
+                    <div class="passport-frame">
+                        <img
+                            src="<?php echo htmlspecialchars($passport); ?>"
+                            alt="Student Passport"
+                            onerror="this.onerror=null;this.src='assets/image/default.png';"
+                        >
                     </div>
-
-
-                    <div class="student-detail-value">
-
+                    <div class="passport-status">
+                        <span class="passport-status-dot"></span>
                         <?php
-
-                        echo htmlspecialchars(
-                            $student['matric_no']
-                        );
-
-                        ?>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- FULL NAME -->
-
-                <div class="student-detail-item">
-
-                    <div class="student-detail-label">
-                        Full Name
-                    </div>
-
-
-                    <div class="student-detail-value">
-
-                        <?php
-
-                        echo htmlspecialchars(
-                            $student['firstname']
-                            . " "
-                            . $student['lastname']
-                        );
-
-                        ?>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- GENDER -->
-
-                <div class="student-detail-item">
-
-                    <div class="student-detail-label">
-                        Gender
-                    </div>
-
-
-                    <div class="student-detail-value">
-
-                        <?php
-
-                        echo htmlspecialchars(
-                            $student['gender']
-                        );
-
-                        ?>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- DEPARTMENT -->
-
-                <div class="student-detail-item">
-
-                    <div class="student-detail-label">
-                        Department
-                    </div>
-
-
-                    <div class="student-detail-value">
-
-                        <?php
-
-                        echo htmlspecialchars(
-                            $student['department']
-                        );
-
-                        ?>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- LEVEL -->
-
-                <div class="student-detail-item">
-
-                    <div class="student-detail-label">
-                        Level
-                    </div>
-
-
-                    <div class="student-detail-value">
-
-                        <?php
-
-                        echo htmlspecialchars(
-                            $student['level']
-                        );
-
-                        ?>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PHONE -->
-
-                <div class="student-detail-item">
-
-                    <div class="student-detail-label">
-                        Phone
-                    </div>
-
-
-                    <div class="student-detail-value">
-
-                        <?php
-
-                        echo htmlspecialchars(
-                            $student['phone']
-                        );
-
-                        ?>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- EMAIL -->
-
-                <div class="student-detail-item">
-
-                    <div class="student-detail-label">
-                        Email
-                    </div>
-
-
-                    <div class="student-detail-value">
-
-                        <?php
-
-                        echo htmlspecialchars(
-                            $student['email']
-                        );
-
-                        ?>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- PASSPORT STATUS -->
-
-                <div class="student-detail-item">
-
-                    <div class="student-detail-label">
-                        Passport
-                    </div>
-
-
-                    <div class="student-detail-value">
-
-
-                        <?php
-
                         if (!empty($student['passport'])) {
-
-                            echo "Passport uploaded";
-
+                            echo "Passport Uploaded";
                         } else {
-
-                            echo "No passport uploaded";
-
+                            echo "No Passport";
                         }
-
                         ?>
+                    </div>
+                    <div class="passport-student-name">
+                        <h3>
+                            <?php
+
+                            echo htmlspecialchars(
+                                $student['firstname']
+                                . " "
+                                . $student['lastname']
+                            );
+                            ?>
+                        </h3>
+                        <p>
+                            <?php
+                            echo htmlspecialchars(
+                                $student['matric_no']
+                            );
+                            ?>
+                        </p>
+                    </div>
+                </div>
+                <!-- RIGHT: DETAILS -->
+                <div class="compact-profile-details">
+                    <div class="compact-details-heading">
+                        <div class="details-heading-icon">
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4"
+                                />
+
+                                <path
+                                    d="M4 21a8 8 0 0 1 16 0"
+                                />
+                            </svg>
+                        </div>
+                        <div>
+                            <span> STUDENT INFORMATION</span>
+                            <h3> Personal Details </h3>
+                        </div>
+                    </div>
+                    <div class="compact-details-grid">
+                        <!-- MATRIC -->
+                        <div class="compact-detail">
+                            <span> Matric Number </span>
+                            <strong>
+                                <?php
+                                echo htmlspecialchars(
+                                    $student['matric_no']
+                                );
+                                ?>
+                            </strong>
+                        </div>
+
+                        <!-- FULL NAME -->
+
+                        <div class="compact-detail">
+
+                            <span>
+                                Full Name
+                            </span>
+
+                            <strong>
+
+                                <?php
+
+                                echo htmlspecialchars(
+                                    $student['firstname']
+                                    . " "
+                                    . $student['lastname']
+                                );
+
+                                ?>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- GENDER -->
+
+                        <div class="compact-detail">
+
+                            <span>
+                                Gender
+                            </span>
+
+                            <strong>
+
+                                <?php
+
+                                echo htmlspecialchars(
+                                    $student['gender']
+                                );
+
+                                ?>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- DEPARTMENT -->
+
+                        <div class="compact-detail">
+
+                            <span>
+                                Department
+                            </span>
+
+                            <strong>
+
+                                <?php
+
+                                echo htmlspecialchars(
+                                    $student['department']
+                                );
+
+                                ?>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- LEVEL -->
+
+                        <div class="compact-detail">
+
+                            <span>
+                                Level
+                            </span>
+
+                            <strong>
+
+                                <?php
+
+                                echo htmlspecialchars(
+                                    $student['level']
+                                );
+
+                                ?>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- PHONE -->
+
+                        <div class="compact-detail">
+
+                            <span>
+                                Phone Number
+                            </span>
+
+                            <strong>
+
+                                <?php
+
+                                echo htmlspecialchars(
+                                    $student['phone']
+                                );
+
+                                ?>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- EMAIL -->
+
+                        <div class="compact-detail">
+
+                            <span>
+                                Email Address
+                            </span>
+
+                            <strong class="email-value">
+
+                                <?php
+
+                                echo htmlspecialchars(
+                                    $student['email']
+                                );
+
+                                ?>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- PASSPORT -->
+
+                        <div class="compact-detail">
+
+                            <span>
+                                Passport
+                            </span>
+
+                            <strong>
+
+                                <?php
+
+                                if (!empty($student['passport'])) {
+
+                                    echo "Uploaded";
+
+                                } else {
+
+                                    echo "Not Uploaded";
+
+                                }
+
+                                ?>
+
+                            </strong>
+
+                        </div>
 
 
                     </div>
 
+
                 </div>
 
 
-            </div>
-   <!-- result-->
+            </section>
+
+
+
+            <!-- =====================================================
+                 ACADEMIC RESULTS
+            ====================================================== -->
 
             <section
-                class="student-results-section"
+                class="compact-results-section"
                 id="results"
             >
 
-                <div class="student-results-header">
 
-                    <div>
+                <!-- RESULTS HEADER -->
 
-                        <span>
-                            ACADEMIC PERFORMANCE
-                        </span>
+                <div class="compact-results-header">
 
-                        <h2>
-                            Student Results
-                        </h2>
 
-                        <p>
-                            Academic results recorded for this student.
-                        </p>
+                    <div class="compact-results-title">
+
+
+                        <div class="results-heading-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="20"
+                                height="20"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <path
+                                    d="M4 4h16v16H4z"
+                                />
+
+                                <path
+                                    d="M8 16v-4"
+                                />
+
+                                <path
+                                    d="M12 16V8"
+                                />
+
+                                <path
+                                    d="M16 16v-7"
+                                />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                ACADEMIC PERFORMANCE
+                            </span>
+
+                            <h2>
+                                Student Results
+                            </h2>
+
+                            <p>
+                                Academic results recorded for this student.
+                            </p>
+
+                        </div>
+
 
                     </div>
 
 
+
                     <a
-                        href="add_result.php?student_id=<?php echo (int)$student['id']; ?>"
-                        class="add-result-btn"
+                        href="add_result?student_id=<?php echo (int)$student['id']; ?>"
+                        class="compact-add-result-btn"
                     >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="17"
+                            height="17"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <line
+                                x1="12"
+                                y1="5"
+                                x2="12"
+                                y2="19"
+                            />
+
+                            <line
+                                x1="5"
+                                y1="12"
+                                x2="19"
+                                y2="12"
+                            />
+
+                        </svg>
+
                         Add Result
+
                     </a>
+
 
                 </div>
 
 
-                <div class="student-results-card">
+
+                <!-- RESULTS TABLE -->
+
+                <div class="compact-results-card">
 
 
                     <?php
@@ -967,13 +1084,20 @@ if (
 
                     ?>
 
-                        <div class="student-results-table-wrapper">
 
-                            <table class="student-results-table">
+                        <div class="compact-results-table-wrapper">
+
+
+                            <table class="compact-results-table">
+
 
                                 <thead>
 
                                     <tr>
+
+                                        <th>
+                                            #
+                                        </th>
 
                                         <th>
                                             Course
@@ -1006,7 +1130,10 @@ if (
 
                                 <tbody>
 
+
                                 <?php
+
+                                $result_number = 1;
 
                                 while (
                                     $result =
@@ -1017,29 +1144,19 @@ if (
 
                                 ?>
 
+
                                     <tr>
+
+
+                                        <!-- NUMBER -->
 
                                         <td>
 
-                                            <strong>
+                                            <span class="result-number">
 
                                                 <?php
 
-                                                echo htmlspecialchars(
-                                                    $result['course_code']
-                                                );
-
-                                                ?>
-
-                                            </strong>
-
-                                            <span class="course-title">
-
-                                                <?php
-
-                                                echo htmlspecialchars(
-                                                    $result['course_title']
-                                                );
+                                                echo $result_number;
 
                                                 ?>
 
@@ -1047,6 +1164,46 @@ if (
 
                                         </td>
 
+
+
+                                        <!-- COURSE -->
+
+                                        <td>
+
+                                            <div class="result-course">
+
+                                                <strong>
+
+                                                    <?php
+
+                                                    echo htmlspecialchars(
+                                                        $result['course_code']
+                                                    );
+
+                                                    ?>
+
+                                                </strong>
+
+
+                                                <span>
+
+                                                    <?php
+
+                                                    echo htmlspecialchars(
+                                                        $result['course_title']
+                                                    );
+
+                                                    ?>
+
+                                                </span>
+
+                                            </div>
+
+                                        </td>
+
+
+
+                                        <!-- SEMESTER -->
 
                                         <td>
 
@@ -1061,6 +1218,9 @@ if (
                                         </td>
 
 
+
+                                        <!-- SESSION -->
+
                                         <td>
 
                                             <?php
@@ -1074,9 +1234,12 @@ if (
                                         </td>
 
 
+
+                                        <!-- SCORE -->
+
                                         <td>
 
-                                            <strong class="student-result-score">
+                                            <strong class="result-score">
 
                                                 <?php
 
@@ -1088,15 +1251,20 @@ if (
 
                                             </strong>
 
-                                            / 100
+                                            <span class="score-total">
+                                                / 100
+                                            </span>
 
                                         </td>
 
 
+
+                                        <!-- GRADE -->
+
                                         <td>
 
                                             <span
-                                                class="student-result-grade grade-<?php echo strtolower($result['grade']); ?>"
+                                                class="result-grade-badge grade-<?php echo strtolower(htmlspecialchars($result['grade'])); ?>"
                                             >
 
                                                 <?php
@@ -1112,31 +1280,46 @@ if (
                                         </td>
 
 
+
+                                        <!-- REMARK -->
+
                                         <td>
 
-                                            <?php
+                                            <span class="result-remark">
 
-                                            echo htmlspecialchars(
-                                                $result['remark']
-                                            );
+                                                <?php
 
-                                            ?>
+                                                echo htmlspecialchars(
+                                                    $result['remark']
+                                                );
+
+                                                ?>
+
+                                            </span>
 
                                         </td>
 
+
                                     </tr>
 
+
                                 <?php
+
+                                    $result_number++;
 
                                 }
 
                                 ?>
 
+
                                 </tbody>
+
 
                             </table>
 
+
                         </div>
+
 
                     <?php
 
@@ -1144,28 +1327,38 @@ if (
 
                     ?>
 
-                        <div class="student-results-empty">
 
-                            <div class="student-results-empty-icon">
+                        <div class="compact-no-results">
+
+
+                            <div class="no-results-icon">
 
                                 <svg
                                     viewBox="0 0 24 24"
-                                    width="28"
-                                    height="28"
+                                    width="30"
+                                    height="30"
                                     fill="none"
                                     stroke="currentColor"
-                                    stroke-width="2"
+                                    stroke-width="1.7"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                 >
 
-                                    <path d="M4 4h16v16H4z"/>
+                                    <path
+                                        d="M4 4h16v16H4z"
+                                    />
 
-                                    <path d="M8 16v-4"/>
+                                    <path
+                                        d="M8 16v-4"
+                                    />
 
-                                    <path d="M12 16V8"/>
+                                    <path
+                                        d="M12 16V8"
+                                    />
 
-                                    <path d="M16 16v-7"/>
+                                    <path
+                                        d="M16 16v-7"
+                                    />
 
                                 </svg>
 
@@ -1183,13 +1376,17 @@ if (
 
 
                             <a
-                                href="add_result.php?student_id=<?php echo (int)$student['id']; ?>"
-                                class="add-result-btn"
+                                href="add_result?student_id=<?php echo (int)$student['id']; ?>"
+                                class="compact-add-result-btn"
                             >
+
                                 Add First Result
+
                             </a>
 
+
                         </div>
+
 
                     <?php
 
@@ -1200,58 +1397,83 @@ if (
 
                 </div>
 
+
             </section>
 
-            <!-- =================================================
-                 ACTION BUTTONS
-            ================================================== -->
 
-            <div class="student-profile-actions">
 
-                <!-- BACK -->
+            <!-- =====================================================
+                 BOTTOM ACTIONS
+            ====================================================== -->
+
+            <div class="student-profile-bottom-actions">
+
 
                 <a
-                    href="view_students.php"
-                    class="student-profile-btn back-profile-btn"
+                    href="view_students"
+                    class="profile-bottom-btn back-btn-new"
                 >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <line
+                            x1="19"
+                            y1="12"
+                            x2="5"
+                            y2="12"
+                        />
+
+                        <polyline
+                            points="12 19 5 12 12 5"
+                        />
+
+                    </svg>
+
                     Back to Students
+
                 </a>
-
-
-
-                <!-- EDIT -->
-
-                <a
-                    href="edit_student.php?id=<?php echo (int)$student['id']; ?>"
-                    class="student-profile-btn edit-profile-btn"
-                >
-                    Edit Student
-                </a>
-
-
-
-                <!-- PRINT -->
-
-                <button
-                    type="button"
-                    class="student-profile-btn print-profile-btn"
-                    onclick="window.print()"
-                >
-                    Print Profile
-                </button>
 
 
             </div>
 
 
-        </div>
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer class="admin-footer">
+
+            <span>
+                2026 Student Record Management System
+            </span>
+
+            <span>
+                |
+            </span>
+
+            <span>
+                Designed by Sekinat Mutolib
+            </span>
+
+        </footer>
 
 
     </main>
 
 
 </div>
-
+<script src="assets/js/sidebar.js"></script>
 
 </body>
 

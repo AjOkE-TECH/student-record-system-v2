@@ -21,15 +21,11 @@
 
     <div class="logo-section">
 
-        <img src="assets/image/logo.png" alt="SRMS Logo">
-
-        <div class="logo-text">
-
-            <h1>SRMS</h1>
-
-            <p>Student Record Management System</p>
-
-        </div>
+        <img
+            class="logo-image"
+            src="assets/image/record_logo.png"
+            alt="Student Record Management System Logo"
+        >
 
     </div>
 
@@ -43,7 +39,7 @@
 
         <a href="#contact">Contact</a>
 
-        <a href="login.php" class="login-link">Login</a>
+        <a href="login" class="login-link">Login</a>
 
     </nav>
 
@@ -70,7 +66,7 @@
             administrative activities.
         </p>
 
-        <a href="login.php" class="hero-btn">
+        <a href="login" class="hero-btn">
             Get Started
         </a>
 

@@ -77,6 +77,14 @@ textarea {
     font-weight: 500;
 }
 
+
+.logo-image {
+    display: block;
+    object-fit: contain;
+    width: auto;
+    max-width: 100%;
+}
+
 .register-nav a {
     color: #006400;
     text-decoration: none;
@@ -359,7 +367,7 @@ textarea {
     }
 
     .register-logo img {
-      height: 44px;
+      height: 75px;
       width: auto;
       object-fit: contain;
     }
@@ -635,8 +643,8 @@ textarea {
 }
 
 .logo-section img {
-    width: 65px;
-    height: 65px;
+    height: 75px;
+    width: auto;
     object-fit: contain;
 }
 
@@ -2927,4 +2935,1051 @@ body > footer {
     margin: 0 0 20px;
     color: #7b8794;
     font-size: 14px;
+}
+/* =========================================================
+   NEW COMPACT STUDENT PROFILE
+========================================================= */
+
+.student-profile-page {
+    width: 100%;
+    padding: 24px 30px 35px;
+    background: #f5f7fa;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.student-profile-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 22px;
+}
+
+.student-profile-eyebrow {
+    display: block;
+    margin-bottom: 5px;
+    color: #008b8b;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.student-profile-page-header h2 {
+    margin: 0;
+    color: #172b3a;
+    font-size: 28px;
+    font-weight: 750;
+    line-height: 1.15;
+}
+
+.student-profile-page-header p {
+    margin: 7px 0 0;
+    color: #72808d;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   HEADER BUTTONS
+========================================================= */
+
+.student-profile-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-shrink: 0;
+}
+
+.profile-header-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 1px solid #dce3e8;
+    background: #ffffff;
+    color: #40515e;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.profile-header-btn svg {
+    flex-shrink: 0;
+}
+
+.profile-header-btn:hover {
+    transform: translateY(-1px);
+    border-color: #cbd5dc;
+    box-shadow: 0 4px 12px rgba(20, 40, 50, 0.06);
+}
+
+.profile-edit-btn {
+    background: #006400;
+    border-color: #006400;
+    color: #ffffff;
+}
+
+.profile-edit-btn:hover {
+    background: #005000;
+    border-color: #005000;
+}
+
+.profile-print-btn {
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   COMPACT PROFILE CARD
+========================================================= */
+
+.compact-profile-card {
+    display: grid;
+    grid-template-columns: 225px minmax(0, 1fr);
+    gap: 28px;
+
+    width: 100%;
+
+    padding: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e9ed;
+    border-radius: 14px;
+
+    box-shadow:
+        0 5px 18px rgba(20, 40, 50, 0.045);
+
+    margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   PASSPORT LEFT
+========================================================= */
+
+.compact-profile-passport {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 4px 4px 0;
+}
+
+.passport-frame {
+    width: 150px;
+    height: 180px;
+
+    padding: 5px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce4e8;
+    border-radius: 10px;
+
+    box-shadow:
+        0 5px 15px rgba(20, 40, 50, 0.08);
+}
+
+.passport-frame img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 6px;
+
+    background: #f1f4f6;
+}
+
+.passport-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 10px;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #edf8f0;
+
+    color: #237343;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.passport-status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #2e9b54;
+}
+
+.passport-student-name {
+    width: 100%;
+
+    margin-top: 12px;
+
+    text-align: center;
+}
+
+.passport-student-name h3 {
+    margin: 0;
+
+    color: #172b3a;
+
+    font-size: 17px;
+    font-weight: 750;
+
+    line-height: 1.3;
+}
+
+.passport-student-name p {
+    margin: 4px 0 0;
+
+    color: #73818d;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DETAILS RIGHT
+========================================================= */
+
+.compact-profile-details {
+    min-width: 0;
+
+    padding-left: 26px;
+
+    border-left: 1px solid #edf0f2;
+}
+
+.compact-details-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 17px;
+}
+
+.details-heading-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #eef8f3;
+    color: #006b2d;
+}
+
+.compact-details-heading span {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #008b8b;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+}
+
+.compact-details-heading h3 {
+    margin: 0;
+
+    color: #182b39;
+
+    font-size: 17px;
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   DETAILS GRID
+========================================================= */
+
+.compact-details-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    column-gap: 38px;
+    row-gap: 0;
+}
+
+.compact-detail {
+    min-width: 0;
+
+    padding: 11px 0;
+
+    border-bottom: 1px solid #edf0f2;
+}
+
+.compact-detail span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #7b8790;
+
+    font-size: 10px;
+
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.65px;
+}
+
+.compact-detail strong {
+    display: block;
+
+    overflow: hidden;
+
+    color: #263642;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    line-height: 1.35;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.compact-detail .email-value {
+    color: #006b2d;
+}
+
+
+/* =========================================================
+   RESULTS SECTION
+========================================================= */
+
+.compact-results-section {
+    width: 100%;
+
+    margin-top: 4px;
+}
+
+.compact-results-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 13px;
+}
+
+.compact-results-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.results-heading-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #eef8f3;
+
+    color: #006b2d;
+}
+
+.compact-results-title span {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #008b8b;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.1px;
+}
+
+.compact-results-title h2 {
+    margin: 0;
+
+    color: #172b3a;
+
+    font-size: 19px;
+
+    font-weight: 750;
+}
+
+.compact-results-title p {
+    margin: 3px 0 0;
+
+    color: #77838c;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ADD RESULT BUTTON
+========================================================= */
+
+.compact-add-result-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 38px;
+
+    padding: 0 14px;
+
+    border-radius: 8px;
+
+    background: #006400;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    border: 1px solid #006400;
+
+    transition: 0.2s ease;
+
+    white-space: nowrap;
+}
+
+.compact-add-result-btn:hover {
+    background: #005000;
+
+    border-color: #005000;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(0, 100, 0, 0.14);
+}
+
+
+/* =========================================================
+   RESULTS CARD
+========================================================= */
+
+.compact-results-card {
+    width: 100%;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e8eb;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 16px rgba(20, 40, 50, 0.04);
+}
+
+.compact-results-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   RESULTS TABLE
+========================================================= */
+
+.compact-results-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 760px;
+}
+
+.compact-results-table thead {
+    background: #f5f8fa;
+}
+
+.compact-results-table th {
+    padding: 11px 13px;
+
+    text-align: left;
+
+    color: #6c7a84;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+
+    border-bottom: 1px solid #e5eaed;
+
+    white-space: nowrap;
+}
+
+.compact-results-table td {
+    padding: 12px 13px;
+
+    color: #394852;
+
+    font-size: 12px;
+
+    border-bottom: 1px solid #edf0f2;
+
+    vertical-align: middle;
+}
+
+.compact-results-table tbody tr {
+    transition: 0.15s ease;
+}
+
+.compact-results-table tbody tr:hover {
+    background: #f9fbfa;
+}
+
+.compact-results-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   RESULT NUMBER
+========================================================= */
+
+.result-number {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+
+    border-radius: 6px;
+
+    background: #f0f4f2;
+
+    color: #63716a;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   COURSE
+========================================================= */
+
+.result-course {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.result-course strong {
+    color: #1c303e;
+
+    font-size: 12px;
+
+    font-weight: 750;
+}
+
+.result-course span {
+    color: #7b8790;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SCORE
+========================================================= */
+
+.result-score {
+    color: #1d303d;
+
+    font-size: 13px;
+
+    font-weight: 750;
+}
+
+.score-total {
+    color: #9aa4aa;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   GRADE
+========================================================= */
+
+.result-grade-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 28px;
+    height: 27px;
+
+    padding: 0 7px;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+.grade-a {
+    background: #e5f7ea;
+    color: #1c7b3d;
+}
+
+.grade-b {
+    background: #e8f2ff;
+    color: #2866a6;
+}
+
+.grade-c {
+    background: #fff4dd;
+    color: #a46a00;
+}
+
+.grade-d {
+    background: #fff0df;
+    color: #a75d00;
+}
+
+.grade-e,
+.grade-f {
+    background: #ffebeb;
+    color: #bd3838;
+}
+
+
+/* =========================================================
+   REMARK
+========================================================= */
+
+.result-remark {
+    color: #687780;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   NO RESULTS
+========================================================= */
+
+.compact-no-results {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 230px;
+
+    padding: 30px;
+
+    text-align: center;
+}
+
+.no-results-icon {
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 10px;
+
+    border-radius: 12px;
+
+    background: #eef5f1;
+
+    color: #006b2d;
+}
+
+.compact-no-results h3 {
+    margin: 0;
+
+    color: #263843;
+
+    font-size: 16px;
+
+    font-weight: 750;
+}
+
+.compact-no-results p {
+    max-width: 360px;
+
+    margin: 6px 0 15px;
+
+    color: #7a858d;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   BOTTOM ACTION
+========================================================= */
+
+.student-profile-bottom-actions {
+    display: flex;
+
+    align-items: center;
+
+    margin-top: 16px;
+}
+
+.profile-bottom-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 36px;
+
+    padding: 0 13px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition: 0.2s ease;
+}
+
+.back-btn-new {
+    background: #ffffff;
+
+    color: #50606b;
+
+    border: 1px solid #dfe5e8;
+}
+
+.back-btn-new:hover {
+    background: #f5f7f8;
+
+    color: #273b47;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+    .admin-sidebar,
+    .admin-topbar,
+    .student-profile-header-actions,
+    .student-profile-bottom-actions,
+    .compact-add-result-btn,
+    .admin-footer {
+        display: none !important;
+    }
+
+    .admin-main {
+        width: 100% !important;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+    }
+
+    .student-profile-page {
+        padding: 0 !important;
+
+        background: #ffffff !important;
+    }
+
+    .compact-profile-card,
+    .compact-results-card {
+        box-shadow: none !important;
+
+        border: 1px solid #dddddd !important;
+    }
+
+    .compact-profile-card {
+        page-break-inside: avoid;
+    }
+
+    .compact-results-section {
+        page-break-inside: avoid;
+    }
+}
+
+/* =========================================================
+   SIDEBAR TOGGLE (responsive hamburger)
+========================================================= */
+
+.sidebar-toggle {
+    width: 42px;
+    height: 42px;
+
+    position: relative;
+
+    flex: 0 0 auto;
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    margin-right: 16px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #006400;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.sidebar-toggle span {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    margin-left: -10px;
+    margin-top: -1px;
+
+    display: block;
+
+    width: 20px;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background: currentColor;
+
+    transform-origin: center;
+
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+}
+
+/* Three clean horizontal lines (expanded) */
+
+.sidebar-toggle span:nth-child(1) {
+    transform: translateY(-7px);
+}
+
+.sidebar-toggle span:nth-child(2) {
+    transform: translateY(0);
+}
+
+.sidebar-toggle span:nth-child(3) {
+    transform: translateY(7px);
+}
+
+.sidebar-toggle:hover {
+    background: #006400;
+    color: #ffffff;
+
+    box-shadow: 0 6px 16px rgba(0, 100, 0, 0.18);
+}
+
+.sidebar-toggle:focus {
+    outline: 2px solid #006400;
+    outline-offset: 2px;
+}
+
+/* Standalone placement (pages without a topbar) */
+
+.admin-main > .sidebar-toggle,
+.main-content > .sidebar-toggle {
+    margin: 18px 0 8px;
+}
+
+/* Smooth layout transitions */
+
+.admin-layout .admin-sidebar,
+.container .admin-sidebar {
+    transition: width 0.3s ease;
+}
+
+.admin-layout .admin-main,
+.container .main-content {
+    transition:
+        margin-left 0.3s ease,
+        width 0.3s ease;
+}
+
+/* Keep topbar/header title left-aligned and profile on the right */
+
+.admin-main .admin-topbar,
+.main-content .admin-topbar {
+    justify-content: flex-start;
+}
+
+.admin-main .admin-topbar .admin-profile,
+.main-content .admin-topbar .admin-profile {
+    margin-left: auto;
+}
+
+.main-content .header {
+    justify-content: flex-start;
+}
+
+.main-content .header .header-right {
+    margin-left: auto;
+}
+
+
+/* Hamburger -> X when the sidebar is collapsed */
+
+.admin-layout.sidebar-collapsed .sidebar-toggle span:nth-child(1),
+.container.sidebar-collapsed .sidebar-toggle span:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.admin-layout.sidebar-collapsed .sidebar-toggle span:nth-child(2),
+.container.sidebar-collapsed .sidebar-toggle span:nth-child(2) {
+    opacity: 0;
+}
+
+.admin-layout.sidebar-collapsed .sidebar-toggle span:nth-child(3),
+.container.sidebar-collapsed .sidebar-toggle span:nth-child(3) {
+    transform: rotate(-45deg);
+}
+
+
+/* =========================================================
+   COLLAPSED SIDEBAR
+========================================================= */
+
+.admin-layout.sidebar-collapsed .admin-sidebar,
+.container.sidebar-collapsed .admin-sidebar {
+    width: 80px;
+}
+
+.admin-layout.sidebar-collapsed .admin-main,
+.container.sidebar-collapsed .main-content {
+    width: calc(100% - 80px);
+    margin-left: 80px;
+}
+
+.admin-layout.sidebar-collapsed .admin-brand,
+.container.sidebar-collapsed .admin-brand {
+    padding: 0;
+    justify-content: center;
+}
+
+.admin-layout.sidebar-collapsed .admin-brand .logo-image,
+.container.sidebar-collapsed .admin-brand .logo-image {
+    width: 52px;
+    height: 52px;
+}
+
+.admin-layout.sidebar-collapsed .brand-text,
+.admin-layout.sidebar-collapsed .navigation-title,
+.admin-layout.sidebar-collapsed .admin-navigation a span:not(.nav-icon),
+.admin-layout.sidebar-collapsed .sidebar-footer strong,
+.admin-layout.sidebar-collapsed .sidebar-footer span,
+.container.sidebar-collapsed .brand-text,
+.container.sidebar-collapsed .navigation-title,
+.container.sidebar-collapsed .admin-navigation a span:not(.nav-icon),
+.container.sidebar-collapsed .sidebar-footer strong,
+.container.sidebar-collapsed .sidebar-footer span {
+    display: none;
+}
+
+.admin-layout.sidebar-collapsed .admin-navigation a,
+.container.sidebar-collapsed .admin-navigation a {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.admin-layout.sidebar-collapsed .admin-navigation a .nav-icon,
+.container.sidebar-collapsed .admin-navigation a .nav-icon {
+    margin-right: 0;
+}
+
+.admin-layout.sidebar-collapsed .sidebar-footer,
+.container.sidebar-collapsed .sidebar-footer {
+    text-align: center;
 }

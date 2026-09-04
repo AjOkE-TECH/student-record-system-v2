@@ -2,7 +2,7 @@
 session_start();
 
 if(!isset($_SESSION['admin'])){
-    header("Location: login.php");
+    header("Location: login");
     exit();
 }
 
@@ -59,7 +59,7 @@ if(isset($_POST['update_student'])){
         WHERE id='$id'");
 
     if($update){
-        header("Location: view_students.php");
+        header("Location: view_students");
         exit();
     }else{
         $error = "Failed to update student.";
@@ -71,6 +71,7 @@ if(isset($_POST['update_student'])){
 <html>
 <head>
     <title>Edit Student</title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/admin.css">
 </head>
 <body>
@@ -84,21 +85,11 @@ if(isset($_POST['update_student'])){
 
         <div class="admin-brand">
 
-            <div class="brand-mark">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            </div>
-
-            <div class="brand-text">
-
-                <h2>
-                    Student Record
-                </h2>
-
-                <span>
-                    Management System
-                </span>
-
-            </div>
+            <img
+                class="logo-image"
+                src="assets/image/record_logo.png"
+                alt="Student Record Management System Logo"
+            >
 
         </div>
 
@@ -114,36 +105,20 @@ if(isset($_POST['update_student'])){
 
                 <li>
 
-                    <a
-                        href="dashboard.php"
-                        class="active"
-                    >
-
+                    <a href="dashboard" class="active">
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
                         </span>
-
-                        <span>
-                            Dashboard
-                        </span>
-
+                        <span> Dashboard</span>
                     </a>
-
                 </li>
 
-
                 <li>
-
-                    <a href="add_student.php">
-
+                    <a href="add_student">
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/><path d="M15 3h6"/><path d="M18 0v6"/></svg>
                         </span>
-
                         <span>
-                            Add Student
-                        </span>
-
                     </a>
 
                 </li>
@@ -151,7 +126,7 @@ if(isset($_POST['update_student'])){
 
                 <li>
 
-                    <a href="view_students.php">
+                    <a href="view_students">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/><circle cx="17" cy="9" r="3"/><path d="M21 21v-2a4 4 0 0 0-7.5-1.5"/></svg>
@@ -168,7 +143,7 @@ if(isset($_POST['update_student'])){
 
                 <li>
 
-                    <a href="search_student.php">
+                    <a href="search_student">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
@@ -195,7 +170,7 @@ if(isset($_POST['update_student'])){
 
                 <li>
 
-                    <a href="logout.php" class="logout-link">
+                    <a href="logout" class="logout-link">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -229,6 +204,18 @@ if(isset($_POST['update_student'])){
 
     </aside>
     <main class="admin-main">
+
+        <button
+            class="sidebar-toggle"
+            id="sidebarToggle"
+            type="button"
+            aria-label="Toggle sidebar"
+            aria-expanded="true"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
         <div class="page-content">
 
@@ -523,7 +510,7 @@ if(isset($_POST['update_student'])){
                     <div class="student-form-actions">
 
                         <a
-                            href="view_students.php"
+                            href="view_students"
                             class="cancel-student"
                         >
                             Cancel
@@ -550,6 +537,8 @@ if(isset($_POST['update_student'])){
     </div>
 
 </div>
+
+<script src="assets/js/sidebar.js"></script>
 
 </body>
 </html>

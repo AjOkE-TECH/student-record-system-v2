@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['admin'])) {
-    header("Location: login.php");
+    header("Location: login");
     exit();
 }
 
@@ -97,6 +97,7 @@ $query = mysqli_query(
     >
 
     <title>View Students - SRMS</title>
+<link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/admin.css">
 <link rel="stylesheet" href="assets/css/students.css">
 </head>
@@ -110,21 +111,11 @@ $query = mysqli_query(
     <aside class="admin-sidebar">
         <div class="admin-brand">
 
-            <div class="brand-mark">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            </div>
-
-            <div class="brand-text">
-
-                <h2>
-                    Student Record
-                </h2>
-
-                <span>
-                    Management System
-                </span>
-
-            </div>
+            <img
+                class="logo-image"
+                src="assets/image/record_logo.png"
+                alt="Student Record Management System Logo"
+            >
 
         </div>
 
@@ -141,7 +132,7 @@ $query = mysqli_query(
                 <li>
 
                     <a
-                        href="dashboard.php"
+                        href="dashboard"
                         class="active"
                     >
 
@@ -160,7 +151,7 @@ $query = mysqli_query(
 
                 <li>
 
-                    <a href="add_student.php">
+                    <a href="add_student">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/><path d="M15 3h6"/><path d="M18 0v6"/></svg>
@@ -177,7 +168,7 @@ $query = mysqli_query(
 
                 <li>
 
-                    <a href="view_students.php">
+                    <a href="view_students">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/><circle cx="17" cy="9" r="3"/><path d="M21 21v-2a4 4 0 0 0-7.5-1.5"/></svg>
@@ -194,7 +185,7 @@ $query = mysqli_query(
 
                 <li>
 
-                    <a href="search_student.php">
+                    <a href="search_student">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
@@ -221,7 +212,7 @@ $query = mysqli_query(
 
                 <li>
 
-                    <a href="logout.php" class="logout-link">
+                    <a href="logout" class="logout-link">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -263,6 +254,18 @@ $query = mysqli_query(
         <!-- TOP HEADER -->
 
         <header class="header">
+
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+                aria-label="Toggle sidebar"
+                aria-expanded="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
             <div class="header-left">
 
@@ -334,7 +337,7 @@ $query = mysqli_query(
 
 
                 <a
-                    href="add_student.php"
+                    href="add_student"
                     class="primary-button"
                 >
 
@@ -453,7 +456,7 @@ $query = mysqli_query(
 
                 <form
                     method="GET"
-                    action="view_students.php"
+                    action="view_students"
                     class="student-search-form"
                 >
 
@@ -485,7 +488,7 @@ $query = mysqli_query(
                     <?php if ($search !== ""): ?>
 
                         <a
-                            href="view_students.php"
+                            href="view_students"
                             class="clear-search"
                         >
                             Clear
@@ -753,7 +756,7 @@ $query = mysqli_query(
 
 
                                             <a
-                                                href="student_profile.php?id=<?php echo (int) $row['id']; ?>"
+                                                href="student_profile?id=<?php echo (int) $row['id']; ?>"
                                                 class="table-action view-action"
                                                 title="View Student"
                                             >
@@ -762,7 +765,7 @@ $query = mysqli_query(
 
 
                                             <a
-                                                href="edit_student.php?id=<?php echo (int) $row['id']; ?>"
+                                                href="edit_student?id=<?php echo (int) $row['id']; ?>"
                                                 class="table-action edit-action"
                                                 title="Edit Student"
                                             >
@@ -771,7 +774,7 @@ $query = mysqli_query(
 
 
                                             <a
-                                                href="delete_student.php?id=<?php echo (int) $row['id']; ?>"
+                                                href="delete_student?id=<?php echo (int) $row['id']; ?>"
                                                 class="table-action delete-action"
                                                 title="Delete Student"
                                                 onclick="return confirm('Are you sure you want to delete this student?');"
@@ -928,7 +931,7 @@ $query = mysqli_query(
                         <?php if ($search !== ""): ?>
 
                             <a
-                                href="view_students.php"
+                                href="view_students"
                                 class="empty-button"
                             >
                                 View All Students
@@ -937,7 +940,7 @@ $query = mysqli_query(
                         <?php else: ?>
 
                             <a
-                                href="add_student.php"
+                                href="add_student"
                                 class="empty-button"
                             >
                                 Add First Student
@@ -962,6 +965,8 @@ $query = mysqli_query(
 
 </div>
 
+
+<script src="assets/js/sidebar.js"></script>
 
 </body>
 

@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['admin'])) {
-    header("Location: login.php");
+    header("Location: login");
     exit();
 }
 
@@ -18,7 +18,7 @@ if (
     !isset($_GET['student_id']) ||
     empty($_GET['student_id'])
 ) {
-    header("Location: results.php");
+    header("Location: result");
     exit();
 }
 
@@ -45,7 +45,7 @@ if (
     !$student_query ||
     mysqli_num_rows($student_query) == 0
 ) {
-    header("Location: results.php");
+    header("Location: result");
     exit();
 }
 
@@ -253,7 +253,7 @@ if (
 
 
                 header(
-                    "Location: student_profile.php?id="
+                    "Location: student_profile?id="
                     . $student_id
                     . "#results"
                 );
@@ -286,104 +286,33 @@ if (
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>
-        Add Result - Student Record Management System
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="assets/css/admin.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="assets/css/style.css"
-    >
-
+    <meta name="viewport"content="width=device-width, initial-scale=1.0">
+    <title> Add Result - Student Record Management System</title>
+    <link rel="stylesheet"href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/style.css" >
 </head>
 
-
 <body>
-
-
 <div class="admin-layout">
 
 
-    <!-- =====================================================
-         SIDEBAR
-    ====================================================== -->
-
+    <!--sidebar-->
     <aside class="admin-sidebar">
-
-
         <div class="admin-brand">
-
-            <div class="brand-mark">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-
-                    <path
-                        d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
-                    />
-
-                    <path
-                        d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-                    />
-
-                </svg>
-
-            </div>
-
-
-            <div class="brand-text">
-
-                <h2>
-                    Student Record
-                </h2>
-
-                <span>
-                    Management System
-                </span>
-
-            </div>
-
+            <img
+                class="logo-image"
+                src="assets/image/record_logo.png"
+                alt="Student Record Management System Logo"
+            >
         </div>
-
-
         <nav class="admin-navigation">
-
-
-            <div class="navigation-title">
-                MAIN MENU
-            </div>
-
+            <div class="navigation-title"> MAIN MENU</div>
 
             <ul>
-
-
                 <li>
-
-                    <a href="dashboard.php">
-
+                    <a href="dashboard">
                         <span class="nav-icon">
-
                             <svg
                                 viewBox="0 0 24 24"
                                 width="18"
@@ -394,7 +323,6 @@ if (
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                             >
-
                                 <rect
                                     x="3"
                                     y="3"
@@ -402,7 +330,6 @@ if (
                                     height="7"
                                     rx="1"
                                 />
-
                                 <rect
                                     x="14"
                                     y="3"
@@ -410,7 +337,6 @@ if (
                                     height="7"
                                     rx="1"
                                 />
-
                                 <rect
                                     x="3"
                                     y="14"
@@ -431,21 +357,13 @@ if (
 
                         </span>
 
-                        <span>
-                            Dashboard
-                        </span>
-
+                        <span> Dashboard </span>
                     </a>
-
                 </li>
 
-
                 <li>
-
-                    <a href="add_student.php">
-
+                    <a href="add_student">
                         <span class="nav-icon">
-
                             <svg
                                 viewBox="0 0 24 24"
                                 width="18"
@@ -479,21 +397,13 @@ if (
 
                         </span>
 
-                        <span>
-                            Add Student
-                        </span>
-
+                        <span> Add Student </span>
                     </a>
-
                 </li>
 
-
                 <li>
-
-                    <a href="view_students.php">
-
+                    <a href="view_students">
                         <span class="nav-icon">
-
                             <svg
                                 viewBox="0 0 24 24"
                                 width="18"
@@ -541,7 +451,7 @@ if (
                 <li>
 
                     <a
-                        href="results.php"
+                        href="result"
                         class="active"
                     >
 
@@ -581,7 +491,7 @@ if (
 
                 <li>
 
-                    <a href="search_student.php">
+                    <a href="search_student">
 
                         <span class="nav-icon">
 
@@ -632,7 +542,7 @@ if (
                 <li>
 
                     <a
-                        href="logout.php"
+                        href="logout"
                         class="logout-link"
                     >
 
@@ -707,6 +617,18 @@ if (
 
 
         <header class="admin-topbar">
+
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+                aria-label="Toggle sidebar"
+                aria-expanded="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
             <div>
 
@@ -1032,27 +954,27 @@ if (
                     </strong>
 
                     <span>
-                        70–100 A
+                        70â€“100 A
                     </span>
 
                     <span>
-                        60–69 B
+                        60â€“69 B
                     </span>
 
                     <span>
-                        50–59 C
+                        50â€“59 C
                     </span>
 
                     <span>
-                        45–49 D
+                        45â€“49 D
                     </span>
 
                     <span>
-                        40–44 E
+                        40â€“44 E
                     </span>
 
                     <span>
-                        0–39 F
+                        0â€“39 F
                     </span>
 
                 </div>
@@ -1065,7 +987,7 @@ if (
 
 
                     <a
-                        href="student_profile.php?id=<?php echo $student_id; ?>"
+                        href="student_profile?id=<?php echo $student_id; ?>"
                         class="student-profile-btn back-profile-btn"
                     >
                         Cancel
@@ -1111,6 +1033,9 @@ if (
 
 
 </div>
+
+
+<script src="assets/js/sidebar.js"></script>
 
 </body>
 

@@ -1,0 +1,21 @@
+Options -Indexes
+
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /students_record_system/
+
+    # 1. Redirect direct requests to .php files to their extensionless URLs (301).
+    #    Only fires for real incoming ".php" requests (checked via THE_REQUEST),
+    #    so the internal rewrites below never re-trigger this rule (no loops).
+    RewriteCond %{THE_REQUEST} \.php[?\s]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^([^.]*)\.php$ $1 [R=301,L]
+
+    # 2. Serve extensionless URLs by internally rewriting them to the .php file.
+    #    Existing files and directories are left untouched.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^([^.]+)$ $1.php [L]
+</IfModule>

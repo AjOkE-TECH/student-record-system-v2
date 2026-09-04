@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['admin'])) {
-    header("Location: login.php");
+    header("Location: login");
     exit();
 }
 
@@ -100,43 +100,11 @@ $results_query = mysqli_query(
 
         <div class="admin-brand">
 
-            <div class="brand-mark">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-
-                    <path
-                        d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
-                    />
-
-                    <path
-                        d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-                    />
-
-                </svg>
-
-            </div>
-
-
-            <div class="brand-text">
-
-                <h2>
-                    Student Record
-                </h2>
-
-                <span>
-                    Management System
-                </span>
-
-            </div>
+            <img
+                class="logo-image"
+                src="assets/image/record_logo.png"
+                alt="Student Record Management System Logo"
+            >
 
         </div>
 
@@ -160,7 +128,7 @@ $results_query = mysqli_query(
                 <li>
 
                     <a
-                        href="dashboard.php"
+                        href="dashboard"
                         class="<?php echo ($current_page == 'dashboard.php') ? 'active' : ''; ?>"
                     >
 
@@ -229,7 +197,7 @@ $results_query = mysqli_query(
                 <li>
 
                     <a
-                        href="add_student.php"
+                        href="add_student"
                         class="<?php echo ($current_page == 'add_student.php') ? 'active' : ''; ?>"
                     >
 
@@ -284,7 +252,7 @@ $results_query = mysqli_query(
                 <li>
 
                     <a
-                        href="view_students.php"
+                        href="view_students"
                         class="<?php echo ($current_page == 'view_students.php' || $current_page == 'student_profile.php') ? 'active' : ''; ?>"
                     >
 
@@ -341,7 +309,7 @@ $results_query = mysqli_query(
                 <li>
 
                     <a
-                        href="results.php"
+                        href="result"
                         class="<?php echo ($current_page == 'results.php') ? 'active' : ''; ?>"
                     >
 
@@ -394,7 +362,7 @@ $results_query = mysqli_query(
                 <li>
 
                     <a
-                        href="search_student.php"
+                        href="search_student"
                         class="<?php echo ($current_page == 'search_student.php') ? 'active' : ''; ?>"
                     >
 
@@ -451,7 +419,7 @@ $results_query = mysqli_query(
                 <li>
 
                     <a
-                        href="logout.php"
+                        href="logout"
                         class="logout-link"
                     >
 
@@ -530,6 +498,18 @@ $results_query = mysqli_query(
         <!-- TOPBAR -->
 
         <header class="admin-topbar">
+
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+                aria-label="Toggle sidebar"
+                aria-expanded="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
             <div>
 
@@ -854,7 +834,7 @@ $results_query = mysqli_query(
                                 <td>
 
                                     <a
-                                        href="student_profile.php?id=<?php echo (int)$result['student_id']; ?>"
+                                        href="student_profile?id=<?php echo (int)$result['student_id']; ?>"
                                         class="result-view-btn"
                                     >
                                         View Student
@@ -936,6 +916,8 @@ $results_query = mysqli_query(
 
 </div>
 
+
+<script src="assets/js/sidebar.js"></script>
 
 </body>
 

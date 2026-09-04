@@ -52,7 +52,7 @@ if (isset($_POST['login'])) {
 
 
             header(
-                "Location: dashboard.php"
+                "Location: dashboard"
             );
 
             exit();
@@ -123,39 +123,29 @@ if (isset($_POST['login'])) {
         <div class="login-logo">
 
             <img
-                src="assets/image/logo.png"
+                class="logo-image"
+                src="assets/image/record_logo.png"
                 alt="Student Record Management System Logo"
             >
-
-
-            <div class="logo-text">
-
-                <h2>SRMS</h2>
-
-                <span>
-                    Student Record Management System
-                </span>
-
-            </div>
 
         </div>
 
 
         <nav class="login-nav">
 
-            <a href="index.php">
+            <a href="index">
                 Home
             </a>
 
-            <a href="index.php#about">
+            <a href="index#about">
                 About
             </a>
 
-            <a href="index.php#features">
+            <a href="index#features">
                 Features
             </a>
 
-            <a href="index.php#contact">
+            <a href="index#contact">
                 Contact
             </a>
 
@@ -325,7 +315,7 @@ if (isset($_POST['login'])) {
 
                     Don't have an account?
 
-                    <a href="register.php">
+                    <a href="register">
 
                         Create Account
 
