@@ -17,25 +17,24 @@ if (isset($_GET['id'])) {
 
     $update = mysqli_query(
         $conn,
-        "UPDATE students
-         SET archived_at = NOW()
-         WHERE id = $id
-         AND archived_at IS NULL"
+        "UPDATE courses
+         SET archived_at = NULL
+         WHERE id = $id"
     );
 
     if ($update && mysqli_affected_rows($conn) > 0) {
 
-        $message = "Student archived successfully. Their results and records are preserved.";
+        $message = "Course restored successfully.";
         $message_type = "success";
 
     } else {
 
-        $message = "Student record not found or already archived.";
+        $message = "Course record not found or already active.";
     }
 
 } else {
 
-    $message = "No student specified.";
+    $message = "No course specified.";
 }
 
 ?>
@@ -44,26 +43,11 @@ if (isset($_GET['id'])) {
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Archive Student - Student Record Management System</title>
-
-    <link
-        rel="stylesheet"
-        href="assets/css/style.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="assets/css/admin.css"
-    >
-
+    <meta name="viewport"content="width=device-width, initial-scale=1.0">
+    <title>Restore Course - Student Record Management System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
 </head>
 
 <body>
@@ -106,17 +90,11 @@ if (isset($_GET['id'])) {
                 <li>
 
                     <a href="dashboard">
-
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
                         </span>
-
-                        <span>
-                            Dashboard
-                        </span>
-
+                        <span> Dashboard </span>
                     </a>
-
                 </li>
 
                 <li>
@@ -127,9 +105,7 @@ if (isset($_GET['id'])) {
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/><path d="M15 3h6"/><path d="M18 0v6"/></svg>
                         </span>
 
-                        <span>
-                            Add Student
-                        </span>
+                        <span> Add Student </span>
 
                     </a>
 
@@ -137,10 +113,7 @@ if (isset($_GET['id'])) {
 
                 <li>
 
-                    <a
-                        href="view_students"
-                        class="active"
-                    >
+                    <a href="view_students">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/><circle cx="17" cy="9" r="3"/><path d="M21 21v-2a4 4 0 0 0-7.5-1.5"/></svg>
@@ -162,10 +135,7 @@ if (isset($_GET['id'])) {
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="5" rx="1"/><path d="M4 8v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/></svg>
                         </span>
 
-                        <span>
-                            Archive
-                        </span>
-
+                        <span> Archive </span>
                     </a>
 
                 </li>
@@ -178,9 +148,7 @@ if (isset($_GET['id'])) {
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 16v-4"/><path d="M12 16V8"/><path d="M16 16v-7"/></svg>
                         </span>
 
-                        <span>
-                            Results
-                        </span>
+                        <span> Results </span>
 
                     </a>
 
@@ -188,15 +156,13 @@ if (isset($_GET['id'])) {
 
                 <li>
 
-                    <a href="courses">
+                    <a href="courses" class="active" >
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                         </span>
 
-                        <span>
-                            Courses
-                        </span>
+                        <span> Courses </span>
 
                     </a>
 
@@ -210,9 +176,7 @@ if (isset($_GET['id'])) {
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                         </span>
 
-                        <span>
-                            Sessions
-                        </span>
+                        <span> Sessions </span>
 
                     </a>
 
@@ -283,11 +247,11 @@ if (isset($_GET['id'])) {
             <div>
 
                 <p class="topbar-label">
-                    STUDENT RECORDS
+                    COURSE DIRECTORY
                 </p>
 
                 <h1>
-                    Archive Student
+                    Restore Course
                 </h1>
 
             </div>
@@ -309,17 +273,10 @@ if (isset($_GET['id'])) {
                 <div class="message-actions">
 
                     <a
-                        href="view_students"
+                        href="courses"
                         class="primary-button"
                     >
-                        Back to Students
-                    </a>
-
-                    <a
-                        href="archive_students"
-                        class="primary-button"
-                    >
-                        View Archive
+                        Back to Courses
                     </a>
 
                 </div>

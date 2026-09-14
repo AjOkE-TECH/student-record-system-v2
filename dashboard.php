@@ -17,7 +17,8 @@ include "config/database.php";
 $total_query = mysqli_query(
     $conn,
     "SELECT COUNT(*) AS total
-     FROM students"
+     FROM students
+     WHERE archived_at IS NULL"
 );
 
 $total_result = mysqli_fetch_assoc($total_query);
@@ -32,7 +33,8 @@ $male_query = mysqli_query(
     $conn,
     "SELECT COUNT(*) AS total
      FROM students
-     WHERE gender = 'Male'"
+     WHERE gender = 'Male'
+     AND archived_at IS NULL"
 );
 
 $male_result = mysqli_fetch_assoc($male_query);
@@ -47,7 +49,8 @@ $female_query = mysqli_query(
     $conn,
     "SELECT COUNT(*) AS total
      FROM students
-     WHERE gender = 'Female'"
+     WHERE gender = 'Female'
+     AND archived_at IS NULL"
 );
 
 $female_result = mysqli_fetch_assoc($female_query);
@@ -63,7 +66,8 @@ $department_count_query = mysqli_query(
     "SELECT COUNT(DISTINCT department) AS total
      FROM students
      WHERE department IS NOT NULL
-     AND department != ''"
+     AND department != ''
+     AND archived_at IS NULL"
 );
 
 $department_count_result =
@@ -71,6 +75,21 @@ $department_count_result =
 
 $total_departments =
     $department_count_result['total'];
+
+
+/* =========================================================
+   TOTAL COURSES
+========================================================= */
+
+$total_courses_query = mysqli_query(
+    $conn,
+    "SELECT COUNT(*) AS total
+     FROM courses
+     WHERE archived_at IS NULL"
+);
+
+$total_courses_result = mysqli_fetch_assoc($total_courses_query);
+$total_courses = $total_courses_result['total'];
 
 
 /* =========================================================
@@ -85,6 +104,7 @@ $department_query = mysqli_query(
      FROM students
      WHERE department IS NOT NULL
      AND department != ''
+     AND archived_at IS NULL
      GROUP BY department
      ORDER BY total DESC"
 );
@@ -102,6 +122,7 @@ $level_query = mysqli_query(
      FROM students
      WHERE level IS NOT NULL
      AND level != ''
+     AND archived_at IS NULL
      GROUP BY level
      ORDER BY total DESC"
 );
@@ -119,6 +140,7 @@ $gender_query = mysqli_query(
      FROM students
      WHERE gender IS NOT NULL
      AND gender != ''
+     AND archived_at IS NULL
      GROUP BY gender"
 );
 
@@ -134,6 +156,7 @@ $monthly_query = mysqli_query(
         DATE_FORMAT(created_at, '%Y-%m') AS month_sort,
         COUNT(*) AS total
      FROM students
+     WHERE archived_at IS NULL
      GROUP BY month_sort, month_name
      ORDER BY month_sort DESC
      LIMIT 6"
@@ -155,6 +178,7 @@ $recent_query = mysqli_query(
         level,
         created_at
      FROM students
+     WHERE archived_at IS NULL
      ORDER BY id DESC
      LIMIT 5"
 );
@@ -217,6 +241,18 @@ if (
 
         <div class="admin-brand">
 
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+                aria-label="Toggle sidebar"
+                aria-expanded="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             <img
                 class="logo-image"
                 src="assets/image/record_logo.png"
@@ -227,7 +263,6 @@ if (
 
 
         <nav class="admin-navigation">
-
 
             <div class="navigation-title">
                 MAIN MENU
@@ -344,6 +379,136 @@ if (
 
                 <li>
 
+                    <a href="archive_students">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <rect x="2" y="3" width="20" height="5" rx="1"/>
+                                <path d="M4 8v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"/>
+                                <path d="M10 12h4"/>
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Archive
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="result">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M4 4h16v16H4z"/>
+                                <path d="M8 16v-4"/>
+                                <path d="M12 16V8"/>
+                                <path d="M16 16v-7"/>
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Results
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="courses">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Courses
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="sessions">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+
+                        </span>
+
+                        <span>
+                            Sessions
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
                     <a href="search_student">
 
                         <span class="nav-icon">
@@ -447,24 +612,9 @@ if (
     <main class="admin-main">
 
 
-        <!-- =================================================
-             TOP HEADER
-        ================================================== -->
+        <!-- top header-->
 
         <header class="admin-topbar">
-
-        <button
-            class="sidebar-toggle"
-            id="sidebarToggle"
-            type="button"
-            aria-label="Toggle sidebar"
-            aria-expanded="true"
-        >
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
 
             <div>
 
@@ -524,9 +674,7 @@ if (
 
 
 
-        <!-- =================================================
-             WELCOME SECTION
-        ================================================== -->
+        <!--welcome section-->
 
         <section class="welcome-section">
 
@@ -671,8 +819,6 @@ if (
 
             </div>
 
-
-
             <!-- FEMALE -->
 
             <div class="stat-card stat-teal">
@@ -725,8 +871,6 @@ if (
 
 
             </div>
-
-
 
             <!-- DEPARTMENTS -->
 
@@ -784,47 +928,73 @@ if (
             </div>
 
 
-        </section>
+
+            <!-- TOTAL COURSES -->
+
+            <div class="stat-card stat-blue">
 
 
-
-        <!-- =================================================
-             QUICK ACTIONS
-        ================================================== -->
-
-        <section class="quick-actions-section">
+                <div class="stat-card-top">
 
 
-            <div class="section-heading">
+                    <div class="stat-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="20"
+                            height="20"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+
+                    </div>
 
 
-                <div>
-
-                    <span>
-                        ACTIONS
+                    <span class="stat-label">
+                        COURSES
                     </span>
 
-                    <h2>
-                        Quick Actions
-                    </h2>
 
                 </div>
+
+
+                <h3>
+
+                    <?php
+                    echo $total_courses;
+                    ?>
+
+                </h3>
+
+
+                <p>
+                    Registered courses
+                </p>
 
 
             </div>
 
 
+        </section>
+
+        <!-- quick actions-->
+
+        <section class="quick-actions-section">
+            <div class="section-heading">
+                <div>
+                    <span>ACTIONS</span>
+                    <h2> Quick Actions </h2>
+                </div>
+            </div>
             <div class="quick-actions-grid">
-
-
-                <a
-                    href="add_student"
-                    class="quick-action green-action"
-                >
-
-
+                <a href="add_student"class="quick-action green-action" >
                     <div class="quick-action-icon">
-
                         <svg
                             viewBox="0 0 24 24"
                             width="18"
@@ -842,33 +1012,16 @@ if (
                         </svg>
 
                     </div>
-
-
                     <div>
 
-                        <strong>
-                            Add Student
-                        </strong>
+                        <strong> Add Student </strong>
 
-                        <span>
-                            Register a new student
-                        </span>
-
+                        <span>Register a new student </span>
                     </div>
-
-
                 </a>
 
-
-
-                <a
-                    href="view_students"
-                    class="quick-action blue-action"
-                >
-
-
+                <a href="view_students"class="quick-action blue-action" >
                     <div class="quick-action-icon">
-
                         <svg
                             viewBox="0 0 24 24"
                             width="18"
@@ -884,35 +1037,15 @@ if (
                             <circle cx="17" cy="9" r="3"/>
                             <path d="M21 21v-2a4 4 0 0 0-7.5-1.5"/>
                         </svg>
-
                     </div>
-
-
                     <div>
-
-                        <strong>
-                            View Students
-                        </strong>
-
-                        <span>
-                            Browse student records
-                        </span>
-
+                        <strong> View Students </strong>
+                        <span> Browse student records</span>
                     </div>
-
-
                 </a>
 
-
-
-                <a
-                    href="search_student"
-                    class="quick-action teal-action"
-                >
-
-
+                <a href="search_student" class="quick-action teal-action" >
                     <div class="quick-action-icon">
-
                         <svg
                             viewBox="0 0 24 24"
                             width="18"
@@ -926,93 +1059,33 @@ if (
                             <circle cx="11" cy="11" r="7"/>
                             <path d="m20 20-4-4"/>
                         </svg>
-
                     </div>
-
-
                     <div>
-
-                        <strong>
-                            Search Students
-                        </strong>
-
-                        <span>
-                            Find a student record
-                        </span>
-
+                        <strong> Search Students </strong>
+                        <span>Find a student record </span>
                     </div>
-
-
                 </a>
-
-
             </div>
-
-
         </section>
-
-
-
-        <!-- =================================================
-             ANALYTICS
-        ================================================== -->
-
+        <!-- analytics -->
         <section class="analytics-section">
-
-
             <div class="section-heading">
-
-
                 <div>
-
-                    <span>
-                        ANALYTICS
-                    </span>
-
-                    <h2>
-                        Student Analytics
-                    </h2>
-
+                    <span> ANALYTICS </span>
+                    <h2> Student Analytics </h2>
                 </div>
-
-
             </div>
-
-
             <div class="analytics-grid">
 
-
-                <!-- =================================================
-                     DEPARTMENT
-                ================================================== -->
-
+                <!--department -->
                 <div class="analytics-card">
-
-
                     <div class="analytics-card-header">
-
-
                         <div>
-
-                            <h3>
-                                Students by Department
-                            </h3>
-
-                            <p>
-                                Distribution across departments
-                            </p>
-
+                            <h3>Students by Department</h3>
+                            <p> Distribution across departments </p>
                         </div>
-
-
-                        <div class="analytics-badge green-badge">
-                            DEPARTMENT
-                        </div>
-
-
+                        <div class="analytics-badge green-badge"> DEPARTMENT </div>
                     </div>
-
-
                     <?php
 
                     if (
@@ -1045,55 +1118,28 @@ if (
                             }
 
                     ?>
-
                         <div class="analytics-row">
-
-
                             <div class="analytics-info">
-
-
                                 <strong>
-
                                     <?php
-
                                     echo htmlspecialchars(
                                         $department['department']
                                     );
-
                                     ?>
-
                                 </strong>
-
-
                                 <span>
-
                                     <?php
-
                                     echo $department_total;
-
                                     ?>
-
                                 </span>
-
-
                             </div>
-
-
                             <div class="progress-container">
-
-
                                 <div
                                     class="progress-bar progress-green"
                                     style="width: <?php echo $department_percentage; ?>%;"
                                 ></div>
-
-
                             </div>
-
-
                         </div>
-
-
                     <?php
 
                         }
@@ -1101,55 +1147,24 @@ if (
                     } else {
 
                     ?>
-
                         <div class="empty-data">
                             No department data available.
                         </div>
-
                     <?php
-
                     }
-
                     ?>
-
-
                 </div>
 
-
-
-                <!-- =================================================
-                     LEVEL
-                ================================================== -->
-
+                <!-- level -->
                 <div class="analytics-card">
-
-
                     <div class="analytics-card-header">
-
-
                         <div>
-
-                            <h3>
-                                Students by Level
-                            </h3>
-
-                            <p>
-                                Distribution across academic levels
-                            </p>
-
+                            <h3> Students by Level</h3>
+                            <p> Distribution across academic levels</p>
                         </div>
-
-
-                        <div class="analytics-badge blue-badge">
-                            LEVEL
-                        </div>
-
-
+                        <div class="analytics-badge blue-badge"> LEVEL </div>
                     </div>
-
-
                     <?php
-
                     if (
                         mysqli_num_rows(
                             $level_query
@@ -1180,106 +1195,45 @@ if (
                             }
 
                     ?>
-
                         <div class="analytics-row">
-
-
                             <div class="analytics-info">
-
-
                                 <strong>
-
                                     <?php
-
                                     echo htmlspecialchars(
                                         $level['level']
                                     );
-
                                     ?>
-
                                 </strong>
-
-
                                 <span>
-
                                     <?php
-
                                     echo $level_total;
-
                                     ?>
-
                                 </span>
-
-
                             </div>
-
-
                             <div class="progress-container">
-
-
                                 <div
                                     class="progress-bar progress-blue"
                                     style="width: <?php echo $level_percentage; ?>%;"
                                 ></div>
-
-
                             </div>
-
-
                         </div>
-
-
                     <?php
-
                         }
-
                     } else {
-
                     ?>
-
-                        <div class="empty-data">
-                            No level data available.
-                        </div>
-
+                        <div class="empty-data"> No level data available. </div>
                     <?php
-
                     }
-
                     ?>
-
-
                 </div>
-
-
-
-                <!-- =================================================
-                     GENDER
-                ================================================== -->
-
+                <!-- gender-->
                 <div class="analytics-card">
-
-
                     <div class="analytics-card-header">
-
-
                         <div>
-
-                            <h3>
-                                Gender Distribution
-                            </h3>
-
-                            <p>
-                                Student gender statistics
-                            </p>
-
+                            <h3>Gender Distribution </h3>
+                            <p> Student gender statistics </p>
                         </div>
-
-
-                        <div class="analytics-badge teal-badge">
-                            GENDER
-                        </div>
-
-
+                        <div class="analytics-badge teal-badge">GENDER</div>
                     </div>
 
 

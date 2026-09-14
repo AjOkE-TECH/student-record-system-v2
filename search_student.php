@@ -60,19 +60,23 @@ if (
                 "SELECT *
                  FROM students
 
-                 WHERE matric_no LIKE '%$keyword_safe%'
+                 WHERE archived_at IS NULL
 
-                 OR firstname LIKE '%$keyword_safe%'
+                 AND (
+                    matric_no LIKE '%$keyword_safe%'
 
-                 OR lastname LIKE '%$keyword_safe%'
+                    OR firstname LIKE '%$keyword_safe%'
 
-                 OR email LIKE '%$keyword_safe%'
+                    OR lastname LIKE '%$keyword_safe%'
 
-                 OR department LIKE '%$keyword_safe%'
+                    OR email LIKE '%$keyword_safe%'
 
-                 OR level LIKE '%$keyword_safe%'
+                    OR department LIKE '%$keyword_safe%'
 
-                 OR phone LIKE '%$keyword_safe%'
+                    OR level LIKE '%$keyword_safe%'
+
+                    OR phone LIKE '%$keyword_safe%'
+                 )
 
                  ORDER BY id DESC"
             );
@@ -127,6 +131,18 @@ if (
 
         <div class="admin-brand">
 
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+                aria-label="Toggle sidebar"
+                aria-expanded="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             <img
                 class="logo-image"
                 src="assets/image/record_logo.png"
@@ -137,7 +153,6 @@ if (
 
 
         <!-- NAVIGATION -->
-
         <nav class="admin-navigation">
 
             <div class="navigation-title">
@@ -241,6 +256,140 @@ if (
 
                 <li>
 
+                    <a href="archive_students">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <rect x="2" y="3" width="20" height="5" rx="1"/>
+                                <path d="M4 8v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"/>
+                                <path d="M10 12h4"/>
+
+                            </svg>
+
+                        </span>
+
+                        <span>Archive</span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="result">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <path d="M4 4h16v16H4z"/>
+                                <path d="M8 16v-4"/>
+                                <path d="M12 16V8"/>
+                                <path d="M16 16v-7"/>
+
+                            </svg>
+
+                        </span>
+
+                        <span>Results</span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="courses">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <path
+                                    d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"
+                                />
+
+                                <path
+                                    d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"
+                                />
+
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Courses
+                        </span>
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="sessions">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+
+                        </span>
+
+                        <span>
+                            Sessions
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
                     <a
                         href="search_student"
                         class="active"
@@ -332,18 +481,6 @@ if (
         <!-- TOP HEADER -->
 
         <header class="admin-topbar">
-
-            <button
-                class="sidebar-toggle"
-                id="sidebarToggle"
-                type="button"
-                aria-label="Toggle sidebar"
-                aria-expanded="true"
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
 
             <div>
 

@@ -3402,9 +3402,7 @@ body > footer {
 }
 
 
-/* =========================================================
-   RESULTS CARD
-========================================================= */
+/* RESULTS CARD */
 
 .compact-results-card {
     width: 100%;
@@ -3428,9 +3426,7 @@ body > footer {
 }
 
 
-/* =========================================================
-   RESULTS TABLE
-========================================================= */
+/* RESULTS TABLE */
 
 .compact-results-table {
     width: 100%;
@@ -3489,61 +3485,42 @@ body > footer {
 }
 
 
-/* =========================================================
-   RESULT NUMBER
-========================================================= */
+/* RESULT NUMBER */
 
 .result-number {
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
-
     width: 24px;
     height: 24px;
-
     border-radius: 6px;
-
     background: #f0f4f2;
-
     color: #63716a;
-
     font-size: 10px;
-
     font-weight: 700;
 }
 
 
-/* =========================================================
-   COURSE
-========================================================= */
-
+/* COURSE */
 .result-course {
     display: flex;
-
     flex-direction: column;
-
     gap: 3px;
 }
 
 .result-course strong {
     color: #1c303e;
-
     font-size: 12px;
-
     font-weight: 750;
 }
 
 .result-course span {
     color: #7b8790;
-
     font-size: 10px;
 }
 
 
-/* =========================================================
-   SCORE
-========================================================= */
+/* SCORE */
 
 .result-score {
     color: #1d303d;
@@ -3560,9 +3537,7 @@ body > footer {
 }
 
 
-/* =========================================================
-   GRADE
-========================================================= */
+/* GRADE */
 
 .result-grade-badge {
     display: inline-flex;
@@ -3779,35 +3754,24 @@ body > footer {
     }
 }
 
-/* =========================================================
-   SIDEBAR TOGGLE (responsive hamburger)
-========================================================= */
+/*  SIDEBAR TOGGLE */
 
 .sidebar-toggle {
     width: 42px;
     height: 42px;
-
     position: relative;
-
     flex: 0 0 auto;
-
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     gap: 5px;
-
     margin-right: 16px;
-
     border: 1px solid #e5e7eb;
     border-radius: 10px;
-
     background: #ffffff;
     color: #006400;
-
     cursor: pointer;
-
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
     transition:
@@ -3904,7 +3868,12 @@ body > footer {
     justify-content: flex-start;
 }
 
-.main-content .header .header-right {
+.admin-main .header {
+    justify-content: flex-start;
+}
+
+.main-content .header .header-right,
+.admin-main .header .header-right {
     margin-left: auto;
 }
 
@@ -3982,4 +3951,26 @@ body > footer {
 .admin-layout.sidebar-collapsed .sidebar-footer,
 .container.sidebar-collapsed .sidebar-footer {
     text-align: center;
+}
+
+
+/* =========================================================
+   SIDEBAR TOGGLE (placed inside sidebar brand, left of logo)
+========================================================= */
+
+.admin-brand .sidebar-toggle {
+    flex: 0 0 auto;
+
+    margin: 0;
+
+    padding: 0;
+}
+
+.admin-brand .logo-image {
+    min-width: 0;
+}
+
+.admin-layout.sidebar-collapsed .admin-brand .logo-image,
+.container.sidebar-collapsed .admin-brand .logo-image {
+    display: none;
 }

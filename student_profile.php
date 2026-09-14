@@ -28,7 +28,9 @@ $id = (int) $_GET['id'];
 
 $query = mysqli_query(
     $conn,
-    "SELECT * FROM students WHERE id = $id"
+    "SELECT * FROM students
+     WHERE id = $id
+     AND archived_at IS NULL"
 );
 
 if (!$query || mysqli_num_rows($query) == 0) {
@@ -160,6 +162,18 @@ if (
 
         <div class="admin-brand">
 
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+                aria-label="Toggle sidebar"
+                aria-expanded="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             <img
                 class="logo-image"
                 src="assets/image/record_logo.png"
@@ -169,9 +183,7 @@ if (
         </div>
 
 
-
         <!-- NAVIGATION -->
-
         <nav class="admin-navigation">
 
 
@@ -358,6 +370,56 @@ if (
 
 
 
+                <!-- ARCHIVE -->
+
+                <li>
+
+                    <a href="archive_students">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <rect
+                                    x="2"
+                                    y="3"
+                                    width="20"
+                                    height="5"
+                                    rx="1"
+                                />
+
+                                <path
+                                    d="M4 8v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"
+                                />
+
+                                <path
+                                    d="M10 12h4"
+                                />
+
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Archive
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+
                 <!-- RESULTS -->
 
                 <li>
@@ -400,6 +462,79 @@ if (
 
                         <span>
                             Results
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+
+                <!-- COURSES -->
+
+                <li>
+
+                    <a href="courses">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <path
+                                    d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"
+                                />
+
+                                <path
+                                    d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"
+                                />
+
+                            </svg>
+
+                        </span>
+
+
+                        <span>
+                            Courses
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="sessions">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+
+                        </span>
+
+                        <span>
+                            Sessions
                         </span>
 
                     </a>
@@ -548,19 +683,6 @@ if (
         <!-- TOPBAR -->
 
         <header class="admin-topbar">
-
-            <button
-                class="sidebar-toggle"
-                id="sidebarToggle"
-                type="button"
-                aria-label="Toggle sidebar"
-                aria-expanded="true"
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
 
             <div>
 
@@ -860,6 +982,39 @@ if (
                                 echo htmlspecialchars(
                                     $student['level']
                                 );
+
+                                ?>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- ADMISSION YEAR -->
+
+                        <div class="compact-detail">
+
+                            <span>
+                                Admission Year
+                            </span>
+
+                            <strong>
+
+                                <?php
+
+                                if (
+                                    ($student['admission_year'] ?? null) !== null
+                                    && $student['admission_year'] !== ''
+                                ) {
+
+                                    echo (int) $student['admission_year'];
+
+                                } else {
+
+                                    echo "N/A";
+
+                                }
 
                                 ?>
 

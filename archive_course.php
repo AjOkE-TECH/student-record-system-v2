@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
 
     $update = mysqli_query(
         $conn,
-        "UPDATE students
+        "UPDATE courses
          SET archived_at = NOW()
          WHERE id = $id
          AND archived_at IS NULL"
@@ -25,17 +25,17 @@ if (isset($_GET['id'])) {
 
     if ($update && mysqli_affected_rows($conn) > 0) {
 
-        $message = "Student archived successfully. Their results and records are preserved.";
+        $message = "Course archived successfully. Existing results are preserved.";
         $message_type = "success";
 
     } else {
 
-        $message = "Student record not found or already archived.";
+        $message = "Course record not found or already archived.";
     }
 
 } else {
 
-    $message = "No student specified.";
+    $message = "No course specified.";
 }
 
 ?>
@@ -52,7 +52,7 @@ if (isset($_GET['id'])) {
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Archive Student - Student Record Management System</title>
+    <title>Archive Course - Student Record Management System</title>
 
     <link
         rel="stylesheet"
@@ -137,10 +137,7 @@ if (isset($_GET['id'])) {
 
                 <li>
 
-                    <a
-                        href="view_students"
-                        class="active"
-                    >
+                    <a href="view_students">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/><circle cx="17" cy="9" r="3"/><path d="M21 21v-2a4 4 0 0 0-7.5-1.5"/></svg>
@@ -188,7 +185,10 @@ if (isset($_GET['id'])) {
 
                 <li>
 
-                    <a href="courses">
+                    <a
+                        href="courses"
+                        class="active"
+                    >
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
@@ -207,7 +207,21 @@ if (isset($_GET['id'])) {
                     <a href="sessions">
 
                         <span class="nav-icon">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+
                         </span>
 
                         <span>
@@ -283,11 +297,11 @@ if (isset($_GET['id'])) {
             <div>
 
                 <p class="topbar-label">
-                    STUDENT RECORDS
+                    COURSE DIRECTORY
                 </p>
 
                 <h1>
-                    Archive Student
+                    Archive Course
                 </h1>
 
             </div>
@@ -309,17 +323,10 @@ if (isset($_GET['id'])) {
                 <div class="message-actions">
 
                     <a
-                        href="view_students"
+                        href="courses"
                         class="primary-button"
                     >
-                        Back to Students
-                    </a>
-
-                    <a
-                        href="archive_students"
-                        class="primary-button"
-                    >
-                        View Archive
+                        Back to Courses
                     </a>
 
                 </div>

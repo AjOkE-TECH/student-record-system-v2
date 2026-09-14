@@ -48,7 +48,7 @@ if (isset($_POST['login'])) {
                 $admin['id'];
 
             $_SESSION['admin_name'] =
-                $admin['full_name'];
+                $admin['full_name'] ?? $admin['username'];
 
 
             header(
@@ -129,27 +129,6 @@ if (isset($_POST['login'])) {
             >
 
         </div>
-
-
-        <nav class="login-nav">
-
-            <a href="index">
-                Home
-            </a>
-
-            <a href="index#about">
-                About
-            </a>
-
-            <a href="index#features">
-                Features
-            </a>
-
-            <a href="index#contact">
-                Contact
-            </a>
-
-        </nav>
 
 
     </header>

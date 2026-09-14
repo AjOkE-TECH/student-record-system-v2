@@ -10,10 +10,32 @@ if (!isset($_SESSION['admin'])) {
 }
 
 include "config/database.php";
+include "config/matric.php";
+
+
+/* ---------------------------------------------------------
+   DEPARTMENTS FOR THE DROPDOWN
+--------------------------------------------------------- */
+
+$departments_query = mysqli_query(
+    $conn,
+    "SELECT id, department_name, department_code
+     FROM departments
+     ORDER BY FIELD(
+        UPPER(department_name),
+        'COMPUTER SCIENCE',
+        'SCIENCE LABORATORY TECHNOLOGY',
+        'ACCOUNTANCY',
+        'MARKETING',
+        'BUSINESS ADMINISTRATION'
+     ), department_name ASC"
+);
 
 
 $success = "";
 $error = "";
+$email_warning = "";
+$email_info = "";
 
 
 /* =========================================================
@@ -22,24 +44,25 @@ $error = "";
 
 if (isset($_POST['add_student'])) {
 
-
-    $matric_no = trim($_POST['matric_no']);
-
     $firstname = trim($_POST['firstname']);
 
     $lastname = trim($_POST['lastname']);
 
     $gender = trim($_POST['gender']);
 
-    $department = trim($_POST['department']);
+    $department_id = (int) ($_POST['department'] ?? 0);
 
     $level = trim($_POST['level']);
+
+    $admission_year = $_POST['admission_year'] ?? date('Y');
 
     $phone = trim($_POST['phone']);
 
     $email = trim($_POST['email']);
 
     $passport = "";
+
+    $email_ok = false;
 
 
     /* =====================================================
@@ -128,129 +151,254 @@ if (isset($_POST['add_student'])) {
 
 
     /* =====================================================
-       SECURE VALUES
+       VALIDATION
     ====================================================== */
 
-    $matric_no_safe =
-        mysqli_real_escape_string(
+    $department =
+        srsGetDepartmentById(
             $conn,
-            $matric_no
+            $department_id
         );
 
-    $firstname_safe =
-        mysqli_real_escape_string(
-            $conn,
-            $firstname
-        );
+    if (!$department) {
 
-    $lastname_safe =
-        mysqli_real_escape_string(
-            $conn,
-            $lastname
-        );
+        $error =
+            "Please select a valid department.";
 
-    $gender_safe =
-        mysqli_real_escape_string(
-            $conn,
-            $gender
-        );
-
-    $department_safe =
-        mysqli_real_escape_string(
-            $conn,
-            $department
-        );
-
-    $level_safe =
-        mysqli_real_escape_string(
-            $conn,
-            $level
-        );
-
-    $phone_safe =
-        mysqli_real_escape_string(
-            $conn,
-            $phone
-        );
-
-    $email_safe =
-        mysqli_real_escape_string(
-            $conn,
-            $email
-        );
-
-    $passport_safe =
-        mysqli_real_escape_string(
-            $conn,
-            $passport
-        );
-
-
-    /* =====================================================
-       INSERT STUDENT
-    ====================================================== */
-
-    $sql = "
-        INSERT INTO students
-        (
-            matric_no,
-            firstname,
-            lastname,
-            gender,
-            department,
-            level,
-            phone,
-            email,
-            passport
+    } elseif (
+        !in_array(
+            $level,
+            array('ND I', 'ND II', 'HND I', 'HND II'),
+            true
         )
+    ) {
 
-        VALUES
-        (
-            '$matric_no_safe',
-            '$firstname_safe',
-            '$lastname_safe',
-            '$gender_safe',
-            '$department_safe',
-            '$level_safe',
-            '$phone_safe',
-            '$email_safe',
-            '$passport_safe'
-        )
-    ";
+        $error =
+            "Level must be one of: ND I, ND II, HND I, HND II.";
 
+    } else {
 
-    if (mysqli_query($conn, $sql)) {
+        /* Admission year is full-year (e.g. 2026, never 26). */
+        $admission_year =
+            srsValidateAdmissionYear(
+                $admission_year
+            );
 
+        if ($admission_year === false) {
 
-        /* =================================================
-           SEND EMAIL
-        ================================================== */
+            $error =
+                "Please enter a valid admission year (full year, e.g. 2026).";
 
-        if (file_exists("send_email.php")) {
+        } else {
 
-            require_once "send_email.php";
+            /* =============================================
+               TRANSACTION: generate matric + insert student
+               The matric number is generated SERVER-SIDE
+               using a serialized atomic sequence, so two
+               simultaneous admins can never receive the same
+               number.
+            ============================================== */
 
-            if (function_exists("sendStudentEmail")) {
+            mysqli_begin_transaction($conn);
 
-                sendStudentEmail(
-                    $email,
-                    $firstname . " " . $lastname
+            $generation_error = "";
+
+            $matric_no =
+                srsAutoMatric(
+                    $conn,
+                    $department['id'],
+                    $admission_year,
+                    $generation_error
                 );
+
+            if ($generation_error !== "") {
+
+                mysqli_rollback($conn);
+
+                $error = $generation_error;
+
+            } else {
+
+                $firstname_safe =
+                    mysqli_real_escape_string(
+                        $conn,
+                        $firstname
+                    );
+
+                $lastname_safe =
+                    mysqli_real_escape_string(
+                        $conn,
+                        $lastname
+                    );
+
+                $gender_safe =
+                    mysqli_real_escape_string(
+                        $conn,
+                        $gender
+                    );
+
+                $department_safe =
+                    mysqli_real_escape_string(
+                        $conn,
+                        $department['department_name']
+                    );
+
+                $level_safe =
+                    mysqli_real_escape_string(
+                        $conn,
+                        $level
+                    );
+
+                $admission_year_safe =
+                    (int) $admission_year;
+
+                $phone_safe =
+                    mysqli_real_escape_string(
+                        $conn,
+                        $phone
+                    );
+
+                $email_safe =
+                    mysqli_real_escape_string(
+                        $conn,
+                        $email
+                    );
+
+                $passport_safe =
+                    mysqli_real_escape_string(
+                        $conn,
+                        $passport
+                    );
+
+
+                $sql = "
+                    INSERT INTO students
+                    (
+                        matric_no,
+                        firstname,
+                        lastname,
+                        gender,
+                        department,
+                        level,
+                        admission_year,
+                        phone,
+                        email,
+                        passport
+                    )
+
+                    VALUES
+                    (
+                        '$matric_no',
+                        '$firstname_safe',
+                        '$lastname_safe',
+                        '$gender_safe',
+                        '$department_safe',
+                        '$level_safe',
+                        $admission_year_safe,
+                        '$phone_safe',
+                        '$email_safe',
+                        '$passport_safe'
+                    )
+                ";
+
+                if (mysqli_query($conn, $sql)) {
+
+                    mysqli_commit($conn);
+
+
+                    /* =====================================
+                       SEND EMAIL
+                       The student is already committed and
+                       saved. A failed email NEVER deletes or
+                       rolls back the student record.
+                    ====================================== */
+
+                    if ($email !== "") {
+
+                        if (file_exists("send_email.php")) {
+
+                            require_once "send_email.php";
+
+                            if (function_exists("sendStudentEmail")) {
+
+                                $email_result = sendStudentEmail(
+                                    $email,
+                                    $firstname . " " . $lastname,
+                                    $matric_no,
+                                    $department['department_name'],
+                                    $level,
+                                    (string) $admission_year
+                                );
+
+                                if (is_array($email_result)) {
+
+                                    if ($email_result['success'] === true) {
+
+                                        $email_ok = true;
+
+                                    } else {
+
+                                        $email_warning =
+                                            "The student was added, but the welcome email could not be sent."
+                                            . " Reason: "
+                                            . $email_result['message']
+                                            . " (Student record was saved as requested.)";
+
+                                    }
+
+                                }
+
+                            }
+
+                        } else {
+
+                            $email_warning =
+                                "The student was added, but the welcome email could not be sent."
+                                . " The mail library file (send_email.php) is missing.";
+
+                        }
+
+                    } else {
+
+                        $email_info =
+                            "No welcome email was sent because no email address was provided.";
+
+                    }
+
+
+                    $success =
+                        "Student added successfully! Matric Number: "
+                        . $matric_no;
+
+                    if ($email_ok) {
+                        $success .= " Welcome email sent to " . $email . ".";
+                    }
+
+
+                } else {
+
+                    mysqli_rollback($conn);
+
+
+                    if (
+                        mysqli_errno($conn) === 1062
+                    ) {
+
+                        $error =
+                            "A matching matric number already exists. Please try again.";
+
+                    } else {
+
+                        $error =
+                            "Failed to add student. Please try again.";
+
+                    }
+
+                }
 
             }
 
         }
-
-
-        $success =
-            "Student added successfully!";
-
-
-    } else {
-
-
-        $error =
-            "Failed to add student. Please try again.";
 
     }
 
@@ -289,6 +437,18 @@ if (isset($_POST['add_student'])) {
 
         <div class="admin-brand">
 
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+                aria-label="Toggle sidebar"
+                aria-expanded="true"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             <img
                 class="logo-image"
                 src="assets/image/record_logo.png"
@@ -299,7 +459,6 @@ if (isset($_POST['add_student'])) {
 
 
         <!-- NAVIGATION -->
-
         <nav class="admin-navigation">
 
             <div class="navigation-title">
@@ -406,6 +565,101 @@ if (isset($_POST['add_student'])) {
 
                 <li>
 
+                    <a href="archive_students">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <rect x="2" y="3" width="20" height="5" rx="1"/>
+                                <path d="M4 8v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"/>
+                                <path d="M10 12h4"/>
+
+                            </svg>
+
+                        </span>
+
+                        <span>Archive</span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="result">
+
+                        <span class="nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+
+                                <path d="M4 4h16v16H4z"/>
+                                <path d="M8 16v-4"/>
+                                <path d="M12 16V8"/>
+                                <path d="M16 16v-7"/>
+
+                            </svg>
+
+                        </span>
+
+                        <span>Results</span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="courses">
+
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        </span>
+
+                        <span>
+                            Courses
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="sessions">
+
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </span>
+
+                        <span>
+                            Sessions
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
                     <a href="search_student">
 
                         <span class="nav-icon">
@@ -493,18 +747,6 @@ if (isset($_POST['add_student'])) {
 
         <header class="admin-topbar">
 
-            <button
-                class="sidebar-toggle"
-                id="sidebarToggle"
-                type="button"
-                aria-label="Toggle sidebar"
-                aria-expanded="true"
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
             <div>
 
                 <div class="topbar-label">
@@ -562,6 +804,38 @@ if (isset($_POST['add_student'])) {
 
                         <?php
                         echo htmlspecialchars($error);
+                        ?>
+
+                    </div>
+
+                <?php } ?>
+
+
+
+                <!-- EMAIL WARNING -->
+
+                <?php if (!empty($email_warning)) { ?>
+
+                    <div class="student-message warning">
+
+                        <?php
+                        echo htmlspecialchars($email_warning);
+                        ?>
+
+                    </div>
+
+                <?php } ?>
+
+
+
+                <!-- EMAIL INFO -->
+
+                <?php if (!empty($email_info)) { ?>
+
+                    <div class="student-message info">
+
+                        <?php
+                        echo htmlspecialchars($email_info);
                         ?>
 
                     </div>
@@ -778,25 +1052,6 @@ if (isset($_POST['add_student'])) {
 
                                 </div>
 
-
-                                <!-- MATRIC NUMBER -->
-
-                                <div class="form-group">
-
-                                    <label>
-                                        Matric Number
-                                        <span class="required">*</span>
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="matric_no"
-                                        placeholder="e.g. NCSF/23/0025"
-                                        required
-                                    >
-
-                                </div>
-
                             </div>
 
 
@@ -813,7 +1068,7 @@ if (isset($_POST['add_student'])) {
                             <div class="student-form-grid">
 
 
-                                <!-- DEPARTMENT -->
+                                <!-- DEPARTMENT (DROPDOWN) -->
 
                                 <div class="form-group">
 
@@ -822,17 +1077,44 @@ if (isset($_POST['add_student'])) {
                                         <span class="required">*</span>
                                     </label>
 
-                                    <input
-                                        type="text"
+                                    <select
                                         name="department"
-                                        placeholder="e.g. Computer Science"
+                                        id="department"
                                         required
                                     >
+
+                                        <option value="">
+                                            Select Department
+                                        </option>
+
+                                        <?php
+                                        if (
+                                            $departments_query &&
+                                            mysqli_num_rows($departments_query) > 0
+                                        ):
+                                            while (
+                                                $dept =
+                                                mysqli_fetch_assoc($departments_query)
+                                            ):
+                                        ?>
+
+                                            <option
+                                                value="<?php echo (int) $dept['id']; ?>"
+                                            >
+                                                <?php echo htmlspecialchars($dept['department_name']); ?>
+                                            </option>
+
+                                        <?php
+                                            endwhile;
+                                        endif;
+                                        ?>
+
+                                    </select>
 
                                 </div>
 
 
-                                <!-- LEVEL -->
+                                <!-- LEVEL (DROPDOWN) -->
 
                                 <div class="form-group">
 
@@ -841,12 +1123,59 @@ if (isset($_POST['add_student'])) {
                                         <span class="required">*</span>
                                     </label>
 
-                                    <input
-                                        type="text"
+                                    <select
                                         name="level"
-                                        placeholder="e.g. ND II"
+                                        id="level"
                                         required
                                     >
+
+                                        <option value="">
+                                            Select Level
+                                        </option>
+
+                                        <option value="ND I">
+                                            ND I
+                                        </option>
+
+                                        <option value="ND II">
+                                            ND II
+                                        </option>
+
+                                        <option value="HND I">
+                                            HND I
+                                        </option>
+
+                                        <option value="HND II">
+                                            HND II
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- ADMISSION YEAR -->
+
+                                <div class="form-group">
+
+                                    <label>
+                                        Admission Year
+                                        <span class="required">*</span>
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        name="admission_year"
+                                        id="admission_year"
+                                        value="<?php echo date('Y'); ?>"
+                                        min="1950"
+                                        max="2100"
+                                        required
+                                    >
+
+                                    <small class="field-hint">
+                                        Full year, e.g. 2026.
+                                    </small>
 
                                 </div>
 
@@ -889,14 +1218,12 @@ if (isset($_POST['add_student'])) {
 
                                     <label>
                                         Email Address
-                                        <span class="required">*</span>
                                     </label>
 
                                     <input
                                         type="email"
                                         name="email"
                                         placeholder="e.g. student@gmail.com"
-                                        required
                                     >
 
                                 </div>
@@ -1038,6 +1365,7 @@ if (isset($_POST['add_student'])) {
     });
 
 </script>
+
 
 <script src="assets/js/sidebar.js"></script>
 

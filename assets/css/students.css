@@ -63,6 +63,18 @@
     color: #b91c1c;
 }
 
+.student-message.warning {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+}
+
+.student-message.info {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+}
+
 
 /* ============================================================
    FORM CARD
@@ -325,4 +337,27 @@
 .add-student-button:hover {
     background: #005000;
     transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   FIELD HINTS
+============================================================ */
+
+.field-hint {
+    display: block;
+    margin-top: 6px;
+    color: #6b7280;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+.form-group input[readonly] {
+    background: #eef1f4;
+    color: #374151;
+    cursor: not-allowed;
 }

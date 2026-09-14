@@ -10,12 +10,9 @@ if (!isset($_SESSION['admin'])) {
 include "config/database.php";
 
 
-/* =========================================================
-   PAGINATION
-========================================================= */
+/*pagination */
 
 $limit = 8;
-
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
 if ($page < 1) {
@@ -25,44 +22,63 @@ if ($page < 1) {
 $start = ($page - 1) * $limit;
 
 
-$where = "WHERE archived_at IS NULL";
+/* admin name */
+
+$admin_name = "Administrator";
+
+if (
+    isset($_SESSION['admin_name']) &&
+    !empty($_SESSION['admin_name'])
+) {
+    $admin_name = $_SESSION['admin_name'];
+}
 
 
-/* =========================================================
-   COUNT STUDENTS
-========================================================= */
+/* handle restore action */
+
+if (isset($_GET['restore'])) {
+
+    $restore_id = (int) $_GET['restore'];
+
+    mysqli_query(
+        $conn,
+        "UPDATE students
+         SET archived_at = NULL
+         WHERE id = $restore_id
+         AND archived_at IS NOT NULL"
+    );
+
+    header("Location: archive_students");
+    exit();
+}
+
+
+/* count archived students */
 
 $count_query = mysqli_query(
     $conn,
     "SELECT COUNT(*) AS total
      FROM students
-     $where"
+     WHERE archived_at IS NOT NULL"
 );
 
 $count_row = mysqli_fetch_assoc($count_query);
-
 $total_students = (int) $count_row['total'];
-
-$total_pages = $total_students > 0
-    ? ceil($total_students / $limit)
-    : 1;
+$total_pages = $total_students > 0 ? ceil($total_students / $limit) : 1;
 
 
-/* =========================================================
-   GET STUDENTS
-========================================================= */
+/* get archived students */
 
 $query = mysqli_query(
     $conn,
     "SELECT *
      FROM students
-     $where
-     ORDER BY id DESC
+     WHERE archived_at IS NOT NULL
+     ORDER BY archived_at DESC
      LIMIT $start, $limit"
 );
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,10 +91,10 @@ $query = mysqli_query(
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>View Students - SRMS</title>
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/admin.css">
-<link rel="stylesheet" href="assets/css/students.css">
+    <title>Archived Students - SRMS</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/students.css">
 </head>
 
 
@@ -112,6 +128,7 @@ $query = mysqli_query(
 
 
         <nav class="admin-navigation">
+
             <div class="navigation-title">
                 MAIN MENU
             </div>
@@ -121,9 +138,7 @@ $query = mysqli_query(
 
                 <li>
 
-                    <a
-                        href="dashboard"
-                    >
+                    <a href="dashboard">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -157,10 +172,7 @@ $query = mysqli_query(
 
                 <li>
 
-                    <a
-                        href="view_students"
-                        class="active"
-                    >
+                    <a href="view_students">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/><circle cx="17" cy="9" r="3"/><path d="M21 21v-2a4 4 0 0 0-7.5-1.5"/></svg>
@@ -174,21 +186,21 @@ $query = mysqli_query(
 
                 </li>
 
+
                 <li>
 
-                    <a href="archive_students">
+                    <a href="archive_students" class="active">
 
                         <span class="nav-icon">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="5" rx="1"/><path d="M4 8v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"/><path d="M10 12h4"/></svg>
                         </span>
 
-                        <span>
-                            Archive
-                        </span>
+                        <span> Archive </span>
 
                     </a>
 
                 </li>
+
 
                 <li>
 
@@ -198,9 +210,7 @@ $query = mysqli_query(
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 16v-4"/><path d="M12 16V8"/><path d="M16 16v-7"/></svg>
                         </span>
 
-                        <span>
-                            Results
-                        </span>
+                        <span>Results</span>
 
                     </a>
 
@@ -249,9 +259,7 @@ $query = mysqli_query(
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
                         </span>
 
-                        <span>
-                            Search Student
-                        </span>
+                        <span> Search Student</span>
 
                     </a>
 
@@ -261,10 +269,7 @@ $query = mysqli_query(
             </ul>
 
 
-            <div class="navigation-title navigation-bottom-title">
-                ACCOUNT
-            </div>
-
+            <div class="navigation-title navigation-bottom-title">ACCOUNT</div>
 
             <ul>
 
@@ -304,55 +309,24 @@ $query = mysqli_query(
 
     </aside>
 
-    <!--main contentet -->
+    <!--main content -->
 
     <main class="admin-main">
 
 
         <!-- TOP HEADER -->
 
-        <header class="header">
+        <header class="admin-topbar">
 
-            <div class="header-left">
+            <div>
 
-                <div class="breadcrumb">
-                    Student Management
-                    <span>/</span>
-                    Students
-                </div>
-
-                <h1>
-                    Students
-                </h1>
-
-                <p>
-                    Manage and view all registered students.
+                <p class="topbar-label">
+                    STUDENT RECORDS
                 </p>
 
-            </div>
-
-
-            <div class="header-right">
-
-                <div class="admin-profile">
-
-                    <div class="admin-avatar">
-                        A
-                    </div>
-
-                    <div class="admin-info">
-
-                        <strong>
-                            Administrator
-                        </strong>
-
-                        <span>
-                            System Admin
-                        </span>
-
-                    </div>
-
-                </div>
+                <h1>
+                    Archived Students
+                </h1>
 
             </div>
 
@@ -372,27 +346,22 @@ $query = mysqli_query(
                 <div>
 
                     <h2>
-                        Student Records
+                        Archived Student Records
                     </h2>
 
                     <p>
-                        View, search, edit and manage student information.
+                        Students that have been archived from the system. 
+                        You can restore them at any time.
                     </p>
 
                 </div>
 
 
                 <a
-                    href="add_student"
+                    href="view_students"
                     class="primary-button"
                 >
-
-                    <span class="button-plus">
-                        +
-                    </span>
-
-                    Add Student
-
+                    Back to Active Students
                 </a>
 
             </div>
@@ -409,25 +378,15 @@ $query = mysqli_query(
                     <div>
 
                         <h3>
-                            Registered Students
+                            Archived Students
                         </h3>
 
                         <p>
-                            All registered student records.
+                            <?php
+                            echo number_format($total_students) . " archived student"
+                                . ($total_students == 1 ? '' : 's');
+                            ?>
                         </p>
-
-                    </div>
-
-
-                    <div class="table-count">
-
-                        <strong>
-                            <?php echo number_format($total_students); ?>
-                        </strong>
-
-                        <span>
-                            student<?php echo $total_students == 1 ? '' : 's'; ?>
-                        </span>
 
                     </div>
 
@@ -467,7 +426,7 @@ $query = mysqli_query(
                                     </th>
 
                                     <th>
-                                        Phone
+                                        Archived On
                                     </th>
 
                                     <th>
@@ -488,19 +447,6 @@ $query = mysqli_query(
 
                             while ($row = mysqli_fetch_assoc($query)):
 
-                                if (!empty($row['passport'])) {
-
-                                    $student_passport =
-                                        "assets/upload/students/"
-                                        . $row['passport'];
-
-                                } else {
-
-                                    $student_passport =
-                                        "assets/image/default.png";
-
-                                }
-
                                 $full_name =
                                     $row['firstname']
                                     . " "
@@ -511,8 +457,6 @@ $query = mysqli_query(
                                 <tr>
 
 
-                                    <!-- NUMBER -->
-
                                     <td class="serial-number">
 
                                         <?php echo $sn++; ?>
@@ -520,20 +464,9 @@ $query = mysqli_query(
                                     </td>
 
 
-
-                                    <!-- STUDENT -->
-
                                     <td>
 
                                         <div class="student-cell">
-
-                                            <img
-                                                src="<?php echo htmlspecialchars($student_passport); ?>"
-                                                class="student-passport"
-                                                alt="Student Passport"
-                                                onerror="this.onerror=null;this.src='assets/image/default.png';"
-                                            >
-
 
                                             <div class="student-details">
 
@@ -558,9 +491,6 @@ $query = mysqli_query(
                                     </td>
 
 
-
-                                    <!-- MATRIC NUMBER -->
-
                                     <td>
 
                                         <span class="matric-badge">
@@ -575,9 +505,6 @@ $query = mysqli_query(
 
                                     </td>
 
-
-
-                                    <!-- DEPARTMENT -->
 
                                     <td>
 
@@ -594,9 +521,6 @@ $query = mysqli_query(
                                     </td>
 
 
-
-                                    <!-- LEVEL -->
-
                                     <td>
 
                                         <span class="level-badge">
@@ -612,58 +536,31 @@ $query = mysqli_query(
                                     </td>
 
 
-
-                                    <!-- PHONE -->
-
                                     <td>
 
-                                        <span class="phone-text">
-
-                                            <?php
-                                            echo htmlspecialchars(
-                                                $row['phone']
-                                            );
-                                            ?>
-
-                                        </span>
+                                        <?php
+                                        echo date(
+                                            'd M Y, H:i',
+                                            strtotime(
+                                                $row['archived_at']
+                                            )
+                                        );
+                                        ?>
 
                                     </td>
 
-
-
-                                    <!-- ACTIONS -->
 
                                     <td>
 
                                         <div class="student-actions">
 
-
                                             <a
-                                                href="student_profile?id=<?php echo (int) $row['id']; ?>"
-                                                class="table-action view-action"
-                                                title="View Student"
+                                                href="archive_students?restore=<?php echo (int) $row['id']; ?>"
+                                                class="table-action edit-action restore-action"
+                                                title="Restore Student"
                                             >
-                                                View
+                                                Restore
                                             </a>
-
-
-                                            <a
-                                                href="edit_student?id=<?php echo (int) $row['id']; ?>"
-                                                class="table-action edit-action"
-                                                title="Edit Student"
-                                            >
-                                                Edit
-                                            </a>
-
-
-                                            <a
-                                                href="delete_student?id=<?php echo (int) $row['id']; ?>"
-                                                class="table-action archive-action"
-                                                title="Archive Student"
-                                            >
-                                                Archive
-                                            </a>
-
 
                                         </div>
 
@@ -684,38 +581,23 @@ $query = mysqli_query(
 
 
 
-                    <!-- PAGINATION -->
-
                     <?php if ($total_pages > 1): ?>
 
                         <div class="pagination-area">
 
-
                             <div class="pagination-info">
 
                                 Showing
-
-                                <strong>
-                                    <?php echo $start + 1; ?>
-                                </strong>
-
+                                <strong><?php echo $start + 1; ?></strong>
                                 to
-
-                                <strong>
-                                    <?php echo min($start + $limit, $total_students); ?>
-                                </strong>
-
+                                <strong><?php echo min($start + $limit, $total_students); ?></strong>
                                 of
-
-                                <strong>
-                                    <?php echo $total_students; ?>
-                                </strong>
+                                <strong><?php echo $total_students; ?></strong>
 
                             </div>
 
 
                             <div class="pagination">
-
 
                                 <?php if ($page > 1): ?>
 
@@ -728,14 +610,11 @@ $query = mysqli_query(
 
                                 <?php endif; ?>
 
-
                                 <?php
-
                                 $page_start = max(1, $page - 2);
                                 $page_end = min($total_pages, $page + 2);
 
                                 for ($i = $page_start; $i <= $page_end; $i++):
-
                                 ?>
 
                                     <?php if ($i == $page): ?>
@@ -746,16 +625,13 @@ $query = mysqli_query(
 
                                     <?php else: ?>
 
-                                        <a
-                                            href="?page=<?php echo $i; ?>"
-                                        >
+                                        <a href="?page=<?php echo $i; ?>">
                                             <?php echo $i; ?>
                                         </a>
 
                                     <?php endif; ?>
 
                                 <?php endfor; ?>
-
 
                                 <?php if ($page < $total_pages): ?>
 
@@ -768,7 +644,6 @@ $query = mysqli_query(
 
                                 <?php endif; ?>
 
-
                             </div>
 
                         </div>
@@ -778,39 +653,29 @@ $query = mysqli_query(
 
                 <?php else: ?>
 
-
-                    <!-- EMPTY STATE -->
-
                     <div class="no-students">
 
                         <div class="empty-icon">
-                            S
+                            A
                         </div>
 
                         <h3>
-                            No students found
+                            No Archived Students
                         </h3>
 
                         <p>
-                            There are currently no registered students.
+                            There are currently no archived student records.
                         </p>
 
-
-                        <a
-                            href="add_student"
-                            class="empty-button"
-                        >
-                            Add First Student
+                        <a href="view_students" class="empty-button">
+                            Back to Active Students
                         </a>
 
                     </div>
 
-
                 <?php endif; ?>
 
-
             </div>
-
 
         </section>
 
@@ -826,20 +691,20 @@ $query = mysqli_query(
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    document.querySelectorAll('.archive-action').forEach(function (link) {
+    document.querySelectorAll('.restore-action').forEach(function (link) {
         link.addEventListener('click', function (event) {
             event.preventDefault();
 
             var href = this.getAttribute('href');
 
             Swal.fire({
-                title: 'Archive Student?',
-                text: 'Are you sure you want to archive this student? Their record will be moved to the archive.',
-                icon: 'warning',
+                title: 'Restore Student?',
+                text: 'Restore this student to the active list?',
+                icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#006400',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, archive it',
+                confirmButtonText: 'Yes, restore',
                 cancelButtonText: 'Cancel'
             }).then(function (result) {
                 if (result.isConfirmed) {

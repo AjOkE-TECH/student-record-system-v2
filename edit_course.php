@@ -27,30 +27,156 @@ if (
 
 
 /* =========================================================
-   GET ALL RESULTS
+   CHECK COURSE ID
 ========================================================= */
 
-$results_query = mysqli_query(
+if (
+    !isset($_GET['id']) ||
+    empty($_GET['id'])
+) {
+    header("Location: courses");
+    exit();
+}
+
+$course_id = (int) $_GET['id'];
+
+
+/* =========================================================
+   GET COURSE
+========================================================= */
+
+$course_query = mysqli_query(
     $conn,
     "SELECT
-        results.id,
-        results.student_id,
-        results.course_code,
-        results.course_title,
-        results.semester,
-        results.session,
-        results.score,
-        results.grade,
-        results.remark,
-        students.firstname,
-        students.lastname,
-        students.matric_no
-     FROM results
-     INNER JOIN students
-        ON results.student_id = students.id
-     WHERE students.archived_at IS NULL
-     ORDER BY results.id DESC"
+        courses.id,
+        courses.course_code,
+        courses.course_title,
+        courses.session_id
+     FROM courses
+     WHERE courses.id = $course_id
+       AND courses.archived_at IS NULL"
 );
+
+
+if (
+    !$course_query ||
+    mysqli_num_rows($course_query) == 0
+) {
+    header("Location: courses");
+    exit();
+}
+
+
+$course = mysqli_fetch_assoc($course_query);
+
+
+/* =========================================================
+   GET ALL SESSIONS FOR THE DROPDOWN
+========================================================= */
+
+$sessions_query = mysqli_query(
+    $conn,
+    "SELECT * FROM sessions ORDER BY session_name DESC"
+);
+
+
+/* =========================================================
+   FORM VARIABLES
+========================================================= */
+
+$success = "";
+$error = "";
+
+$course_code = $course['course_code'];
+$course_title = $course['course_title'];
+$session_id = (int) $course['session_id'];
+
+
+/* =========================================================
+   PROCESS FORM
+========================================================= */
+
+if (isset($_POST['update_course'])) {
+
+    $course_code = trim($_POST['course_code'] ?? "");
+    $course_title = trim($_POST['course_title'] ?? "");
+    $session_id = (int) ($_POST['session_id'] ?? 0);
+
+    /* Normalize course code to uppercase */
+    $course_code = strtoupper($course_code);
+
+
+    /* =====================================================
+       VALIDATION
+    ===================================================== */
+
+    if ($course_code == "" || $course_title == "") {
+
+        $error = "Course code and course title are required.";
+
+    } elseif ($session_id <= 0) {
+
+        $error = "Please select a valid academic session.";
+
+    } elseif (!preg_match('/^[A-Z\/0-9\s.\-]{2,20}$/', $course_code)) {
+
+        $error = "Course code must be 2-20 characters using only letters, numbers, dash or slash.";
+
+    } else {
+
+        /* Verify session exists */
+        $session_check = mysqli_query(
+            $conn,
+            "SELECT id FROM sessions WHERE id = $session_id"
+        );
+
+        if (!$session_check || mysqli_num_rows($session_check) == 0) {
+
+            $error = "Selected academic session does not exist.";
+
+        } else {
+
+            /* Duplicate check excluding current course */
+            $code_escaped = $conn->real_escape_string($course_code);
+            $title_escaped = $conn->real_escape_string($course_title);
+
+            $dup_check = mysqli_query(
+                $conn,
+                "SELECT id FROM courses
+                 WHERE course_code = '$code_escaped'
+                   AND session_id = $session_id
+                   AND id != $course_id
+                   AND archived_at IS NULL"
+            );
+
+            if ($dup_check && mysqli_num_rows($dup_check) > 0) {
+
+                $error = "Another course with this code already exists for the selected session.";
+
+            } else {
+
+                $update = mysqli_query(
+                    $conn,
+                    "UPDATE courses
+                     SET course_code = '$code_escaped',
+                         course_title = '$title_escaped',
+                         session_id = $session_id
+                     WHERE id = $course_id"
+                );
+
+                if ($update) {
+
+                    $success = "Course updated successfully.";
+
+                } else {
+
+                    $error = "Unable to update course: " . mysqli_error($conn);
+
+                }
+            }
+        }
+    }
+}
 
 ?>
 
@@ -68,7 +194,7 @@ $results_query = mysqli_query(
     >
 
     <title>
-        Results - Student Record Management System
+        Edit Course - Student Record Management System
     </title>
 
     <link
@@ -79,6 +205,16 @@ $results_query = mysqli_query(
     <link
         rel="stylesheet"
         href="assets/css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="assets/css/students.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="assets/css/courses.css"
     >
 
 </head>
@@ -156,37 +292,13 @@ $results_query = mysqli_query(
                                 stroke-linejoin="round"
                             >
 
-                                <rect
-                                    x="3"
-                                    y="3"
-                                    width="7"
-                                    height="7"
-                                    rx="1"
-                                />
+                                <rect x="3" y="3" width="7" height="7" rx="1"/>
 
-                                <rect
-                                    x="14"
-                                    y="3"
-                                    width="7"
-                                    height="7"
-                                    rx="1"
-                                />
+                                <rect x="14" y="3" width="7" height="7" rx="1"/>
 
-                                <rect
-                                    x="3"
-                                    y="14"
-                                    width="7"
-                                    height="7"
-                                    rx="1"
-                                />
+                                <rect x="3" y="14" width="7" height="7" rx="1"/>
 
-                                <rect
-                                    x="14"
-                                    y="14"
-                                    width="7"
-                                    height="7"
-                                    rx="1"
-                                />
+                                <rect x="14" y="14" width="7" height="7" rx="1"/>
 
                             </svg>
 
@@ -225,23 +337,13 @@ $results_query = mysqli_query(
                                 stroke-linejoin="round"
                             >
 
-                                <circle
-                                    cx="9"
-                                    cy="7"
-                                    r="4"
-                                />
+                                <circle cx="9" cy="7" r="4"/>
 
-                                <path
-                                    d="M3 21v-2a6 6 0 0 1 12 0v2"
-                                />
+                                <path d="M3 21v-2a6 6 0 0 1 12 0v2"/>
 
-                                <path
-                                    d="M15 3h6"
-                                />
+                                <path d="M15 3h6"/>
 
-                                <path
-                                    d="M18 0v6"
-                                />
+                                <path d="M18 0v6"/>
 
                             </svg>
 
@@ -280,25 +382,13 @@ $results_query = mysqli_query(
                                 stroke-linejoin="round"
                             >
 
-                                <circle
-                                    cx="9"
-                                    cy="7"
-                                    r="4"
-                                />
+                                <circle cx="9" cy="7" r="4"/>
 
-                                <path
-                                    d="M3 21v-2a6 6 0 0 1 12 0v2"
-                                />
+                                <path d="M3 21v-2a6 6 0 0 1 12 0v2"/>
 
-                                <circle
-                                    cx="17"
-                                    cy="9"
-                                    r="3"
-                                />
+                                <circle cx="17" cy="9" r="3"/>
 
-                                <path
-                                    d="M21 21v-2a4 4 0 0 0-7.5-1.5"
-                                />
+                                <path d="M21 21v-2a4 4 0 0 0-7.5-1.5"/>
 
                             </svg>
 
@@ -337,21 +427,11 @@ $results_query = mysqli_query(
                                 stroke-linejoin="round"
                             >
 
-                                <rect
-                                    x="2"
-                                    y="3"
-                                    width="20"
-                                    height="5"
-                                    rx="1"
-                                />
+                                <rect x="2" y="3" width="20" height="5" rx="1"/>
 
-                                <path
-                                    d="M4 8v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"
-                                />
+                                <path d="M4 8v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"/>
 
-                                <path
-                                    d="M10 12h4"
-                                />
+                                <path d="M10 12h4"/>
 
                             </svg>
 
@@ -390,21 +470,13 @@ $results_query = mysqli_query(
                                 stroke-linejoin="round"
                             >
 
-                                <path
-                                    d="M4 4h16v16H4z"
-                                />
+                                <path d="M4 4h16v16H4z"/>
 
-                                <path
-                                    d="M8 16v-4"
-                                />
+                                <path d="M8 16v-4"/>
 
-                                <path
-                                    d="M12 16V8"
-                                />
+                                <path d="M12 16V8"/>
 
-                                <path
-                                    d="M16 16v-7"
-                                />
+                                <path d="M16 16v-7"/>
 
                             </svg>
 
@@ -427,7 +499,7 @@ $results_query = mysqli_query(
 
                     <a
                         href="courses"
-                        class="<?php echo ($current_page == 'courses.php' || $current_page == 'add_course.php' || $current_page == 'edit_course.php') ? 'active' : ''; ?>"
+                        class="active"
                     >
 
                         <span class="nav-icon">
@@ -443,13 +515,9 @@ $results_query = mysqli_query(
                                 stroke-linejoin="round"
                             >
 
-                                <path
-                                    d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"
-                                />
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
 
-                                <path
-                                    d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"
-                                />
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
 
                             </svg>
 
@@ -463,7 +531,6 @@ $results_query = mysqli_query(
                     </a>
 
                 </li>
-
 
 
                 <!-- SESSIONS -->
@@ -525,15 +592,9 @@ $results_query = mysqli_query(
                                 stroke-linejoin="round"
                             >
 
-                                <circle
-                                    cx="11"
-                                    cy="11"
-                                    r="7"
-                                />
+                                <circle cx="11" cy="11" r="7"/>
 
-                                <path
-                                    d="m20 20-4-4"
-                                />
+                                <path d="m20 20-4-4"/>
 
                             </svg>
 
@@ -582,20 +643,11 @@ $results_query = mysqli_query(
                                 stroke-linejoin="round"
                             >
 
-                                <path
-                                    d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
-                                />
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
 
-                                <polyline
-                                    points="16 17 21 12 16 7"
-                                />
+                                <polyline points="16 17 21 12 16 7"/>
 
-                                <line
-                                    x1="21"
-                                    y1="12"
-                                    x2="9"
-                                    y2="12"
-                                />
+                                <line x1="21" y1="12" x2="9" y2="12"/>
 
                             </svg>
 
@@ -648,11 +700,11 @@ $results_query = mysqli_query(
             <div>
 
                 <p class="topbar-label">
-                    ACADEMIC RECORDS
+                    COURSE DIRECTORY
                 </p>
 
                 <h1>
-                    Results
+                    Edit Course
                 </h1>
 
             </div>
@@ -690,340 +742,233 @@ $results_query = mysqli_query(
         </header>
 
 
+        <div class="page-content">
 
-        <!-- PAGE CONTENT -->
-
-        <section class="results-page">
+            <div class="course-page">
 
 
-            <div class="results-page-header">
+                <!-- PAGE HEADER -->
 
-                <div>
+                <div class="course-page-header">
 
-                    <span class="welcome-label">
-                        ACADEMIC PERFORMANCE
-                    </span>
+                    <div>
 
-                    <h2>
-                        Student Results
-                    </h2>
+                        <span class="welcome-label">
+                            UPDATE COURSE
+                        </span>
 
-                    <p>
-                        View and manage academic results for all students.
-                    </p>
+                        <h2>
+                            Edit Course Details
+                        </h2>
+
+                        <p>
+                            Update the course information below.
+                        </p>
+
+                    </div>
 
                 </div>
 
-            </div>
 
 
+                <!-- SUCCESS -->
 
-            <!-- RESULTS TABLE -->
+                <?php if (!empty($success)) { ?>
 
-            <div class="results-table-card">
-
-
-                <div class="results-table-wrapper">
-
-
-                    <table class="results-table">
-
-
-                        <thead>
-
-                            <tr>
-
-                                <th>
-                                    Student
-                                </th>
-
-                                <th>
-                                    Matric No
-                                </th>
-
-                                <th>
-                                    Course Code
-                                </th>
-
-                                <th>
-                                    Course Title
-                                </th>
-
-                                <th>
-                                    Semester
-                                </th>
-
-                                <th>
-                                    Session
-                                </th>
-
-                                <th>
-                                    Score
-                                </th>
-
-                                <th>
-                                    Grade
-                                </th>
-
-                                <th>
-                                    Remark
-                                </th>
-
-                                <th>
-                                    Action
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
+                    <div class="student-message success">
 
                         <?php
-
-                        if (
-                            $results_query &&
-                            mysqli_num_rows($results_query) > 0
-                        ) {
-
-                            while (
-                                $result =
-                                mysqli_fetch_assoc($results_query)
-                            ) {
-
+                        echo htmlspecialchars($success);
                         ?>
 
+                    </div>
 
-                            <tr>
-
-
-                                <!-- STUDENT -->
-
-                                <td>
-
-                                    <strong>
-
-                                        <?php
-
-                                        echo htmlspecialchars(
-                                            $result['firstname']
-                                            . " "
-                                            . $result['lastname']
-                                        );
-
-                                        ?>
-
-                                    </strong>
-
-                                </td>
+                <?php } ?>
 
 
 
-                                <!-- MATRIC -->
+                <!-- ERROR -->
 
-                                <td>
+                <?php if (!empty($error)) { ?>
 
-                                    <?php
+                    <div class="student-message error">
 
-                                    echo htmlspecialchars(
-                                        $result['matric_no']
-                                    );
+                        <?php
+                        echo htmlspecialchars($error);
+                        ?>
 
-                                    ?>
+                    </div>
 
-                                </td>
+                <?php } ?>
 
 
+
+                <!-- FORM CARD -->
+
+                <div class="student-form-card course-form-card">
+
+                    <div class="student-form-header">
+
+                        <h2>
+                            Course Information
+                        </h2>
+
+                        <p>
+                            Update the course details below.
+                        </p>
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        class="student-form"
+                    >
+
+
+                        <div class="student-form-body">
+
+                            <div class="form-section-title">
+                                Course Details
+                            </div>
+
+                            <div class="student-form-grid">
 
                                 <!-- COURSE CODE -->
 
-                                <td>
+                                <div class="form-group">
 
-                                    <span class="course-code">
+                                    <label>
+                                        Course Code
+                                        <span class="required">*</span>
+                                    </label>
 
-                                        <?php
+                                    <input
+                                        type="text"
+                                        name="course_code"
+                                        value="<?php echo htmlspecialchars($course_code); ?>"
+                                        placeholder="e.g. COM301"
+                                        maxlength="20"
+                                        required
+                                    >
 
-                                        echo htmlspecialchars(
-                                            $result['course_code']
-                                        );
+                                    <small class="field-hint">
+                                        e.g. COM301, STA111. Letters and numbers only.
+                                    </small>
 
-                                        ?>
-
-                                    </span>
-
-                                </td>
-
+                                </div>
 
 
                                 <!-- COURSE TITLE -->
 
-                                <td>
+                                <div class="form-group">
 
-                                    <?php
+                                    <label>
+                                        Course Title
+                                        <span class="required">*</span>
+                                    </label>
 
-                                    echo htmlspecialchars(
-                                        $result['course_title']
-                                    );
+                                    <input
+                                        type="text"
+                                        name="course_title"
+                                        value="<?php echo htmlspecialchars($course_title); ?>"
+                                        placeholder="e.g. Introduction to Software Engineering"
+                                        maxlength="150"
+                                        required
+                                    >
 
-                                    ?>
-
-                                </td>
-
-
-
-                                <!-- SEMESTER -->
-
-                                <td>
-
-                                    <?php
-
-                                    echo htmlspecialchars(
-                                        $result['semester']
-                                    );
-
-                                    ?>
-
-                                </td>
-
+                                </div>
 
 
                                 <!-- SESSION -->
 
-                                <td>
+                                <div class="form-group">
 
-                                    <?php
+                                    <label>
+                                        Academic Session
+                                        <span class="required">*</span>
+                                    </label>
 
-                                    echo htmlspecialchars(
-                                        $result['session']
-                                    );
-
-                                    ?>
-
-                                </td>
-
-
-
-                                <!-- SCORE -->
-
-                                <td>
-
-                                    <strong>
-
-                                        <?php
-
-                                        echo htmlspecialchars(
-                                            $result['score']
-                                        );
-
-                                        ?>
-
-                                    </strong>
-
-                                </td>
-
-
-
-                                <!-- GRADE -->
-
-                                <td>
-
-                                    <span
-                                        class="result-grade grade-<?php echo strtolower($result['grade']); ?>"
+                                    <select
+                                        name="session_id"
+                                        required
                                     >
 
+                                        <option value="">
+                                            Select Session
+                                        </option>
+
                                         <?php
-
-                                        echo htmlspecialchars(
-                                            $result['grade']
-                                        );
-
+                                        if (
+                                            $sessions_query &&
+                                            mysqli_num_rows($sessions_query) > 0
+                                        ):
+                                            while (
+                                                $session_row =
+                                                mysqli_fetch_assoc($sessions_query)
+                                            ):
                                         ?>
 
-                                    </span>
+                                            <option
+                                                value="<?php echo (int)$session_row['id']; ?>"
+                                                <?php echo ($session_id == (int)$session_row['id']) ? 'selected' : ''; ?>
+                                            >
+                                                <?php
+                                                echo htmlspecialchars(
+                                                    $session_row['session_name']
+                                                );
+                                                ?>
+                                            </option>
 
-                                </td>
+                                        <?php
+                                            endwhile;
+                                        endif;
+                                        ?>
 
+                                    </select>
 
+                                    <small class="field-hint">
+                                        The session this course is offered in.
+                                    </small>
 
-                                <!-- REMARK -->
+                                </div>
 
-                                <td>
+                            </div>
 
-                                    <?php
-
-                                    echo htmlspecialchars(
-                                        $result['remark']
-                                    );
-
-                                    ?>
-
-                                </td>
-
-
-
-                                <!-- ACTION -->
-
-                                <td>
-
-                                    <a
-                                        href="student_profile?id=<?php echo (int)$result['student_id']; ?>"
-                                        class="result-view-btn"
-                                    >
-                                        View Student
-                                    </a>
-
-                                </td>
+                        </div>
 
 
-                            </tr>
+                        <!-- ACTIONS -->
+
+                        <div class="student-form-actions">
+
+                            <a
+                                href="courses"
+                                class="cancel-student"
+                            >
+                                Cancel
+                            </a>
 
 
-                        <?php
+                            <button
+                                type="submit"
+                                name="update_course"
+                                class="add-student-button"
+                            >
+                                Update Course
+                            </button>
 
-                            }
-
-                        } else {
-
-                        ?>
-
-
-                            <tr>
-
-                                <td
-                                    colspan="10"
-                                    class="empty-results"
-                                >
-
-                                    No student results have been added yet.
-
-                                </td>
-
-                            </tr>
+                        </div>
 
 
-                        <?php
-
-                        }
-
-                        ?>
-
-
-                        </tbody>
-
-
-                    </table>
-
+                    </form>
 
                 </div>
 
 
             </div>
 
-
-        </section>
-
+        </div>
 
 
         <!-- FOOTER -->
