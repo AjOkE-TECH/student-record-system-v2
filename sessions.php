@@ -295,15 +295,7 @@ if ($sessions_query) {
         <!-- PAGE CONTENT -->
         <section class="courses-page">
 
-            <!-- PAGE TOP -->
-            <div class="courses-page-header">
-                <div>
-                    <span class="welcome-label">ACADEMIC SESSIONS</span>
-                    <h2>Session Management</h2>
-                    <p>Create and manage academic sessions for courses and results.</p>
-                </div>
-            </div>
-
+           
             <!-- SUCCESS / ERROR MESSAGE -->
             <?php if ($success !== ""): ?>
                 <div class="courses-table-card" style="margin-bottom:18px; padding:14px 22px; background:#ecfdf5; border-color:#d1fae5; color:#006400;">

@@ -310,7 +310,7 @@ if (!function_exists('srsNextMatricPreview')) {
         $next = $current + 1;
         $matricNo = srsBuildMatric($code, $admissionYear, $next);
 
-        /* Skip any numbers already in use (legacy protection). */
+        /* Skip any numbers already in use  */
         while (srsMatricExists($conn, $matricNo) && $next < 100000) {
             $next++;
             $matricNo = srsBuildMatric($code, $admissionYear, $next);
