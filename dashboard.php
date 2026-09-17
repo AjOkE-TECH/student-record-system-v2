@@ -1555,42 +1555,16 @@ if (
 
 
                 <table class="recent-table">
-
-
                     <thead>
-
-
                         <tr>
-
-                            <th>
-                                Name
-                            </th>
-
-                            <th>
-                                Matric No
-                            </th>
-
-                            <th>
-                                Department
-                            </th>
-
-                            <th>
-                                Level
-                            </th>
-
-                            <th>
-                                Date Added
-                            </th>
-
+                            <th> Name</th>
+                            <th> Matric No </th>
+                            <th> Department</th>
+                            <th> Level </th>
+                            <th> Date Added</th>
                         </tr>
-
-
                     </thead>
-
-
                     <tbody>
-
-
                     <?php
 
                     if (
@@ -1607,31 +1581,20 @@ if (
                         ) {
 
                     ?>
-
                         <tr>
-
-
                             <td>
-
                                 <strong class="student-name">
-
                                     <?php
-
                                     echo htmlspecialchars(
                                         $recent['firstname']
                                         . " "
                                         . $recent['lastname']
                                     );
-
                                     ?>
-
                                 </strong>
-
                             </td>
 
-
                             <td>
-
                                 <span class="matric-number">
 
                                     <?php
@@ -1721,52 +1684,19 @@ if (
                     }
 
                     ?>
-
-
                     </tbody>
-
-
                 </table>
-
-
             </div>
-
-
         </section>
-
-
-
-        <!-- =================================================
-             FOOTER
-        ================================================== -->
+        <!-- FOOTER-->
 
         <footer class="admin-footer">
-
-
-            <span>
-                2026 Student Record Management System
-            </span>
-
-
-            <span>
-                |
-            </span>
-
-
-            <span>
-                Designed by Sekinat Mutolib
-            </span>
-
-
+            <span> 2026 Student Record Management System </span>
+            <span> |</span>
+            <span> Designed by Sekinat Mutolib</span>
         </footer>
-
-
     </main>
-
-
 </div>
-
-
 <script src="assets/js/sidebar.js"></script>
 
 </body>

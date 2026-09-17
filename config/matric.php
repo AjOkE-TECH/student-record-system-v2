@@ -233,7 +233,7 @@ if (!function_exists('srsAutoMatric')) {
 
         do {
 
-            /* Atomic, serialized increment. Each connection sees its own value. */
+            /* serialized increment. Each connection sees its own value. */
             $stmt = mysqli_prepare($conn,
                 "UPDATE matric_sequences
                  SET current_value = LAST_INSERT_ID(current_value + 1)
@@ -272,7 +272,7 @@ if (!function_exists('srsNextMatricPreview')) {
      * Read-only PREVIEW of the next matric number for a
      * department and year. Does NOT consume the sequence.
      *
-     * @return string|null Matric preview, or null on error.
+     * @return string|null Matric preview, or null on error
      */
     function srsNextMatricPreview($conn, $departmentId, $admissionYear)
     {

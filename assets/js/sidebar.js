@@ -1,4 +1,4 @@
-/* SIDEBAR TOGGLE - shared behavior
+/* SIDEBAR TOGGLE
    Collapses/expands the admin sidebar */
 
 (function () {
